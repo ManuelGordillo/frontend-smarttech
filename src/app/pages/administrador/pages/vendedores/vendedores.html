@@ -1,1 +1,42 @@
-<p>vendedores works!</p>,
+<div class="p-6">
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <h1 class="text-3xl font-bold text-slate-900">Vendedores</h1>
+      <p class="text-slate-500">Administración de vendedores</p>
+    </div>
+
+    <button class="btn btn-primary">+ Nuevo Vendedor</button>
+  </div>
+
+  <div class="bg-white rounded-xl shadow overflow-hidden text-slate-900">
+    <table class="table w-full text-slate-900">
+      <thead class="bg-slate-100 text-slate-900">
+        <tr>
+          <th class="text-slate-900 font-semibold">ID</th>
+          <th class="text-slate-900 font-semibold">Nombre</th>
+          <th class="text-slate-900 font-semibold">Correo</th>
+          <th class="text-slate-900 font-semibold">Usuario</th>
+          <th class="text-slate-900 font-semibold">Estado</th>
+          <th class="text-slate-900 font-semibold">Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr class="hover:bg-slate-50">
+          <td>1</td>
+          <td>Juan Pérez</td>
+          <td>juan@gmail.com</td>
+          <td>jperez</td>
+          <td>
+            <span class="badge badge-success"> Activo </span>
+          </td>
+          <td class="space-x-2">
+            <button class="btn btn-sm btn-info">Editar</button>
+
+            <button class="btn btn-sm btn-error">Desactivar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
