@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'app-dashboard-administrador',
+  selector: 'app-cerrar-sesion',
   imports: [],
-  templateUrl: './dashboard-administrador.html',
+  templateUrl: './cerrar-sesion.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardAdministrador {}
+export default class CerrarSesion {}
