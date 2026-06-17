@@ -2,6 +2,9 @@ import { Routes } from '@angular/router';
 import { Inicio } from './pages/home/inicio/inicio';
 import { Navbar } from './shared/components/navbar/navbar';
 import { PaginaPrincipal } from './pages/home/pagina-principal/pagina-principal';
+import { Login } from './auth/login/login';
+import { RegistrarCliente } from './auth/registrar-cliente/registrar-cliente';
+import { DashboardAdministrador } from './administrador/dashboard-administrador/dashboard-administrador';
 
 export const routes: Routes = [
   {
@@ -13,6 +16,19 @@ export const routes: Routes = [
     path: 'pagina-principal',
     component: PaginaPrincipal,
     title: 'Pagina-Principal',
+  },
+  {
+    path: 'login',
+    component: Login,
+    title: 'Inicia sesion',
+  },
+  {
+    path: 'registrar-cliente',
+    component: RegistrarCliente,
+  },
+  {
+    path: 'dashboard-administrador',
+    component: DashboardAdministrador,
   },
   {
     path: '**',
