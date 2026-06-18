@@ -5,12 +5,13 @@
       <p class="text-slate-400 mt-2">Completa tus datos para registrarte</p>
     </div>
 
-    <form class="space-y-5">
+    <form [formGroup]="registerForm" (ngSubmit)="registrar()" class="space-y-5">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label class="block text-sm font-medium text-slate-300 mb-2"> Nombres </label>
           <input
             type="text"
+            formControlName="nombres"
             placeholder="Juan Carlos"
             class="w-full px-4 py-3 bg-slate-700 text-slate-100 placeholder-slate-400 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
           />
@@ -20,6 +21,7 @@
           <label class="block text-sm font-medium text-slate-300 mb-2"> Apellidos </label>
           <input
             type="text"
+            formControlName="apellidos"
             placeholder="Pérez Gómez"
             class="w-full px-4 py-3 bg-slate-700 text-slate-100 placeholder-slate-400 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
           />
@@ -30,6 +32,7 @@
         <div>
           <label class="block text-sm font-medium text-slate-300 mb-2"> Tipo de Documento </label>
           <select
+            formControlName="tipoDocumento"
             class="w-full px-4 py-3 bg-slate-700 text-slate-100 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
           >
             <option>DNI</option>
@@ -42,6 +45,7 @@
           <label class="block text-sm font-medium text-slate-300 mb-2"> Número de Documento </label>
           <input
             type="text"
+            formControlName="numeroDocumento"
             placeholder="12345678"
             class="w-full px-4 py-3 bg-slate-700 text-slate-100 placeholder-slate-400 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
           />
@@ -52,6 +56,7 @@
         <label class="block text-sm font-medium text-slate-300 mb-2"> Correo Electrónico </label>
         <input
           type="email"
+          formControlName="correo"
           placeholder="correo@ejemplo.com"
           class="w-full px-4 py-3 bg-slate-700 text-slate-100 placeholder-slate-400 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
         />
@@ -61,7 +66,17 @@
         <label class="block text-sm font-medium text-slate-300 mb-2"> Teléfono </label>
         <input
           type="tel"
+          formControlName="telefono"
           placeholder="999 999 999"
+          class="w-full px-4 py-3 bg-slate-700 text-slate-100 placeholder-slate-400 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
+        />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-300 mb-2"> Direccion </label>
+        <input
+          type="text"
+          formControlName="direccion"
+          placeholder="Av. Arequipa 214"
           class="w-full px-4 py-3 bg-slate-700 text-slate-100 placeholder-slate-400 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
         />
       </div>
@@ -70,9 +85,21 @@
         <label class="block text-sm font-medium text-slate-300 mb-2"> Nombre de Usuario </label>
         <input
           type="text"
+          formControlName="usuario"
           placeholder="usuario123"
           class="w-full px-4 py-3 bg-slate-700 text-slate-100 placeholder-slate-400 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
         />
+        @if (f['usuario'].touched && f['usuario'].errors?.['required']) {
+          <p class="text-red-400 text-sm mt-1">El usuario es obligatorio</p>
+        }
+
+        @if (f['usuario'].touched && f['usuario'].errors?.['minlength']) {
+          <p class="text-red-400 text-sm mt-1">Debe tener mínimo 8 caracteres</p>
+        }
+
+        @if (f['usuario'].touched && f['usuario'].errors?.['maxlength']) {
+          <p class="text-red-400 text-sm mt-1">Debe tener máximo 12 caracteres</p>
+        }
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -80,6 +107,7 @@
           <label class="block text-sm font-medium text-slate-300 mb-2"> Contraseña </label>
           <input
             type="password"
+            formControlName="password"
             placeholder="••••••••"
             class="w-full px-4 py-3 bg-slate-700 text-slate-100 placeholder-slate-400 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
           />
@@ -89,8 +117,12 @@
           <label class="block text-sm font-medium text-slate-300 mb-2">
             Confirmar Contraseña
           </label>
+          @if (registerForm.errors?.['passwordMismatch'] && f['confirmarPassword'].touched) {
+            <p class="text-red-400 text-sm mt-1">Las contraseñas no coinciden</p>
+          }
           <input
             type="password"
+            formControlName="confirmarPassword"
             placeholder="••••••••"
             class="w-full px-4 py-3 bg-slate-700 text-slate-100 placeholder-slate-400 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
           />
@@ -99,6 +131,7 @@
 
       <button
         type="submit"
+        [disabled]="registerForm.invalid"
         class="w-full bg-cyan-600 text-white py-3 rounded-lg font-semibold hover:bg-cyan-700 transition"
       >
         Registrarse
