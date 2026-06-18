@@ -6,95 +6,9 @@
   </div>
 
   <!-- Resumen -->
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-    <div class="bg-white rounded-xl shadow p-5">
-      <p class="text-slate-500">Productos</p>
-      <h2 class="text-3xl font-bold">120</h2>
-    </div>
-
-    <div class="bg-white rounded-xl shadow p-5">
-      <p class="text-slate-500">Stock Disponible</p>
-      <h2 class="text-3xl font-bold text-green-600">980</h2>
-    </div>
-
-    <div class="bg-white rounded-xl shadow p-5">
-      <p class="text-slate-500">Stock Bajo</p>
-      <h2 class="text-3xl font-bold text-amber-500">12</h2>
-    </div>
-
-    <div class="bg-white rounded-xl shadow p-5">
-      <p class="text-slate-500">Agotados</p>
-      <h2 class="text-3xl font-bold text-red-600">3</h2>
-    </div>
-  </div>
-
+  <inventario-resumen />
   <!-- Filtros -->
-  <div class="bg-white rounded-xl shadow p-5 mb-6">
-    <h2 class="text-lg font-semibold text-slate-900 mb-4">Filtros</h2>
-
-    <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
-      <select class="select select-bordered w-full text-white">
-        <option class="text-white">Todas las marcas</option>
-        <option class="text-white">Apple</option>
-        <option class="text-white">Samsung</option>
-        <option class="text-white">Xiaomi</option>
-      </select>
-
-      <input type="text" placeholder="Modelo" class="input input-bordered w-full text-white" />
-
-      <select class="select select-bordered w-full text-white">
-        <option class="text-white">Todos</option>
-        <option class="text-white">Stock Bajo</option>
-        <option class="text-white">Disponible</option>
-        <option class="text-white">Agotado</option>
-      </select>
-
-      <input type="date" class="input input-bordered w-full text-white" />
-
-      <button class="btn btn-primary">Buscar</button>
-    </div>
-  </div>
-
+  <inventario-filtros />
   <!-- Tabla -->
-  <div class="bg-white rounded-xl shadow overflow-hidden">
-    <table class="table w-full text-slate-900">
-      <thead class="bg-slate-100">
-        <tr>
-          <th>ID</th>
-          <th>Marca</th>
-          <th>Modelo</th>
-          <th>Precio</th>
-          <th>Stock</th>
-          <th>Estado</th>
-          <th>Último Ingreso</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Apple</td>
-          <td>iPhone 15 Pro</td>
-          <td>S/ 4,500</td>
-          <td>25</td>
-          <td>
-            <span class="badge badge-success"> Disponible </span>
-          </td>
-          <td>15/06/2026</td>
-        </tr>
-
-        <tr>
-          <td>2</td>
-          <td>Samsung</td>
-          <td>Galaxy S25</td>
-          <td>S/ 3,800</td>
-          <td>5</td>
-          <td>
-            <span class="badge badge-warning"> Stock Bajo </span>
-          </td>
-          <td>10/06/2026</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <inventario-tabla />
 </div>

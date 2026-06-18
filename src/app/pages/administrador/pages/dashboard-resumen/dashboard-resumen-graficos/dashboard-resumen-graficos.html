@@ -1,0 +1,32 @@
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-8">
+  <div class="card bg-white shadow-lg border border-slate-200 xl:col-span-2">
+    <div class="card-body">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="card-title">Ventas Mensuales</h2>
+
+        <div class="badge badge-primary">2026</div>
+      </div>
+
+      <!-- Canvas para Chart.js -->
+      <div class="h-96">
+        <canvas id="ventasChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-white shadow-lg border border-slate-200">
+    <div class="card-body">
+      <h2 class="card-title">Objetivo Mensual</h2>
+
+      <div class="flex justify-center my-6">
+        <div class="radial-progress text-primary" style="--value: 78; --size: 12rem">78%</div>
+      </div>
+
+      <div class="text-center">
+        <p class="text-2xl font-bold">S/ 84,320</p>
+
+        <p class="text-slate-500">de S/ 108,000 proyectados</p>
+      </div>
+    </div>
+  </div>
+</div>

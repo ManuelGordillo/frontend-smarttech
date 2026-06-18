@@ -7,149 +7,17 @@
 
   <!-- Resumen -->
 
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-    <div class="bg-white rounded-xl shadow p-5">
-      <p class="text-slate-500">Administradores</p>
-
-      <h2 class="text-3xl font-bold text-blue-600">2</h2>
-    </div>
-
-    <div class="bg-white rounded-xl shadow p-5">
-      <p class="text-slate-500">Vendedores</p>
-
-      <h2 class="text-3xl font-bold text-green-600">8</h2>
-    </div>
-
-    <div class="bg-white rounded-xl shadow p-5">
-      <p class="text-slate-500">Clientes</p>
-
-      <h2 class="text-3xl font-bold text-purple-600">150</h2>
-    </div>
-
-    <div class="bg-white rounded-xl shadow p-5">
-      <p class="text-slate-500">Usuarios Totales</p>
-
-      <h2 class="text-3xl font-bold">160</h2>
-    </div>
-  </div>
+  <configuracion-resumen />
 
   <!-- Filtro -->
 
-  <div class="bg-white rounded-xl shadow p-5 mb-6">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-      <select class="select select-bordered w-full text-white">
-        <option class="text-white">Todos</option>
-        <option class="text-white">Administradores</option>
-        <option class="text-white">Vendedores</option>
-        <option class="text-white">Clientes</option>
-      </select>
-
-      <input
-        type="text"
-        placeholder="Buscar usuario"
-        class="input input-bordered w-full text-white"
-      />
-
-      <select class="select select-bordered w-full text-white">
-        <option class="text-white">Activo</option>
-        <option class="text-white">Inactivo</option>
-      </select>
-
-      <button class="btn btn-primary">Buscar</button>
-    </div>
-  </div>
+  <configuracion-filtro />
 
   <!-- Tabla -->
 
-  <div class="bg-white rounded-xl shadow overflow-hidden">
-    <table class="table w-full text-slate-900">
-      <thead class="bg-slate-100">
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Rol</th>
-          <th>Correo</th>
-          <th>Estado</th>
-          <th>Ingresos Generados</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Juan Pérez</td>
-          <td>
-            <span class="badge badge-success"> Vendedor </span>
-          </td>
-          <td>juan@gmail.com</td>
-          <td>
-            <span class="badge badge-success"> Activo </span>
-          </td>
-          <td class="font-semibold text-green-600">S/ 42,500</td>
-          <td>
-            <div class="flex gap-2">
-              <button class="btn btn-sm btn-info">Editar</button>
-
-              <button class="btn btn-sm btn-warning">Bloquear</button>
-
-              <button class="btn btn-sm btn-error">Eliminar</button>
-            </div>
-          </td>
-        </tr>
-
-        <tr>
-          <td>2</td>
-          <td>Ana Torres</td>
-          <td>
-            <span class="badge badge-primary"> Administrador </span>
-          </td>
-          <td>ana@gmail.com</td>
-          <td>
-            <span class="badge badge-success"> Activo </span>
-          </td>
-          <td class="font-semibold text-green-600">S/ 0</td>
-          <td>
-            <div class="flex gap-2">
-              <button class="btn btn-sm btn-info">Editar</button>
-
-              <button class="btn btn-sm btn-warning">Bloquear</button>
-
-              <button class="btn btn-sm btn-error">Eliminar</button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <configuracion-tabla />
 
   <!-- Ranking de vendedores -->
 
-  <div class="bg-white rounded-xl shadow mt-8 p-6">
-    <h2 class="text-xl font-bold mb-4">Ranking de Vendedores</h2>
-
-    <table class="table w-full text-slate-900">
-      <thead class="bg-slate-100">
-        <tr>
-          <th>Vendedor</th>
-          <th>Ventas</th>
-          <th>Ingresos Generados</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr>
-          <td>Juan Pérez</td>
-          <td>120</td>
-          <td>S/ 42,500</td>
-        </tr>
-
-        <tr>
-          <td>Pedro Ruiz</td>
-          <td>98</td>
-          <td>S/ 35,000</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <configuracion-ranking />
 </div>
