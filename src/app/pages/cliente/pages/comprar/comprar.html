@@ -1,0 +1,162 @@
+<div class="flex min-h-screen">
+  <!-- SIDEBAR FILTROS -->
+  <aside class="w-72 bg-white border-r p-6 hidden md:block">
+    <h2 class="text-xl font-bold mb-4">Filtros</h2>
+
+    <!-- Búsqueda -->
+    <div class="mb-6">
+      <label class="label">
+        <span class="label-text">Buscar producto</span>
+      </label>
+      <input type="text" placeholder="Ej: iPhone, Samsung..." class="input input-bordered w-full" />
+    </div>
+
+    <!-- Categoría -->
+    <div class="mb-6">
+      <label class="label">
+        <span class="label-text">Categoría</span>
+      </label>
+      <select class="select select-bordered w-full">
+        <option>Todos</option>
+        <option>Celulares</option>
+        <option>Tablets</option>
+        <option>Accesorios</option>
+      </select>
+    </div>
+
+    <!-- Marca -->
+    <div class="mb-6">
+      <label class="label">
+        <span class="label-text">Marca</span>
+      </label>
+      <select class="select select-bordered w-full">
+        <option>Todas</option>
+        <option>Apple</option>
+        <option>Samsung</option>
+        <option>Xiaomi</option>
+      </select>
+    </div>
+
+    <!-- Precio -->
+    <div class="mb-6">
+      <label class="label">
+        <span class="label-text">Precio máximo</span>
+      </label>
+      <input type="range" min="0" max="5000" class="range range-primary" />
+      <div class="text-sm mt-2 text-slate-500">S/ 0 - S/ 5000</div>
+    </div>
+
+    <button class="btn btn-primary w-full">Aplicar filtros</button>
+  </aside>
+
+  <!-- CONTENIDO -->
+  <main class="flex-1 p-6">
+    <!-- GRID PRODUCTOS -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- PRODUCTO 1 -->
+      <div class="card bg-white shadow-md hover:shadow-xl transition">
+        <figure class="p-4">
+          <img src="https://via.placeholder.com/300" class="rounded-xl h-48 object-cover" />
+        </figure>
+
+        <div class="card-body">
+          <h2 class="card-title">iPhone 14 Pro</h2>
+
+          <p class="text-sm text-slate-500">Smartphone Apple con 128GB y cámara profesional.</p>
+
+          <div class="flex justify-between items-center mt-2">
+            <span class="font-bold text-lg">S/ 4500</span>
+            <span class="text-sm text-green-600">Stock: 10</span>
+          </div>
+
+          <div class="card-actions mt-4">
+            <label for="modal-producto" class="btn btn-primary w-full"> Ver detalle </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRODUCTO 2 -->
+      <div class="card bg-white shadow-md hover:shadow-xl transition">
+        <figure class="p-4">
+          <img src="https://via.placeholder.com/300" class="rounded-xl h-48 object-cover" />
+        </figure>
+
+        <div class="card-body">
+          <h2 class="card-title">Samsung Galaxy S23</h2>
+
+          <p class="text-sm text-slate-500">Pantalla AMOLED, 256GB, alto rendimiento.</p>
+
+          <div class="flex justify-between items-center mt-2">
+            <span class="font-bold text-lg">S/ 3800</span>
+            <span class="text-sm text-green-600">Stock: 5</span>
+          </div>
+
+          <div class="card-actions mt-4">
+            <label for="modal-producto" class="btn btn-primary w-full"> Ver detalle </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRODUCTO 3 -->
+      <div class="card bg-white shadow-md hover:shadow-xl transition">
+        <figure class="p-4">
+          <img src="https://via.placeholder.com/300" class="rounded-xl h-48 object-cover" />
+        </figure>
+
+        <div class="card-body">
+          <h2 class="card-title">Xiaomi Redmi Note 13</h2>
+
+          <p class="text-sm text-slate-500">Económico, buena batería y cámara.</p>
+
+          <div class="flex justify-between items-center mt-2">
+            <span class="font-bold text-lg">S/ 1200</span>
+            <span class="text-sm text-green-600">Stock: 20</span>
+          </div>
+
+          <div class="card-actions mt-4">
+            <label for="modal-producto" class="btn btn-primary w-full"> Ver detalle </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL DETALLE PRODUCTO -->
+<input type="checkbox" id="modal-producto" class="modal-toggle" />
+
+<div class="modal">
+  <div class="modal-box max-w-3xl">
+    <label for="modal-producto" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+      ✕
+    </label>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- IMAGEN -->
+      <div>
+        <img src="https://via.placeholder.com/500" class="rounded-xl w-full object-cover" />
+      </div>
+
+      <!-- INFO -->
+      <div>
+        <h2 class="text-2xl font-bold">iPhone 14 Pro</h2>
+
+        <p class="text-slate-500 mt-2">
+          Smartphone Apple con chip A16 Bionic, cámara profesional y alto rendimiento.
+        </p>
+
+        <div class="mt-4 space-y-2 text-sm">
+          <p><span class="font-semibold">Categoría:</span> Celulares</p>
+          <p><span class="font-semibold">Marca:</span> Apple</p>
+          <p><span class="font-semibold">Stock:</span> 10 unidades</p>
+        </div>
+
+        <div class="mt-6">
+          <span class="text-2xl font-bold text-primary">S/ 4500</span>
+        </div>
+
+        <button class="btn btn-primary w-full mt-6">Agregar al carrito</button>
+      </div>
+    </div>
+  </div>
+</div>
