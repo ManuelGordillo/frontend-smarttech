@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-interface MenuOpcionCliente {
+interface MenuOpcionVendedor {
   titulo: string;
   subtitulo: string;
   ruta: string;
@@ -9,13 +9,13 @@ interface MenuOpcionCliente {
 }
 
 @Component({
-  selector: 'smarttech-side-menu-opciones-cliente',
+  selector: 'smarttech-side-menu-opciones-vendedor',
   imports: [RouterLink],
-  templateUrl: './side-menu-opciones-cliente.html',
+  templateUrl: './side-menu-opciones-vendedor.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SideMenuOpcionesCliente {
-  menuOpcionesCliente: MenuOpcionCliente[] = [
+export class SideMenuOpcionesVendedor {
+  menuOpcionesVendedor: MenuOpcionVendedor[] = [
     {
       titulo: 'Dashboard',
       subtitulo: 'Resumen',

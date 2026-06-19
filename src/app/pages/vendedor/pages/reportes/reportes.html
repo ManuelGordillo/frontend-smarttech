@@ -1,0 +1,170 @@
+<div class="min-h-screen bg-base-100 p-6">
+  <!-- HEADER -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold">Reportes y Estadísticas</h1>
+
+    <p class="text-base-content/70 mt-1">Análisis de ventas, productos y rendimiento.</p>
+  </div>
+
+  <!-- KPI CARDS -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+    <div class="stat bg-base-200 shadow rounded-box">
+      <div class="stat-title">Ventas Hoy</div>
+
+      <div class="stat-value text-primary">S/ 5,430</div>
+
+      <div class="stat-desc">↑ 12% respecto ayer</div>
+    </div>
+
+    <div class="stat bg-base-200 shadow rounded-box">
+      <div class="stat-title">Ventas Mes</div>
+
+      <div class="stat-value text-secondary">S/ 87,210</div>
+
+      <div class="stat-desc">↑ 8% respecto mes anterior</div>
+    </div>
+
+    <div class="stat bg-base-200 shadow rounded-box">
+      <div class="stat-title">Productos Vendidos</div>
+
+      <div class="stat-value text-accent">1,245</div>
+
+      <div class="stat-desc">↑ 5% crecimiento</div>
+    </div>
+
+    <div class="stat bg-base-200 shadow rounded-box">
+      <div class="stat-title">Clientes Atendidos</div>
+
+      <div class="stat-value text-success">320</div>
+
+      <div class="stat-desc">↑ 3% nuevos clientes</div>
+    </div>
+  </div>
+
+  <!-- GRÁFICOS -->
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
+    <!-- VENTAS POR DÍA -->
+    <div class="card bg-base-100 shadow-xl border border-base-300">
+      <div class="card-body">
+        <h2 class="card-title">Ventas por Día</h2>
+
+        <div class="h-64 flex items-center justify-center text-base-content/50">
+          [Gráfico Lineal - Chart.js]
+        </div>
+      </div>
+    </div>
+
+    <!-- VENTAS POR MES -->
+    <div class="card bg-base-100 shadow-xl border border-base-300">
+      <div class="card-body">
+        <h2 class="card-title">Ventas por Mes</h2>
+
+        <div class="h-64 flex items-center justify-center text-base-content/50">
+          [Gráfico Barras - Chart.js]
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEGUNDA FILA DE GRÁFICOS -->
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
+    <!-- PRODUCTOS MÁS VENDIDOS -->
+    <div class="card bg-base-100 shadow-xl border border-base-300">
+      <div class="card-body">
+        <h2 class="card-title">Productos Más Vendidos</h2>
+
+        <div class="space-y-4 mt-4">
+          <div class="flex justify-between">
+            <span>Samsung Galaxy S25</span>
+            <span class="font-bold">320 uds</span>
+          </div>
+
+          <div class="flex justify-between">
+            <span>iPhone 17 Pro</span>
+            <span class="font-bold">210 uds</span>
+          </div>
+
+          <div class="flex justify-between">
+            <span>Redmi Note 15</span>
+            <span class="font-bold">180 uds</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CATEGORÍAS -->
+    <div class="card bg-base-100 shadow-xl border border-base-300">
+      <div class="card-body">
+        <h2 class="card-title">Ventas por Categoría</h2>
+
+        <div class="space-y-4 mt-4">
+          <div>
+            <div class="flex justify-between">
+              <span>Celulares</span>
+              <span>65%</span>
+            </div>
+
+            <progress class="progress progress-primary w-full" value="65" max="100"></progress>
+          </div>
+
+          <div>
+            <div class="flex justify-between">
+              <span>Accesorios</span>
+              <span>25%</span>
+            </div>
+
+            <progress class="progress progress-secondary w-full" value="25" max="100"></progress>
+          </div>
+
+          <div>
+            <div class="flex justify-between">
+              <span>Tablets</span>
+              <span>10%</span>
+            </div>
+
+            <progress class="progress progress-accent w-full" value="10" max="100"></progress>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOP CLIENTES -->
+  <div class="card bg-base-100 shadow-xl border border-base-300">
+    <div class="card-body">
+      <h2 class="card-title mb-4">Top Clientes</h2>
+
+      <div class="overflow-x-auto">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>Compras</th>
+              <th>Total Gastado</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>Juan Pérez</td>
+              <td>12</td>
+              <td class="font-bold">S/ 18,500</td>
+            </tr>
+
+            <tr>
+              <td>María Torres</td>
+              <td>9</td>
+              <td class="font-bold">S/ 14,200</td>
+            </tr>
+
+            <tr>
+              <td>Carlos Ramos</td>
+              <td>7</td>
+              <td class="font-bold">S/ 10,800</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

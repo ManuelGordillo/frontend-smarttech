@@ -1,0 +1,102 @@
+<div class="min-h-screen bg-base-100 p-6">
+  <!-- HEADER -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold">Dashboard Vendedor</h1>
+
+    <p class="text-base-content/70 mt-1">Resumen general de tu rendimiento de ventas.</p>
+  </div>
+
+  <!-- KPI -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+    <div class="stat bg-base-200 shadow rounded-box">
+      <div class="stat-title">Ventas Hoy</div>
+      <div class="stat-value text-primary">S/ 1,250</div>
+      <div class="stat-desc">↑ 8% vs ayer</div>
+    </div>
+
+    <div class="stat bg-base-200 shadow rounded-box">
+      <div class="stat-title">Ventas Mes</div>
+      <div class="stat-value text-secondary">S/ 32,400</div>
+      <div class="stat-desc">↑ 12% vs mes anterior</div>
+    </div>
+
+    <div class="stat bg-base-200 shadow rounded-box">
+      <div class="stat-title">Productos Vendidos</div>
+      <div class="stat-value text-accent">142</div>
+      <div class="stat-desc">Este mes</div>
+    </div>
+
+    <div class="stat bg-base-200 shadow rounded-box">
+      <div class="stat-title">Clientes Atendidos</div>
+      <div class="stat-value text-success">58</div>
+      <div class="stat-desc">Este mes</div>
+    </div>
+  </div>
+
+  <!-- GRAFICOS -->
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
+    <div class="card bg-base-100 shadow-xl border border-base-300">
+      <div class="card-body">
+        <h2 class="card-title">Ventas Semanales</h2>
+        <div class="h-64 flex items-center justify-center text-base-content/50">
+          [Gráfico Lineal]
+        </div>
+      </div>
+    </div>
+
+    <div class="card bg-base-100 shadow-xl border border-base-300">
+      <div class="card-body">
+        <h2 class="card-title">Productos Más Vendidos</h2>
+        <div class="space-y-3 mt-3">
+          <div class="flex justify-between">
+            <span>iPhone 17 Pro</span>
+            <span class="font-bold">32 uds</span>
+          </div>
+
+          <div class="flex justify-between">
+            <span>Samsung S25</span>
+            <span class="font-bold">28 uds</span>
+          </div>
+
+          <div class="flex justify-between">
+            <span>Redmi Note 15</span>
+            <span class="font-bold">22 uds</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACCESO RAPIDO -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="card bg-primary text-primary-content shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title">Nueva Venta</h2>
+        <p>Ir a productos para vender rápido</p>
+        <div class="card-actions justify-end">
+          <button class="btn btn-neutral">Ir</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card bg-secondary text-secondary-content shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title">Carrito</h2>
+        <p>Revisar ventas pendientes</p>
+        <div class="card-actions justify-end">
+          <button class="btn btn-neutral">Ver</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card bg-accent text-accent-content shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title">Clientes</h2>
+        <p>Buscar o registrar cliente</p>
+        <div class="card-actions justify-end">
+          <button class="btn btn-neutral">Abrir</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

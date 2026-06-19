@@ -1,0 +1,162 @@
+<div class="min-h-screen bg-base-100 p-6">
+  <!-- HEADER -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold">Historial de Ventas</h1>
+
+    <p class="text-base-content/70 mt-1">Consulta todas las ventas realizadas.</p>
+  </div>
+
+  <!-- FILTROS -->
+  <div class="card bg-base-100 shadow-xl border border-base-300 mb-8">
+    <div class="card-body">
+      <h2 class="card-title mb-4">Filtros de Búsqueda</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <input type="text" placeholder="N° Venta" class="input input-bordered" />
+
+        <input type="text" placeholder="Cliente" class="input input-bordered" />
+
+        <input type="date" class="input input-bordered" />
+
+        <button class="btn btn-primary">Buscar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESUMEN -->
+  <div class="stats shadow w-full mb-8">
+    <div class="stat">
+      <div class="stat-title">Ventas Hoy</div>
+
+      <div class="stat-value text-primary">15</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-title">Ventas del Mes</div>
+
+      <div class="stat-value text-secondary">120</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-title">Total Vendido</div>
+
+      <div class="stat-value text-success">S/ 48,500</div>
+    </div>
+  </div>
+
+  <!-- TABLA -->
+  <div class="card bg-base-100 shadow-xl border border-base-300">
+    <div class="card-body">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="card-title">Ventas Registradas</h2>
+
+        <button class="btn btn-outline btn-primary">Exportar Excel</button>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="table table-zebra">
+          <thead>
+            <tr>
+              <th>N° Venta</th>
+              <th>Fecha</th>
+              <th>Cliente</th>
+              <th>Comprobante</th>
+              <th>Total</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>#V0001</td>
+
+              <td>19/06/2026</td>
+
+              <td>Juan Pérez</td>
+
+              <td>Boleta</td>
+
+              <td class="font-semibold">S/ 3,499</td>
+
+              <td>
+                <span class="badge badge-success"> Completada </span>
+              </td>
+
+              <td>
+                <div class="flex gap-2">
+                  <button class="btn btn-info btn-sm">Ver</button>
+
+                  <button class="btn btn-primary btn-sm">PDF</button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>#V0002</td>
+
+              <td>18/06/2026</td>
+
+              <td>María Torres</td>
+
+              <td>Factura</td>
+
+              <td class="font-semibold">S/ 5,999</td>
+
+              <td>
+                <span class="badge badge-success"> Completada </span>
+              </td>
+
+              <td>
+                <div class="flex gap-2">
+                  <button class="btn btn-info btn-sm">Ver</button>
+
+                  <button class="btn btn-primary btn-sm">PDF</button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>#V0003</td>
+
+              <td>17/06/2026</td>
+
+              <td>Carlos Ramos</td>
+
+              <td>Boleta</td>
+
+              <td class="font-semibold">S/ 1,299</td>
+
+              <td>
+                <span class="badge badge-warning"> Pendiente </span>
+              </td>
+
+              <td>
+                <div class="flex gap-2">
+                  <button class="btn btn-info btn-sm">Ver</button>
+
+                  <button class="btn btn-primary btn-sm">PDF</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGINACIÓN -->
+  <div class="flex justify-center mt-8">
+    <div class="join">
+      <button class="join-item btn">«</button>
+
+      <button class="join-item btn btn-active">1</button>
+
+      <button class="join-item btn">2</button>
+
+      <button class="join-item btn">3</button>
+
+      <button class="join-item btn">»</button>
+    </div>
+  </div>
+</div>

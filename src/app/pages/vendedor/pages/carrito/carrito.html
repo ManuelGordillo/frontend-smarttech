@@ -1,0 +1,188 @@
+<div class="min-h-screen bg-base-100 p-6">
+  <!-- HEADER -->
+  <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-8">
+    <div>
+      <h1 class="text-3xl font-bold">Carrito de Compras</h1>
+
+      <p class="text-base-content/70 mt-1">Revisa los productos antes de finalizar la venta.</p>
+    </div>
+
+    <button class="btn btn-outline">← Seguir Comprando</button>
+  </div>
+
+  <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+    <!-- PRODUCTOS -->
+    <div class="xl:col-span-2">
+      <div class="card bg-base-100 shadow-xl border border-base-300">
+        <div class="card-body">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="card-title text-xl">Productos Agregados</h2>
+
+            <div class="badge badge-primary badge-lg">3 Productos</div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Precio</th>
+                  <th>Cantidad</th>
+                  <th>Subtotal</th>
+                  <th></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <!-- Producto -->
+                <tr>
+                  <td>
+                    <div class="flex items-center gap-4">
+                      <img
+                        src="https://via.placeholder.com/80"
+                        class="w-16 h-16 rounded-lg object-cover"
+                      />
+
+                      <div>
+                        <div class="font-bold">Samsung Galaxy S25</div>
+
+                        <div class="text-sm text-gray-500">Samsung</div>
+                      </div>
+                    </div>
+                  </td>
+
+                  <td class="font-semibold">S/ 3,499</td>
+
+                  <td>
+                    <div class="join">
+                      <button class="btn btn-sm join-item">-</button>
+
+                      <button class="btn btn-sm join-item btn-disabled">1</button>
+
+                      <button class="btn btn-sm join-item">+</button>
+                    </div>
+                  </td>
+
+                  <td class="font-bold">S/ 3,499</td>
+
+                  <td>
+                    <button class="btn btn-error btn-sm btn-outline">Eliminar</button>
+                  </td>
+                </tr>
+
+                <!-- Producto -->
+                <tr>
+                  <td>
+                    <div class="flex items-center gap-4">
+                      <img
+                        src="https://via.placeholder.com/80"
+                        class="w-16 h-16 rounded-lg object-cover"
+                      />
+
+                      <div>
+                        <div class="font-bold">AirPods Pro</div>
+
+                        <div class="text-sm text-gray-500">Apple</div>
+                      </div>
+                    </div>
+                  </td>
+
+                  <td class="font-semibold">S/ 999</td>
+
+                  <td>
+                    <div class="join">
+                      <button class="btn btn-sm join-item">-</button>
+
+                      <button class="btn btn-sm join-item btn-disabled">2</button>
+
+                      <button class="btn btn-sm join-item">+</button>
+                    </div>
+                  </td>
+
+                  <td class="font-bold">S/ 1,998</td>
+
+                  <td>
+                    <button class="btn btn-error btn-sm btn-outline">Eliminar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL DERECHO -->
+    <div class="space-y-6">
+      <!-- CLIENTE -->
+      <div class="card bg-base-100 shadow-xl border border-base-300">
+        <div class="card-body">
+          <h2 class="card-title">Cliente Asociado</h2>
+
+          <div class="alert alert-success mt-2">
+            <span> Juan Pérez Gómez </span>
+          </div>
+
+          <button class="btn btn-outline btn-primary mt-3">Seleccionar Cliente</button>
+        </div>
+      </div>
+
+      <!-- COMPROBANTE -->
+      <div class="card bg-base-100 shadow-xl border border-base-300">
+        <div class="card-body">
+          <h2 class="card-title">Tipo de Comprobante</h2>
+
+          <select class="select select-bordered mt-2">
+            <option selected>Boleta</option>
+
+            <option>Factura</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- RESUMEN -->
+      <div class="card bg-base-100 shadow-xl border border-base-300">
+        <div class="card-body">
+          <h2 class="card-title">Resumen de Compra</h2>
+
+          <div class="space-y-3 mt-3">
+            <div class="flex justify-between">
+              <span>Productos</span>
+
+              <span>3</span>
+            </div>
+
+            <div class="flex justify-between">
+              <span>Subtotal</span>
+
+              <span>S/ 5,497.00</span>
+            </div>
+
+            <div class="flex justify-between">
+              <span>IGV (18%)</span>
+
+              <span>S/ 989.46</span>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="flex justify-between text-xl font-bold">
+              <span>Total</span>
+
+              <span class="text-primary"> S/ 6,486.46 </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACCIONES -->
+      <div class="card bg-base-100 shadow-xl border border-base-300">
+        <div class="card-body space-y-3">
+          <button class="btn btn-success btn-lg w-full">Finalizar Venta</button>
+
+          <button class="btn btn-outline btn-error w-full">Vaciar Carrito</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

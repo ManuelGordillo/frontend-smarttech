@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'smarttech-cerrar-sesion',
+  selector: 'app-reportes',
   imports: [],
-  templateUrl: './cerrar-sesion.html',
+  templateUrl: './reportes.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class CerrarSesion {}
+export class Reportes {}
