@@ -7,103 +7,18 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <!-- SIDEBAR SETTINGS -->
-      <div class="bg-white shadow rounded-xl p-4 space-y-2">
-        <button class="btn btn-ghost w-full justify-start">👤 Perfil</button>
-
-        <button class="btn btn-ghost w-full justify-start">🔐 Seguridad</button>
-
-        <button class="btn btn-ghost w-full justify-start">📱 Sesiones activas</button>
-
-        <button class="btn btn-ghost w-full justify-start">📧 Notificaciones</button>
-      </div>
-
+      <!-- SIDEBAR CONFIGURACION -->
+      <smarttech-sdb-configuracion-cliente />
       <!-- CONTENIDO PRINCIPAL -->
       <div class="lg:col-span-2 space-y-6">
         <!-- PERFIL -->
-        <div class="bg-white shadow rounded-xl p-6">
-          <h2 class="text-xl font-bold mb-4">Información del perfil</h2>
-
-          <div class="flex items-center gap-4 mb-6">
-            <div class="avatar">
-              <div class="w-16 rounded-full">
-                <img src="https://via.placeholder.com/100" />
-              </div>
-            </div>
-
-            <div>
-              <p class="font-bold">Juan Pérez</p>
-              <p class="text-sm text-slate-500">Cliente activo</p>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input class="input input-bordered w-full" placeholder="Nombres" />
-            <input class="input input-bordered w-full" placeholder="Apellidos" />
-
-            <input class="input input-bordered w-full" placeholder="Correo electrónico" />
-            <input class="input input-bordered w-full" placeholder="Teléfono" />
-
-            <input
-              class="input input-bordered w-full md:col-span-2"
-              placeholder="Documento de identidad"
-            />
-          </div>
-
-          <button class="btn btn-primary mt-6">Guardar cambios</button>
-        </div>
+        <smarttech-perfil-cliente />
 
         <!-- SEGURIDAD -->
-        <div class="bg-white shadow rounded-xl p-6">
-          <h2 class="text-xl font-bold mb-4">Seguridad</h2>
-
-          <div class="space-y-4">
-            <input
-              class="input input-bordered w-full"
-              type="password"
-              placeholder="Contraseña actual"
-            />
-            <input
-              class="input input-bordered w-full"
-              type="password"
-              placeholder="Nueva contraseña"
-            />
-            <input
-              class="input input-bordered w-full"
-              type="password"
-              placeholder="Confirmar nueva contraseña"
-            />
-          </div>
-
-          <button class="btn btn-warning mt-4">Cambiar contraseña</button>
-        </div>
+        <smarttech-seguridad-cliente />
 
         <!-- SESIONES ACTIVAS -->
-        <div class="bg-white shadow rounded-xl p-6">
-          <h2 class="text-xl font-bold mb-4">Sesiones activas</h2>
-
-          <div class="space-y-3">
-            <!-- SESION 1 -->
-            <div class="flex items-center justify-between border p-3 rounded-lg">
-              <div>
-                <p class="font-semibold">Chrome - Windows</p>
-                <p class="text-xs text-slate-500">Lima, Perú · Activo ahora</p>
-              </div>
-              <button class="btn btn-error btn-sm">Cerrar</button>
-            </div>
-
-            <!-- SESION 2 -->
-            <div class="flex items-center justify-between border p-3 rounded-lg">
-              <div>
-                <p class="font-semibold">Safari - iPhone</p>
-                <p class="text-xs text-slate-500">Hace 2 días</p>
-              </div>
-              <button class="btn btn-outline btn-sm">Cerrar</button>
-            </div>
-          </div>
-
-          <button class="btn btn-outline btn-error w-full mt-4">Cerrar todas las sesiones</button>
-        </div>
+        <smarttech-sesiones-activas-cliente />
       </div>
     </div>
   </div>
