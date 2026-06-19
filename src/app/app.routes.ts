@@ -4,6 +4,7 @@ import { Inicio } from './pages/home/inicio/inicio';
 import { PaginaPrincipal } from './pages/home/pagina-principal/pagina-principal';
 import { Login } from './auth/login/login';
 import { RegistrarCliente } from './auth/registrar-cliente/registrar-cliente';
+import { Celulares } from './pages/productos/celulares/celulares';
 
 export const routes: Routes = [
   {
@@ -24,6 +25,10 @@ export const routes: Routes = [
   {
     path: 'registrar-cliente',
     component: RegistrarCliente,
+  },
+  {
+    path: 'productos',
+    loadChildren: () => import('./pages/productos/productos.routes'),
   },
   {
     path: 'administrador',
