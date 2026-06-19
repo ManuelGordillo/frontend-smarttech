@@ -6,86 +6,9 @@
   </div>
 
   <!-- Resumen -->
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-    <div class="bg-white rounded-xl shadow p-5">
-      <p class="text-slate-500">Ventas Hoy</p>
-      <h2 class="text-3xl font-bold text-green-600">S/ 4,850</h2>
-    </div>
-
-    <div class="bg-white rounded-xl shadow p-5">
-      <p class="text-slate-500">Ventas del Mes</p>
-      <h2 class="text-3xl font-bold text-blue-600">S/ 82,430</h2>
-    </div>
-
-    <div class="bg-white rounded-xl shadow p-5">
-      <p class="text-slate-500">Productos Vendidos</p>
-      <h2 class="text-3xl font-bold text-slate-900">315</h2>
-    </div>
-
-    <div class="bg-white rounded-xl shadow p-5">
-      <p class="text-slate-500">Tickets Generados</p>
-      <h2 class="text-3xl font-bold text-purple-600">98</h2>
-    </div>
-  </div>
-
+  <smarttech-ventas-resumen />
   <!-- Filtros -->
-  <div class="bg-white rounded-xl shadow p-5 mb-6">
-    <h2 class="text-lg font-semibold text-slate-900 mb-4">Filtros de búsqueda</h2>
-
-    <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
-      <select class="select select-bordered w-full text-white">
-        <option class="text-white">Apple</option>
-        <option class="text-white">Todas las marcas</option>
-        <option class="text-white">Samsung</option>
-        <option class="text-white">Xiaomi</option>
-      </select>
-
-      <input type="text" placeholder="Modelo" class="input input-bordered w-full text-white" />
-
-      <input type="date" class="input input-bordered w-full text-white" />
-
-      <input type="date" class="input input-bordered w-full text-white" />
-
-      <button class="btn btn-primary">Buscar</button>
-    </div>
-  </div>
-
+  <smarttech-ventas-filtros />
   <!-- Tabla -->
-  <div class="bg-white rounded-xl shadow overflow-hidden">
-    <table class="table w-full text-slate-900">
-      <thead class="bg-slate-100">
-        <tr>
-          <th>N° Venta</th>
-          <th>Fecha</th>
-          <th>Cliente</th>
-          <th>Marca</th>
-          <th>Modelo</th>
-          <th>Cantidad</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr>
-          <td>V001</td>
-          <td>17/06/2026</td>
-          <td>Carlos Gómez</td>
-          <td>Apple</td>
-          <td>iPhone 15 Pro</td>
-          <td>1</td>
-          <td class="font-semibold text-green-600">S/ 4,500</td>
-        </tr>
-
-        <tr>
-          <td>V002</td>
-          <td>17/06/2026</td>
-          <td>María López</td>
-          <td>Samsung</td>
-          <td>Galaxy S25</td>
-          <td>2</td>
-          <td class="font-semibold text-green-600">S/ 7,600</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <smarttech-ventas-tabla />
 </div>

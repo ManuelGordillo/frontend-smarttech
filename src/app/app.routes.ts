@@ -33,6 +33,10 @@ export const routes: Routes = [
     path: 'cliente',
     loadChildren: () => import('./pages/cliente/cliente.routes'),
   },
+  {
+    path: 'vendedor',
+    loadChildren: () => import('./pages/vendedor/vendedor.routes'),
+  },
 
   {
     path: '**',
