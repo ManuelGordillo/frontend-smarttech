@@ -4,47 +4,16 @@
     <h2 class="text-xl font-bold mb-4">Filtros</h2>
 
     <!-- Búsqueda -->
-    <div class="mb-6">
-      <label class="label">
-        <span class="label-text">Buscar producto</span>
-      </label>
-      <input type="text" placeholder="Ej: iPhone, Samsung..." class="input input-bordered w-full" />
-    </div>
+    <smarttech-busqueda />
 
     <!-- Categoría -->
-    <div class="mb-6">
-      <label class="label">
-        <span class="label-text">Categoría</span>
-      </label>
-      <select class="select select-bordered w-full">
-        <option>Todos</option>
-        <option>Celulares</option>
-        <option>Tablets</option>
-        <option>Accesorios</option>
-      </select>
-    </div>
+    <smarttech-categoria />
 
     <!-- Marca -->
-    <div class="mb-6">
-      <label class="label">
-        <span class="label-text">Marca</span>
-      </label>
-      <select class="select select-bordered w-full">
-        <option>Todas</option>
-        <option>Apple</option>
-        <option>Samsung</option>
-        <option>Xiaomi</option>
-      </select>
-    </div>
+    <smarttech-marca />
 
     <!-- Precio -->
-    <div class="mb-6">
-      <label class="label">
-        <span class="label-text">Precio máximo</span>
-      </label>
-      <input type="range" min="0" max="5000" class="range range-primary" />
-      <div class="text-sm mt-2 text-slate-500">S/ 0 - S/ 5000</div>
-    </div>
+    <smarttech-precio />
 
     <button class="btn btn-primary w-full">Aplicar filtros</button>
   </aside>
