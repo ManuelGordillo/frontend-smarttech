@@ -8,6 +8,7 @@ import Inventario from './pages/inventario/inventario';
 import Ventas from './pages/ventas/ventas';
 import Reportes from './pages/reportes/reportes';
 import Configuracion from './pages/configuracion/configuracion';
+import { CrearVendedor } from './pages/vendedores/crear-vendedor/crear-vendedor';
 
 export const administradorRoutes: Routes = [
   {
@@ -22,6 +23,10 @@ export const administradorRoutes: Routes = [
       {
         path: 'vendedores',
         component: Vendedores,
+      },
+      {
+        path: 'crear-vendedor',
+        component: CrearVendedor,
       },
       {
         path: 'clientes',

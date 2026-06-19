@@ -38,7 +38,7 @@ export class Login {
 
         switch (response.rol) {
           case 'ADMINISTRADOR':
-            this.router.navigate(['/dashboard-administrador']);
+            this.router.navigate(['administrador/dashboard-administrador']);
             break;
 
           case 'VENDEDOR':
