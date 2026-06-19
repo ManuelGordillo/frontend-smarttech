@@ -6,4 +6,4 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './historial-de-compras.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HistorialDeCompras {}
+export default class HistorialDeCompras {}

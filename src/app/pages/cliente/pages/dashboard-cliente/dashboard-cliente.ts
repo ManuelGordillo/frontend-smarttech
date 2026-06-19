@@ -8,4 +8,4 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './dashboard-cliente.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardCliente {}
+export default class DashboardCliente {}

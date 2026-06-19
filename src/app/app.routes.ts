@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { Inicio } from './pages/home/inicio/inicio';
-import { Navbar } from './shared/components/navbar/navbar';
+
 import { PaginaPrincipal } from './pages/home/pagina-principal/pagina-principal';
 import { Login } from './auth/login/login';
 import { RegistrarCliente } from './auth/registrar-cliente/registrar-cliente';
@@ -28,6 +28,10 @@ export const routes: Routes = [
   {
     path: 'administrador',
     loadChildren: () => import('./pages/administrador/administrador.routes'),
+  },
+  {
+    path: 'cliente',
+    loadChildren: () => import('./pages/cliente/cliente.routes'),
   },
 
   {

@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'app-configuracion',
+  selector: 'smarttech-configuracion-cliente',
   imports: [],
   templateUrl: './configuracion.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Configuracion {}
+export default class ConfiguracionCliente {}
