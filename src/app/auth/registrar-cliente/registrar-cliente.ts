@@ -7,6 +7,7 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-registrar-cliente',
@@ -15,6 +16,11 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegistrarCliente {
+  private location = inject(Location);
+
+  volverAtras() {
+    this.location.back();
+  }
   private fb = inject(FormBuilder);
 
   registerForm: FormGroup = this.fb.group(

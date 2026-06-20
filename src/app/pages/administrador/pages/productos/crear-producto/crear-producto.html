@@ -1,1 +1,157 @@
-<p>crear-producto works!</p>,
+<section class="bg-slate-900 min-h-screen flex items-center justify-center py-10">
+  <div class="w-full max-w-3xl bg-slate-800 rounded-2xl shadow-2xl p-8 border border-slate-700">
+    <button
+      (click)="volverAtras()"
+      type="button"
+      class="absolute top-4 right-4 text-slate-400 hover:text-white text-2xl"
+    >
+      ✕
+    </button>
+    <h1 class="text-3xl font-bold text-white text-center mb-8">Crear Producto</h1>
+
+    <form [formGroup]="productoForm" (ngSubmit)="guardarProducto()" class="space-y-5">
+      <!-- Modelo y Marca -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div>
+          <label class="block text-sm font-medium text-slate-300 mb-2"> Modelo </label>
+
+          <input
+            type="text"
+            formControlName="modelo"
+            placeholder="Ej: Galaxy S25"
+            class="w-full px-4 py-3 bg-slate-700 text-white border border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500"
+          />
+
+          @if (
+            productoForm.get('modelo')?.touched && productoForm.get('modelo')?.errors?.['required']
+          ) {
+            <p class="text-red-400 text-sm mt-1">El modelo es obligatorio</p>
+          }
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-slate-300 mb-2"> Marca </label>
+
+          <input
+            type="text"
+            formControlName="marca"
+            placeholder="Ej: Samsung"
+            class="w-full px-4 py-3 bg-slate-700 text-white border border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500"
+          />
+
+          @if (
+            productoForm.get('marca')?.touched && productoForm.get('marca')?.errors?.['required']
+          ) {
+            <p class="text-red-400 text-sm mt-1">La marca es obligatoria</p>
+          }
+        </div>
+      </div>
+
+      <!-- Descripción -->
+
+      <div>
+        <label class="block text-sm de font-medium text-slate-300 mb-2"> Descripción </label>
+
+        <textarea
+          rows="4"
+          formControlName="descripcion"
+          placeholder="Descripción del producto"
+          class="w-full px-4 py-3 bg-slate-700 text-white border border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500"
+        >
+        </textarea>
+
+        @if (
+          productoForm.get('descripcion')?.touched &&
+          productoForm.get('descripcion')?.errors?.['required']
+        ) {
+          <p class="text-red-400 text-sm mt-1">La descripción es obligatoria</p>
+        }
+      </div>
+
+      <!-- Precio y Stock -->
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div>
+          <label class="block text-sm font-medium text-slate-300 mb-2"> Precio </label>
+
+          <input
+            type="number"
+            formControlName="precio"
+            placeholder="Ej: 1500"
+            class="w-full px-4 py-3 bg-slate-700 text-white border border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-slate-300 mb-2"> Stock </label>
+
+          <input
+            type="number"
+            formControlName="stock"
+            placeholder="Cantidad disponible"
+            class="w-full px-4 py-3 bg-slate-700 text-white border border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500"
+          />
+        </div>
+      </div>
+
+      <!-- Categoria y Estado -->
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div>
+          <label class="block text-sm font-medium text-slate-300 mb-2"> Categoría </label>
+
+          <select
+            formControlName="categoria"
+            class="w-full px-4 py-3 bg-slate-700 text-white border border-slate-600 rounded-lg"
+          >
+            <option value="">Seleccione categoría</option>
+
+            <option value="CELULAR">Celular</option>
+
+            <option value="TABLET">Tablet</option>
+
+            <option value="ACCESORIO">Accesorio</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-slate-300 mb-2"> Estado </label>
+
+          <select
+            formControlName="estado"
+            class="w-full px-4 py-3 bg-slate-700 text-white border border-slate-600 rounded-lg"
+          >
+            <option value="">Seleccione estado</option>
+
+            <option value="Disponible">Disponible</option>
+
+            <option value="Agotado">Agotado</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Color -->
+
+      <div>
+        <label class="block text-sm font-medium text-slate-300 mb-2"> Color </label>
+
+        <input
+          type="text"
+          formControlName="color"
+          placeholder="Ej: Negro"
+          class="w-full px-4 py-3 bg-slate-700 text-white border border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500"
+        />
+      </div>
+
+      <!-- Botón -->
+
+      <button
+        type="submit"
+        [disabled]="productoForm.invalid"
+        class="w-full bg-cyan-600 hover:bg-cyan-700 disabled:bg-slate-600 text-white py-3 rounded-lg font-semibold transition"
+      >
+        Guardar Producto
+      </button>
+    </form>
+  </div>
+</section>

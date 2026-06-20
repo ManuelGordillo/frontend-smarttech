@@ -1,67 +1,99 @@
-<div class="p-6">
+<div class="p-6 bg-slate-900 min-h-screen">
+  <!-- Header -->
   <div class="flex justify-between items-center mb-6">
     <div>
-      <h1 class="text-3xl font-bold text-slate-900">Productos</h1>
+      <h1 class="text-3xl font-bold text-white">Productos</h1>
 
-      <p class="text-slate-500">Gestión de productos</p>
+      <p class="text-slate-400">Gestión de productos</p>
     </div>
 
-    <button routerLink="./crear-producto/crear-producto.html" class="btn btn-primary">
+    <button
+      routerLink="./crear-producto"
+      class="bg-cyan-600 hover:bg-cyan-700 text-white px-5 py-3 rounded-lg font-semibold transition"
+    >
       + Nuevo Producto
     </button>
   </div>
 
-  <div class="bg-white rounded-xl shadow overflow-hidden text-slate-900">
-    <table class="table w-full text-slate-900">
-      <thead class="bg-slate-100 text-slate-900">
-        <tr>
-          <th class="font-semibold">ID</th>
-          <th class="font-semibold">Fecha Ingreso</th>
-          <th class="font-semibold">Imagen</th>
-          <th class="font-semibold">Modelo</th>
-          <th class="font-semibold">Marca</th>
-          <th class="font-semibold">Descripcion</th>
-          <th class="font-semibold">Color</th>
-          <th class="font-semibold">Categoria</th>
-          <th class="font-semibold">Serie</th>
-          <th class="font-semibold">Precio</th>
-          <th class="font-semibold">Stock</th>
-        </tr>
-      </thead>
+  <!-- Tabla -->
 
-      <tbody>
-        <tr class="hover:bg-slate-50">
-          <td>1</td>
-          <td>Fecha</td>
-          <td>📱</td>
-          <td>iPhone 15</td>
-          <td>Apple</td>
-          <td>128GB</td>
-          <td>Negro</td>
-          <td>Celular</td>
-          <td>123456789123456</td>
-          <td>S/ 4500</td>
-          <td>
-            <span class="badge badge-success"> 25 </span>
-          </td>
-        </tr>
+  <div class="bg-slate-800 rounded-xl shadow-xl overflow-hidden border border-slate-700">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-slate-300">
+        <thead class="bg-slate-700 text-slate-100">
+          <tr>
+            <th class="px-4 py-3">ID</th>
 
-        <tr class="hover:bg-slate-50">
-          <td>2</td>
-          <td>Fecha</td>
-          <td>📱</td>
-          <td>Samsung Galaxy S25</td>
-          <td>Samsung</td>
-          <td>Samsung</td>
-          <td>Samsung</td>
-          <td>Samsung</td>
-          <td>Samsung</td>
-          <td>S/ 3800</td>
-          <td>
-            <span class="badge badge-warning"> 8 </span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            <th class="px-4 py-3">Fecha Ingreso</th>
+
+            <th class="px-4 py-3">Imagen</th>
+
+            <th class="px-4 py-3">Modelo</th>
+
+            <th class="px-4 py-3">Marca</th>
+
+            <th class="px-4 py-3">Descripción</th>
+
+            <th class="px-4 py-3">Color</th>
+
+            <th class="px-4 py-3">Categoría</th>
+
+            <th class="px-4 py-3">Precio</th>
+
+            <th class="px-4 py-3">Stock</th>
+
+            <th class="px-4 py-3">Estado</th>
+
+            <th class="px-4 py-3">Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <!-- Aquí irá tu @for de Angular -->
+
+          <tr class="border-t border-slate-700 hover:bg-slate-700/50">
+            <td class="px-4 py-3">1</td>
+
+            <td class="px-4 py-3">20/06/2026</td>
+
+            <td class="px-4 py-3 text-2xl">📱</td>
+
+            <td class="px-4 py-3">iPhone 15</td>
+
+            <td class="px-4 py-3">Apple</td>
+
+            <td class="px-4 py-3">128GB</td>
+
+            <td class="px-4 py-3">Negro</td>
+
+            <td class="px-4 py-3">CELULAR</td>
+
+            <td class="px-4 py-3">S/ 4500</td>
+
+            <td class="px-4 py-3">
+              <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm"> 25 </span>
+            </td>
+
+            <td class="px-4 py-3">
+              <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm">
+                Disponible
+              </span>
+            </td>
+
+            <td class="px-4 py-3">
+              <div class="flex gap-2">
+                <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">
+                  Editar
+                </button>
+
+                <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">
+                  Eliminar
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
