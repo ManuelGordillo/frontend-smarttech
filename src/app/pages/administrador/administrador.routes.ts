@@ -10,11 +10,15 @@ import Reportes from './pages/reportes/reportes';
 import Configuracion from './pages/configuracion/configuracion';
 import { CrearVendedor } from './pages/vendedores/crear-vendedor/crear-vendedor';
 import { CrearProducto } from './pages/productos/crear-producto/crear-producto';
+import { Login } from '../../auth/login/login';
+import { PaginaPrincipal } from '../home/pagina-principal/pagina-principal';
+import { authGuard } from '../../guards/auth.guard';
 
 export const administradorRoutes: Routes = [
   {
     path: 'dashboard-administrador',
     component: DashboardAdministrador,
+    canActivate: [() => authGuard('ADMINISTRADOR')],
 
     children: [
       {
@@ -56,6 +60,10 @@ export const administradorRoutes: Routes = [
       {
         path: 'configuracion',
         component: Configuracion,
+      },
+      {
+        path: 'cerrar-sesion',
+        redirectTo: 'pagina-principal',
       },
       {
         path: '**',

@@ -1,4 +1,32 @@
 <div class="p-6">
+  <!-- Mensaje de éxito -->
+  @if (mensajeExito) {
+    <div role="alert" class="alert alert-success mb-4 shadow-lg">
+      <span>{{ mensajeExito }}</span>
+      <button (click)="mensajeExito = ''" class="btn btn-sm btn-ghost">✕</button>
+    </div>
+  }
+
+  <!-- Mensaje de error -->
+  @if (error) {
+    <div role="alert" class="alert alert-error mb-4 shadow-lg">
+      <span>{{ error }}</span>
+      <div>
+        @if (error.includes('sesión')) {
+          <button routerLink="/login" class="btn btn-sm btn-error text-white ml-2">
+            Ir al Login
+          </button>
+        } @else {
+          <button (click)="cargarVendedores()" class="btn btn-sm btn-error text-white ml-2">
+            Reintentar
+          </button>
+        }
+        <button (click)="error = ''" class="btn btn-sm btn-ghost ml-2">✕</button>
+      </div>
+    </div>
+  }
+
+  <!-- Header -->
   <div class="flex justify-between items-center mb-6">
     <div>
       <h1 class="text-3xl font-bold text-slate-900">Vendedores</h1>
@@ -13,35 +41,175 @@
     </button>
   </div>
 
-  <div class="bg-white rounded-xl shadow overflow-hidden text-slate-900">
-    <table class="table w-full text-slate-900">
-      <thead class="bg-slate-100 text-slate-900">
-        <tr>
-          <th class="text-slate-900 font-semibold">ID</th>
-          <th class="text-slate-900 font-semibold">Nombre</th>
-          <th class="text-slate-900 font-semibold">Correo</th>
-          <th class="text-slate-900 font-semibold">Usuario</th>
-          <th class="text-slate-900 font-semibold">Estado</th>
-          <th class="text-slate-900 font-semibold">Acciones</th>
-        </tr>
-      </thead>
+  <!-- Loading -->
+  @if (loading) {
+    <div class="flex flex-col justify-center items-center py-12">
+      <span class="loading loading-spinner loading-lg text-primary"></span>
+      <p class="mt-4 text-slate-500">Cargando vendedores...</p>
+    </div>
+  }
 
-      <tbody>
-        <tr class="hover:bg-slate-50">
-          <td>1</td>
-          <td>Juan Pérez</td>
-          <td>juan@gmail.com</td>
-          <td>jperez</td>
-          <td>
-            <span class="badge badge-success"> Activo </span>
-          </td>
-          <td class="space-x-2">
-            <button class="btn btn-sm btn-info">Editar</button>
+  <!-- Tabla -->
+  @if (!loading && !error) {
+    <div class="bg-white rounded-xl shadow overflow-hidden text-slate-900">
+      <!-- Sin vendedores -->
+      @if (vendedores.length === 0) {
+        <div class="p-8 text-center">
+          <p class="text-lg text-slate-500">No hay vendedores registrados</p>
+          <p class="text-sm text-slate-400">Haz clic en "Nuevo Vendedor" para agregar uno</p>
+        </div>
+      }
 
-            <button class="btn btn-sm btn-error">Desactivar</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+      <!-- Tabla con datos -->
+      @if (vendedores.length > 0) {
+        <div class="overflow-x-auto">
+          <table class="table w-full text-slate-900">
+            <thead class="bg-slate-100 text-slate-900">
+              <tr>
+                <th class="text-slate-900 font-semibold">ID</th>
+                <th class="text-slate-900 font-semibold">Usuario</th>
+                <th class="text-slate-900 font-semibold">Rol</th>
+                <th class="text-slate-900 font-semibold">Estado</th>
+                <th class="text-slate-900 font-semibold text-center">Acciones</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              @for (vendedor of vendedores; track vendedor.id) {
+                <tr class="hover:bg-slate-50">
+                  <td>#{{ vendedor.id }}</td>
+                  <td>
+                    <div class="flex items-center gap-2">
+                      <div class="avatar placeholder">
+                        <div class="w-8 rounded-full bg-primary text-primary-content">
+                          <span class="text-xs">{{
+                            vendedor.nombreUsuario.charAt(0).toUpperCase()
+                          }}</span>
+                        </div>
+                      </div>
+                      {{ vendedor.nombreUsuario }}
+                    </div>
+                  </td>
+                  <td>
+                    <span class="badge badge-secondary badge-sm">{{ vendedor.rol }}</span>
+                  </td>
+                  <td>
+                    <span
+                      [class]="
+                        vendedor.estado
+                          ? 'badge badge-success badge-sm'
+                          : 'badge badge-error badge-sm'
+                      "
+                    >
+                      {{ vendedor.estado ? 'Activo' : 'Inactivo' }}
+                    </span>
+                  </td>
+                  <td>
+                    <div class="flex justify-center items-center gap-2">
+                      <!-- 🔥 Editar - Abre el modal -->
+                      <button (click)="abrirModal(vendedor)" class="btn btn-sm btn-info text-white">
+                        Editar
+                      </button>
+
+                      <!-- Activar/Desactivar -->
+                      <button
+                        (click)="cambiarEstado(vendedor)"
+                        [class]="
+                          vendedor.estado ? 'btn btn-sm btn-warning' : 'btn btn-sm btn-success'
+                        "
+                        class="text-white"
+                      >
+                        {{ vendedor.estado ? 'Desactivar' : 'Activar' }}
+                      </button>
+
+                      <!-- Eliminar -->
+                      <button
+                        (click)="eliminarVendedor(vendedor)"
+                        class="btn btn-sm btn-error text-white"
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </div>
+  }
 </div>
+
+<!-- ========================================== -->
+<!-- 🔥 MODAL DE EDICIÓN (FUERA del div principal) -->
+<!-- ========================================== -->
+<dialog id="modal-editar" class="modal" [class.modal-open]="modalAbierto">
+  <div class="modal-box bg-white">
+    <h3 class="font-bold text-lg text-slate-900">✏️ Editar Vendedor</h3>
+
+    @if (vendedorEditando) {
+      <div class="py-4">
+        <!-- ID -->
+        <div class="mb-4">
+          <label class="label-text font-medium text-slate-700">ID</label>
+          <input
+            type="text"
+            class="input input-bordered w-full bg-white text-slate-900"
+            [value]="vendedorEditando.id"
+            disabled
+          />
+        </div>
+
+        <!-- Nombre de usuario -->
+        <div class="mb-4">
+          <label class="label-text font-medium text-slate-700">Nombre de Usuario</label>
+          <input
+            type="text"
+            class="input input-bordered w-full bg-white text-slate-900"
+            [(ngModel)]="vendedorEditando.nombreUsuario"
+            placeholder="Nombre de usuario"
+          />
+        </div>
+
+        <!-- Contraseña -->
+        <div class="mb-4">
+          <label class="label-text font-medium text-slate-700">Contraseña</label>
+          <input
+            type="text"
+            class="input input-bordered w-full bg-white text-slate-900"
+            [(ngModel)]="vendedorEditando.contrasena"
+            placeholder="Contraseña"
+          />
+        </div>
+
+        <!-- Estado -->
+        <div class="mb-4">
+          <label class="label-text font-medium text-slate-700">Estado</label>
+          <select
+            class="select select-bordered w-full bg-white text-slate-900"
+            [(ngModel)]="vendedorEditando.estado"
+          >
+            <option [value]="true" class="text-slate-900">Activo</option>
+            <option [value]="false" class="text-slate-900">Inactivo</option>
+          </select>
+        </div>
+      </div>
+    }
+
+    <div class="modal-action">
+      <button
+        (click)="cerrarModal()"
+        class="btn bg-slate-200 text-slate-700 hover:bg-slate-300 border-none"
+      >
+        Cancelar
+      </button>
+      <button (click)="guardarCambios()" class="btn btn-primary text-white">Guardar</button>
+    </div>
+  </div>
+
+  <!-- Cerrar al hacer clic fuera -->
+  <form method="dialog" class="modal-backdrop">
+    <button (click)="cerrarModal()">cerrar</button>
+  </form>
+</dialog>

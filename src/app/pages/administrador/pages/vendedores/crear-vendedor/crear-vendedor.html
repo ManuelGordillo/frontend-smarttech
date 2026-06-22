@@ -1,15 +1,14 @@
 <div class="p-8">
   <div class="max-w-2xl mx-auto">
-    <div class="bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden">
-      <!-- Header -->
+    <div class="bg-slate-100 rounded-3xl shadow-xl border border-slate-200 overflow-hidden">
+      <!-- Header - AZUL (se mantiene) -->
       <div class="bg-linear-to-r from-blue-600 to-indigo-600 p-6">
         <h1 class="text-3xl font-bold text-white">Registrar Vendedor</h1>
-
         <p class="text-blue-100 mt-2">Crear una nueva cuenta para el equipo de ventas</p>
       </div>
 
-      <!-- Formulario -->
-      <div class="p-8">
+      <!-- Formulario - FONDO GRIS -->
+      <div class="p-8 bg-slate-100">
         <form [formGroup]="vendedorForm" (ngSubmit)="guardar()">
           <!-- Usuario -->
           <div class="mb-6">
@@ -66,8 +65,13 @@
 
           <!-- Botones -->
           <div class="flex gap-4">
-            <button type="button" class="btn btn-outline flex-1">Cancelar</button>
-
+            <button
+              type="button"
+              class="btn btn-outline flex-1"
+              routerLink="/administrador/dashboard-administrador/vendedores"
+            >
+              Cancelar
+            </button>
             <button type="submit" class="btn btn-primary flex-1">Crear Vendedor</button>
           </div>
         </form>

@@ -1,97 +1,180 @@
-<div class="p-6 bg-slate-900 min-h-screen">
+<div class="p-6 bg-slate-100 min-h-screen">
   <!-- Header -->
   <div class="flex justify-between items-center mb-6">
     <div>
-      <h1 class="text-3xl font-bold text-white">Productos</h1>
-
-      <p class="text-slate-400">Gestión de productos</p>
+      <h1 class="text-3xl font-bold text-slate-900">Productos</h1>
+      <p class="text-slate-500">Gestión de productos</p>
     </div>
 
     <button
-      routerLink="./crear-producto"
-      class="bg-cyan-600 hover:bg-cyan-700 text-white px-5 py-3 rounded-lg font-semibold transition"
+      routerLink="/administrador/dashboard-administrador/crear-producto"
+      class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-lg font-semibold transition shadow-md hover:shadow-lg"
     >
       + Nuevo Producto
     </button>
   </div>
 
+  <!-- Filtros -->
+  <div class="bg-white rounded-xl shadow-md p-4 mb-6 border border-slate-200">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <!-- Buscar por modelo -->
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Buscar</label>
+        <input
+          type="text"
+          [(ngModel)]="filtroBusqueda"
+          placeholder="Buscar producto..."
+          class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-slate-900"
+        />
+      </div>
+
+      <!-- Filtrar por marca -->
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Marca</label>
+        <select
+          [(ngModel)]="filtroMarca"
+          class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-slate-900"
+        >
+          <option value="">Todas las marcas</option>
+          @for (marca of marcas; track marca) {
+            <option [value]="marca">{{ marca }}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Filtrar por categoría -->
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Categoría</label>
+        <select
+          [(ngModel)]="filtroCategoria"
+          class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-slate-900"
+        >
+          <option value="">Todas las categorías</option>
+          @for (categoria of categorias; track categoria) {
+            <option [value]="categoria">{{ categoria }}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Filtrar por color -->
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Color</label>
+        <select
+          [(ngModel)]="filtroColor"
+          class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-slate-900"
+        >
+          <option value="">Todos los colores</option>
+          @for (color of colores; track color) {
+            <option [value]="color">{{ color }}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    <!-- Botones de acción de filtros -->
+    <div class="flex justify-end gap-2 mt-4">
+      <button
+        (click)="limpiarFiltros()"
+        class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg transition font-medium"
+      >
+        Limpiar
+      </button>
+    </div>
+  </div>
+
   <!-- Tabla -->
-
-  <div class="bg-slate-800 rounded-xl shadow-xl overflow-hidden border border-slate-700">
+  <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200">
     <div class="overflow-x-auto">
-      <table class="w-full text-left text-slate-300">
-        <thead class="bg-slate-700 text-slate-100">
+      <table class="w-full text-left text-slate-700">
+        <thead class="bg-slate-100 text-slate-600">
           <tr>
-            <th class="px-4 py-3">ID</th>
-
-            <th class="px-4 py-3">Fecha Ingreso</th>
-
-            <th class="px-4 py-3">Imagen</th>
-
-            <th class="px-4 py-3">Modelo</th>
-
-            <th class="px-4 py-3">Marca</th>
-
-            <th class="px-4 py-3">Descripción</th>
-
-            <th class="px-4 py-3">Color</th>
-
-            <th class="px-4 py-3">Categoría</th>
-
-            <th class="px-4 py-3">Precio</th>
-
-            <th class="px-4 py-3">Stock</th>
-
-            <th class="px-4 py-3">Estado</th>
-
-            <th class="px-4 py-3">Acciones</th>
+            <th class="px-4 py-3 text-sm font-semibold uppercase">ID</th>
+            <th class="px-4 py-3 text-sm font-semibold uppercase">Fecha Ingreso</th>
+            <th class="px-4 py-3 text-sm font-semibold uppercase">Imagen</th>
+            <th class="px-4 py-3 text-sm font-semibold uppercase">Modelo</th>
+            <th class="px-4 py-3 text-sm font-semibold uppercase">Marca</th>
+            <th class="px-4 py-3 text-sm font-semibold uppercase">Descripción</th>
+            <th class="px-4 py-3 text-sm font-semibold uppercase">Color</th>
+            <th class="px-4 py-3 text-sm font-semibold uppercase">Categoría</th>
+            <th class="px-4 py-3 text-sm font-semibold uppercase">Precio</th>
+            <th class="px-4 py-3 text-sm font-semibold uppercase">Stock</th>
+            <th class="px-4 py-3 text-sm font-semibold uppercase">Estado</th>
+            <th class="px-4 py-3 text-sm font-semibold uppercase text-center">Acciones</th>
           </tr>
         </thead>
 
         <tbody>
-          <!-- Aquí irá tu @for de Angular -->
-
-          <tr class="border-t border-slate-700 hover:bg-slate-700/50">
-            <td class="px-4 py-3">1</td>
-
-            <td class="px-4 py-3">20/06/2026</td>
-
-            <td class="px-4 py-3 text-2xl">📱</td>
-
-            <td class="px-4 py-3">iPhone 15</td>
-
-            <td class="px-4 py-3">Apple</td>
-
-            <td class="px-4 py-3">128GB</td>
-
-            <td class="px-4 py-3">Negro</td>
-
-            <td class="px-4 py-3">CELULAR</td>
-
-            <td class="px-4 py-3">S/ 4500</td>
-
-            <td class="px-4 py-3">
-              <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm"> 25 </span>
-            </td>
-
-            <td class="px-4 py-3">
-              <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm">
-                Disponible
-              </span>
-            </td>
-
-            <td class="px-4 py-3">
-              <div class="flex gap-2">
-                <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">
-                  Editar
-                </button>
-
-                <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">
-                  Eliminar
-                </button>
-              </div>
-            </td>
-          </tr>
+          @for (producto of productosFiltrados; track producto.id) {
+            <tr class="border-t border-slate-100 hover:bg-slate-50 transition">
+              <td class="px-4 py-3 text-sm font-medium">#{{ producto.id }}</td>
+              <td class="px-4 py-3 text-sm">{{ producto.fechaIngreso }}</td>
+              <td class="px-4 py-3 text-2xl">{{ producto.imagen }}</td>
+              <td class="px-4 py-3 text-sm font-medium text-slate-900">{{ producto.modelo }}</td>
+              <td class="px-4 py-3 text-sm">
+                <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
+                  {{ producto.marca }}
+                </span>
+              </td>
+              <td class="px-4 py-3 text-sm text-slate-500">{{ producto.descripcion }}</td>
+              <td class="px-4 py-3 text-sm">
+                <span class="inline-flex items-center gap-1">
+                  <span class="w-3 h-3 rounded-full" [style.background]="producto.color"></span>
+                  {{ producto.color }}
+                </span>
+              </td>
+              <td class="px-4 py-3 text-sm">
+                <span
+                  class="bg-purple-100 text-purple-700 px-2 py-1 rounded-full text-xs font-medium"
+                >
+                  {{ producto.categoria }}
+                </span>
+              </td>
+              <td class="px-4 py-3 text-sm font-semibold text-slate-900">
+                S/ {{ producto.precio }}
+              </td>
+              <td class="px-4 py-3 text-sm">
+                <span
+                  class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium"
+                >
+                  {{ producto.stock }}
+                </span>
+              </td>
+              <td class="px-4 py-3 text-sm">
+                <span
+                  [class]="
+                    producto.estado === true
+                      ? 'bg-green-100 text-green-700'
+                      : 'bg-red-100 text-red-700'
+                  "
+                  class="px-3 py-1 rounded-full text-xs font-medium"
+                >
+                  {{ producto.estado }}
+                </span>
+              </td>
+              <td class="px-4 py-3">
+                <div class="flex justify-center gap-2">
+                  <button
+                    class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1.5 rounded-lg text-sm transition shadow-sm hover:shadow-md"
+                  >
+                    Editar
+                  </button>
+                  <button
+                    (click)="eliminarProducto(producto.id)"
+                    class="bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-lg text-sm transition shadow-sm hover:shadow-md"
+                  >
+                    Eliminar
+                  </button>
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="12" class="px-4 py-8 text-center text-slate-500">
+                <p class="text-lg">No hay productos registrados</p>
+                <p class="text-sm">Haz clic en "Nuevo Producto" para agregar uno</p>
+              </td>
+            </tr>
+          }
         </tbody>
       </table>
     </div>
