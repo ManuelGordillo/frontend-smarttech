@@ -1,5 +1,5 @@
 export interface ProductoInterface {
-  id: number;
+  id?: number;
   fechaIngreso?: string;
   imagen?: string;
   modelo: string;

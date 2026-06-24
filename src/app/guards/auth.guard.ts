@@ -18,9 +18,9 @@ export const authGuard = (rolPermitido?: string) => {
     if (rol === 'ADMINISTRADOR') {
       router.navigate(['/administrador/dashboard-administrador']);
     } else if (rol === 'VENDEDOR') {
-      router.navigate(['/vendedor/dashboard']);
+      router.navigate(['/vendedor/vendedor-dashboard']);
     } else if (rol === 'CLIENTE') {
-      router.navigate(['/cliente/dashboard']);
+      router.navigate(['/cliente/dashboard-cliente']);
     } else {
       router.navigate(['/pagina-principal']);
     }

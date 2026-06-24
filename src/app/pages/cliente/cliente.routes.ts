@@ -6,11 +6,13 @@ import DashboardCliente from './pages/dashboard-cliente/dashboard-cliente';
 import DashboardResumenCliente from './pages/dashboard-resumen-cliente/dashboard-resumen-cliente';
 import HistorialDeCompras from './pages/historial-de-compras/historial-de-compras';
 import Pago from './pages/pago/pago';
+import { authGuard } from '../../guards/auth.guard';
 
 export const clienteRoutes: Routes = [
   {
     path: 'dashboard-cliente',
     component: DashboardCliente,
+    canActivate: [() => authGuard('CLIENTE')],
 
     children: [
       {
