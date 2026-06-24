@@ -74,10 +74,10 @@ export class Login {
             this.router.navigate(['/administrador/dashboard-administrador']);
             break;
           case 'VENDEDOR':
-            this.router.navigate(['/vendedor/dashboard']);
+            this.router.navigate(['/vendedor/vendedor-dashboard']);
             break;
           case 'CLIENTE':
-            this.router.navigate(['/cliente/dashboard']);
+            this.router.navigate(['/cliente/dashboard-cliente']);
             break;
           default:
             console.warn('⚠️ Rol no reconocido:', rol);

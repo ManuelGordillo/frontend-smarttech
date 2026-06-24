@@ -3,7 +3,7 @@ import { SideMenuHeaderVendedor } from './side-menu-header-vendedor/side-menu-he
 import { SideMenuOpcionesVendedor } from './side-menu-opciones-vendedor/side-menu-opciones-vendedor';
 
 @Component({
-  selector: 'app-side-menu-vendedor',
+  selector: 'smarttech-side-menu-vendedor',
   imports: [SideMenuHeaderVendedor, SideMenuOpcionesVendedor],
   templateUrl: './side-menu-vendedor.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

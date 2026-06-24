@@ -19,7 +19,7 @@ export class SideMenuOpcionesVendedor {
     {
       titulo: 'Dashboard',
       subtitulo: 'Resumen',
-      ruta: '/cliente/dashboard-cliente/dashboard-resumen-cliente',
+      ruta: '/vendedor/vendedor-dashboard/dashboard-resumen-vendedor',
       icono: 'fa-solid fa-chart-line',
     },
     {

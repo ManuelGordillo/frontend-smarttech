@@ -8,6 +8,7 @@ import { HistorialVentas } from './pages/historial-ventas/historial-ventas';
 import { Reportes } from './pages/reportes/reportes';
 import { ConfiguracionVendedor } from './pages/configuracion-vendedor/configuracion-vendedor';
 import { authGuard } from '../../guards/auth.guard';
+import { NuevaVenta } from './pages/dashboard-resumen-vendedor/nueva-venta/nueva-venta';
 
 export const vendedorRoutes: Routes = [
   {
@@ -35,6 +36,10 @@ export const vendedorRoutes: Routes = [
       {
         path: 'historial-ventas',
         component: HistorialVentas,
+      },
+      {
+        path: 'nueva-venta',
+        component: NuevaVenta,
       },
       {
         path: 'reportes',
