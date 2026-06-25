@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 
 interface MenuOpcionVendedor {
   titulo: string;
@@ -15,6 +15,7 @@ interface MenuOpcionVendedor {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SideMenuOpcionesVendedor {
+  private router = inject(Router);
   menuOpcionesVendedor: MenuOpcionVendedor[] = [
     {
       titulo: 'Dashboard',
@@ -59,4 +60,9 @@ export class SideMenuOpcionesVendedor {
       icono: 'fa-solid fa-screwdriver-wrench',
     },
   ];
+  cerrarSesion(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('rol');
+    this.router.navigate(['/pagina-principal']);
+  }
 }

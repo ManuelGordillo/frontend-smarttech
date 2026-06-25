@@ -2,19 +2,35 @@
   <!-- bg-blue-800 -->
 
   @for (item of menuOpcionesCliente; track item.ruta) {
-    <a
-      [routerLink]="item.ruta"
-      routerLinkActive="bg-blue-800"
-      class="w-full px-2 inline-flex space-x-2 items-center border-b border-slate-700 py-3 hover:bg-white/5 transition ease-linear duration-150"
-    >
-      <div>
-        <!-- <i class="{{ item.icon }}"></i> -->
-        <i [class]="item.icono"></i>
-      </div>
-      <div class="flex flex-col">
-        <span class="text-lg font-bold leading-5 text-white">{{ item.titulo }}</span>
-        <span class="text-sm text-white/50 hidden md:block">{{ item.subtitulo }}</span>
-      </div>
-    </a>
+    @if (item.titulo === 'Cerrar Sesión') {
+      <!-- 🔥 Cerrar Sesión con click (mismos colores) -->
+      <a
+        (click)="cerrarSesion()"
+        class="w-full px-2 inline-flex space-x-2 items-center border-b border-slate-700 py-3 hover:bg-white/5 transition ease-linear duration-150 cursor-pointer"
+      >
+        <div>
+          <i [class]="item.icono"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-lg font-bold leading-5 text-white">{{ item.titulo }}</span>
+          <span class="text-sm text-white/50 hidden md:block">{{ item.subtitulo }}</span>
+        </div>
+      </a>
+    } @else {
+      <!-- 🔥 Resto de opciones con routerLink -->
+      <a
+        [routerLink]="item.ruta"
+        routerLinkActive="bg-blue-800"
+        class="w-full px-2 inline-flex space-x-2 items-center border-b border-slate-700 py-3 hover:bg-white/5 transition ease-linear duration-150"
+      >
+        <div>
+          <i [class]="item.icono"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-lg font-bold leading-5 text-white">{{ item.titulo }}</span>
+          <span class="text-sm text-white/50 hidden md:block">{{ item.subtitulo }}</span>
+        </div>
+      </a>
+    }
   }
 </div>
