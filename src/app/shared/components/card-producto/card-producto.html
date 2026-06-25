@@ -1,46 +1,128 @@
+<!-- card-producto.html -->
 <div class="flex flex-wrap gap-6 p-6">
   <div
-    class="relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-72"
+    class="relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-72 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
   >
+    <!-- Contenedor de la imagen -->
     <div
       class="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white bg-clip-border rounded-xl h-72"
     >
-      <img
-        src="https://res.cloudinary.com/divfxkbk3/image/upload/v1781817387/S26-ultra_vwbqwf.png"
-        alt="card-image"
-        class="object-cover w-full h-full"
-      />
+      <!-- Si tiene imagen, mostrar la imagen -->
+      @if (tieneImagen) {
+        <img
+          [src]="getImagenUrl()"
+          [alt]="producto.modelo"
+          class="object-cover w-full h-full"
+          (error)="handleImageError($event)"
+        />
+      }
+
+      <!-- Si NO tiene imagen, mostrar placeholder visual -->
+      @if (!tieneImagen) {
+        <div class="w-full h-full flex items-center justify-center bg-gray-100">
+          <div class="text-center">
+            <span class="text-6xl block mb-2">{{ categoriaIcono }}</span>
+            <p class="text-gray-400 text-sm">Sin imagen</p>
+          </div>
+        </div>
+      }
+
+      <!-- Badge de stock bajo -->
+      @if (producto.stock < 10 && producto.stock > 0) {
+        <div class="absolute top-2 left-2">
+          <span class="bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+            ¡Últimas unidades!
+          </span>
+        </div>
+      }
+
+      <!-- Badge de agotado -->
+      @if (producto.stock === 0) {
+        <div class="absolute top-2 left-2">
+          <span class="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full">
+            AGOTADO
+          </span>
+        </div>
+      }
+
+      <!-- Badge de categoría -->
+      <div class="absolute top-2 right-2">
+        <span class="text-white text-xs font-bold px-2 py-1 rounded-full" [class]="categoriaColor">
+          {{ categoriaIcono }} {{ producto.categoria }}
+        </span>
+      </div>
+
+      <!-- Overlay si está inactivo -->
+      @if (!producto.estado) {
+        <div class="absolute inset-0 bg-black/50 flex items-center justify-center">
+          <span class="bg-red-600/80 text-white font-bold text-xl px-4 py-2 rounded-lg">
+            NO DISPONIBLE
+          </span>
+        </div>
+      }
     </div>
 
+    <!-- Cuerpo de la tarjeta -->
     <div class="p-6">
+      <div class="flex items-center justify-between mb-2">
+        <!-- Modelo -->
+        <p
+          class="block font-sans text-base antialiased font-medium leading-relaxed text-blue-gray-900 truncate max-w-[140px]"
+        >
+          {{ producto.modelo }}
+        </p>
+
+        <!-- Marca -->
+        <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded-full">
+          {{ producto.marca }}
+        </span>
+      </div>
+
+      <!-- Precio -->
       <div class="flex items-center justify-between mb-2">
         <p
           class="block font-sans text-base antialiased font-medium leading-relaxed text-blue-gray-900"
         >
-          Apple AirPods
+          {{ getPrecioFormateado() }}
         </p>
 
-        <p
-          class="block font-sans text-base antialiased font-medium leading-relaxed text-blue-gray-900"
-        >
-          $95.00
-        </p>
+        <!-- Color -->
+        @if (producto.color) {
+          <span class="flex items-center gap-1 text-sm text-blue-gray-900">
+            <span
+              class="inline-block w-4 h-4 rounded-full border border-gray-300"
+              [style.background]="producto.color"
+            ></span>
+            {{ producto.color }}
+          </span>
+        }
       </div>
 
+      <!-- Descripción -->
       <p
-        class="block font-sans text-sm antialiased font-normal leading-normal text-gray-700 opacity-75"
+        class="block font-sans text-sm antialiased font-normal leading-normal text-gray-700 opacity-75 line-clamp-2 min-h-[40px]"
       >
-        With plenty of talk and listen time, voice-activated Siri access, and an available wireless
-        charging case.
+        {{ producto.descripcion || 'Sin descripción' }}
       </p>
+
+      <!-- Stock (solo texto, sin colores adicionales) -->
+      <div class="mt-2 flex items-center gap-2">
+        <span class="text-sm text-gray-700">📦 Stock:</span>
+        <span class="text-sm font-bold text-blue-gray-900">
+          {{ stockText }}
+        </span>
+      </div>
     </div>
 
+    <!-- Botón de acción -->
     <div class="p-6 pt-0">
       <button
         class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg shadow-gray-900/10 hover:shadow-gray-900/20 focus:opacity-[0.85] active:opacity-[0.85] active:shadow-none block w-full bg-blue-gray-900/10 text-blue-gray-900 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+        [disabled]="!tieneStock"
+        (click)="onAgregarCarrito()"
         type="button"
       >
-        Add to Cart
+        {{ tieneStock ? 'Add to Cart' : 'No Disponible' }}
       </button>
     </div>
   </div>

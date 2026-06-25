@@ -13,6 +13,7 @@ import { CrearProducto } from './pages/productos/crear-producto/crear-producto';
 import { Login } from '../../auth/login/login';
 import { PaginaPrincipal } from '../home/pagina-principal/pagina-principal';
 import { authGuard } from '../../guards/auth.guard';
+import { CrearProductoImagen } from './pages/productos/crear-producto-imagen/crear-producto-imagen';
 
 export const administradorRoutes: Routes = [
   {
@@ -44,6 +45,10 @@ export const administradorRoutes: Routes = [
       {
         path: 'crear-producto',
         component: CrearProducto,
+      },
+      {
+        path: 'crear-producto-imagen',
+        component: CrearProductoImagen,
       },
       {
         path: 'inventario',

@@ -1,4 +1,48 @@
+<!-- celulares.html -->
 <smarttech-navbar />
 
-<smarttech-card-producto />
+<div class="flex flex-wrap gap-6 p-6 justify-center">
+  @if (loading) {
+    <div class="flex justify-center items-center py-20 w-full">
+      <div class="flex flex-col items-center gap-3">
+        <div
+          class="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"
+        ></div>
+        <p class="text-gray-500">Cargando celulares...</p>
+      </div>
+    </div>
+  }
+
+  @if (error) {
+    <div
+      class="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-lg text-center w-full"
+    >
+      <p>{{ error }}</p>
+      <button
+        (click)="cargarCelulares()"
+        class="mt-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition"
+      >
+        Reintentar
+      </button>
+    </div>
+  }
+
+  @if (!loading && !error) {
+    @if (celulares.length > 0) {
+      @for (producto of celulares; track producto.id) {
+        <smarttech-card-producto
+          [producto]="producto"
+          (verDetalle)="verDetalle($event)"
+          (agregarCarrito)="agregarAlCarrito($event)"
+        />
+      }
+    } @else {
+      <div class="text-center py-20 w-full">
+        <p class="text-6xl mb-4">📱</p>
+        <p class="text-xl text-gray-500">No hay celulares disponibles</p>
+      </div>
+    }
+  }
+</div>
+
 <smarttech-footer />

@@ -15,7 +15,7 @@ export class ProductoService {
     return localStorage.getItem('token');
   }
 
-  // Crear headers con el token
+  // Crear headers con el token (para JSON)
   private getHeaders(): HttpHeaders {
     const token = this.getToken();
     let headers = new HttpHeaders({
@@ -32,6 +32,25 @@ export class ProductoService {
     return headers;
   }
 
+  // Crear headers para FormData (subida de archivos) - SIN Content-Type
+  private getHeadersMultipart(): HttpHeaders {
+    const token = this.getToken();
+    let headers = new HttpHeaders();
+
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+      console.log('🔑 Token enviado (multipart):', token.substring(0, 20) + '...');
+    } else {
+      console.warn('⚠️ No hay token disponible');
+    }
+
+    return headers;
+  }
+
+  // ============================================
+  // MÉTODOS EXISTENTES (NO MODIFICADOS)
+  // ============================================
+
   // ✅ LISTAR PRODUCTOS (GET /productos/listar)
   getProductos(): Observable<ProductoInterface[]> {
     console.log('📡 GET:', `${this.apiUrl}/listar`);
@@ -40,7 +59,7 @@ export class ProductoService {
     });
   }
 
-  // ✅ CREAR PRODUCTO (POST /productos/crear)
+  // ✅ CREAR PRODUCTO (POST /productos/crear) - SIN IMAGEN
   crearProducto(producto: any): Observable<ProductoInterface> {
     console.log('📡 POST:', `${this.apiUrl}/crear`);
     console.log('📦 Producto:', JSON.stringify(producto, null, 2));
@@ -96,5 +115,49 @@ export class ProductoService {
         headers: this.getHeaders(),
       },
     );
+  }
+
+  // ============================================
+  // NUEVO MÉTODO: CREAR PRODUCTO CON IMAGEN
+  // ============================================
+
+  /**
+   * ✅ CREAR PRODUCTO CON IMAGEN
+   * POST /productos/crear-con-imagen
+   *
+   * @param producto - Datos del producto (modelo, marca, descripcion, precio, stock, categoria, color, serie)
+   * @param imagen - Archivo de imagen (File)
+   * @returns Observable<ProductoInterface>
+   */
+  crearProductoConImagen(producto: any, imagen: File): Observable<ProductoInterface> {
+    console.log('📡 POST:', `${this.apiUrl}/crear-con-imagen`);
+    console.log('📦 Producto:', producto.modelo, '-', producto.marca);
+    console.log('🖼️ Imagen:', imagen.name, `(${imagen.size} bytes)`);
+
+    const formData = new FormData();
+
+    // Agregar campos del producto
+    formData.append('modelo', producto.modelo);
+    formData.append('marca', producto.marca);
+    formData.append('descripcion', producto.descripcion);
+    formData.append('precio', producto.precio.toString());
+    formData.append('stock', producto.stock.toString());
+    formData.append('categoria', producto.categoria);
+
+    // Campos opcionales
+    if (producto.color) {
+      formData.append('color', producto.color);
+    }
+
+    if (producto.serie) {
+      formData.append('serie', producto.serie);
+    }
+
+    // Agregar la imagen
+    formData.append('imagen', imagen);
+
+    return this.http.post<ProductoInterface>(`${this.apiUrl}/crear-con-imagen`, formData, {
+      headers: this.getHeadersMultipart(),
+    });
   }
 }
