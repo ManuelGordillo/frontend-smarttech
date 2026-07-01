@@ -1,14 +1,40 @@
-<div class="p-6">
+<!-- <div class="p-6">
   <div class="mb-6">
     <h1 class="text-3xl font-bold text-slate-900">Inventario</h1>
 
     <p class="text-slate-500">Gestión y control de stock</p>
   </div>
 
+  Resumen -->
+<!-- <inventario-resumen /> -->
+<!-- Filtros -->
+<!-- <inventario-filtros /> -->
+<!-- Tabla -->
+<!-- <inventario-tabla /> -->
+<!-- </div> -->
+
+<div class="p-6">
+  <div class="mb-6">
+    <h1 class="text-3xl font-bold text-slate-900">Inventario</h1>
+    <p class="text-slate-500">Gestión y control de stock</p>
+  </div>
+
   <!-- Resumen -->
-  <inventario-resumen />
+  <inventario-resumen
+    [totalProductos]="totalProductos"
+    [stockDisponible]="stockDisponible"
+    [stockBajo]="stockBajo"
+    [agotados]="agotados"
+  />
+
   <!-- Filtros -->
-  <inventario-filtros />
+  <inventario-filtros
+    [marcas]="marcas"
+    [colores]="colores"
+    (filtrar)="onFiltrar($event)"
+    (limpiar)="onLimpiarFiltros()"
+  />
+
   <!-- Tabla -->
-  <inventario-tabla />
+  <inventario-tabla [productos]="productosFiltrados" />
 </div>

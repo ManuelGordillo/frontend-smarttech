@@ -1,41 +1,100 @@
-<div class="bg-white rounded-xl shadow overflow-hidden">
-  <table class="table w-full text-slate-900">
-    <thead class="bg-slate-100">
-      <tr>
-        <th>ID</th>
-        <th>Marca</th>
-        <th>Modelo</th>
-        <th>Precio</th>
-        <th>Stock</th>
-        <th>Estado</th>
-        <th>Último Ingreso</th>
-      </tr>
-    </thead>
+<div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200">
+  <div class="overflow-x-auto">
+    <table class="w-full text-left text-slate-700">
+      <thead class="bg-slate-100 text-slate-600">
+        <tr>
+          <th class="px-4 py-3 text-sm font-semibold uppercase">#</th>
+          <th class="px-4 py-3 text-sm font-semibold uppercase">Imagen</th>
+          <th class="px-4 py-3 text-sm font-semibold uppercase">Producto</th>
+          <th class="px-4 py-3 text-sm font-semibold uppercase">Marca</th>
+          <th class="px-4 py-3 text-sm font-semibold uppercase">Color</th>
+          <th class="px-4 py-3 text-sm font-semibold uppercase">Precio</th>
+          <th class="px-4 py-3 text-sm font-semibold uppercase">Stock</th>
+          <th class="px-4 py-3 text-sm font-semibold uppercase">Estado</th>
+          <th class="px-4 py-3 text-sm font-semibold uppercase">Fecha Ingreso</th>
+        </tr>
+      </thead>
 
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>Apple</td>
-        <td>iPhone 15 Pro</td>
-        <td>S/ 4,500</td>
-        <td>25</td>
-        <td>
-          <span class="badge badge-success"> Disponible </span>
-        </td>
-        <td>15/06/2026</td>
-      </tr>
+      <tbody>
+        @for (producto of productos; track producto.id) {
+          <tr class="border-t border-slate-100 hover:bg-slate-50 transition">
+            <!-- ID -->
+            <td class="px-4 py-3 text-sm font-medium text-slate-900">#{{ producto.id ?? '-' }}</td>
 
-      <tr>
-        <td>2</td>
-        <td>Samsung</td>
-        <td>Galaxy S25</td>
-        <td>S/ 3,800</td>
-        <td>5</td>
-        <td>
-          <span class="badge badge-warning"> Stock Bajo </span>
-        </td>
-        <td>10/06/2026</td>
-      </tr>
-    </tbody>
-  </table>
+            <!-- Imagen -->
+            <td class="px-4 py-3">
+              <div
+                class="w-10 h-10 rounded-lg overflow-hidden bg-slate-100 flex items-center justify-center"
+              >
+                @if (producto.imagen) {
+                  <img
+                    [src]="producto.imagen"
+                    [alt]="producto.modelo"
+                    class="w-full h-full object-cover"
+                    (error)="producto.imagen = undefined"
+                  />
+                } @else {
+                  <span class="text-lg">📷</span>
+                }
+              </div>
+            </td>
+
+            <!-- Modelo -->
+            <td class="px-4 py-3 text-sm font-medium text-slate-900">{{ producto.modelo }}</td>
+
+            <!-- Marca -->
+            <td class="px-4 py-3 text-sm">
+              <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
+                {{ producto.marca }}
+              </span>
+            </td>
+
+            <!-- ✅ Color -->
+            <td class="px-4 py-3 text-sm">
+              <div class="flex items-center gap-2">
+                <span
+                  class="w-5 h-5 rounded-full border border-slate-300"
+                  [style.background]="producto.color || '#e2e8f0'"
+                ></span>
+                <span class="text-slate-700">{{ producto.color || 'N/A' }}</span>
+              </div>
+            </td>
+
+            <!-- Precio -->
+            <td class="px-4 py-3 text-sm font-semibold text-slate-900">S/ {{ producto.precio }}</td>
+
+            <!-- Stock -->
+            <td class="px-4 py-3 text-sm">
+              <span
+                class="px-3 py-1 rounded-full text-xs font-medium"
+                [class]="getStockClass(producto.stock)"
+              >
+                {{ producto.stock }}
+              </span>
+            </td>
+
+            <!-- Estado -->
+            <td class="px-4 py-3 text-sm">
+              <span
+                class="px-3 py-1 rounded-full text-xs font-medium"
+                [class]="getEstadoClass(producto)"
+              >
+                {{ getEstadoTexto(producto) }}
+              </span>
+            </td>
+
+            <!-- Fecha -->
+            <td class="px-4 py-3 text-sm text-slate-500">{{ producto.fechaIngreso }}</td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="9" class="px-4 py-8 text-center text-slate-500">
+              <p class="text-lg">No hay productos en el inventario</p>
+              <p class="text-sm">Agrega productos para comenzar</p>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
 </div>
