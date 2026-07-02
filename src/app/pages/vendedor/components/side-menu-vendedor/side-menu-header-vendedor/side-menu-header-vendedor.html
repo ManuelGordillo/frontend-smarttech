@@ -1,9 +1,16 @@
 <div id="logo" class="my-4 px-6">
+  <a routerLink="/pagina-principal">
+    <img
+      src="https://res.cloudinary.com/divfxkbk3/image/upload/v1781901857/Logo_SmartTech_2_-_copia_br0gmq.png"
+      alt="Logo SmartTech"
+    />
+  </a>
   <h1 class="text-lg md:text-2xl font-bold text-white">
     Smart<span class="text-blue-500">Tech</span>.
   </h1>
-  <p class="text-slate-500 text-sm">Dashboard Administrador</p>
+  <p class="text-slate-500 text-sm">Dashboard - {{ rol() }} - {{ nombreVendedor() }}</p>
 </div>
+
 <div id="profile" class="px-6 py-10">
   <p class="text-slate-500">Bienvenido de Nuevo</p>
   <a href="#" class="inline-flex space-x-2 items-center">
@@ -11,9 +18,11 @@
       <img
         class="rounded-full w-8 h-8"
         src="https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=128&q=80"
-        alt=""
+        alt="Avatar"
       />
     </span>
-    <span class="text-sm md:text-base font-bold"> Manuel Gordillo </span>
+    <span class="text-sm md:text-base font-bold text-white">
+      {{ nombreVendedor() }}
+    </span>
   </a>
 </div>

@@ -64,6 +64,11 @@ export class Login {
           return;
         }
 
+        // Guardar el nombre del usuario (usar el usuario ingresado como fallback)
+        const nombre = response.nombre || this.loginForm.value.usuario || 'Usuario';
+        localStorage.setItem('nombreVendedor', nombre);
+        console.log('✅ Nombre guardado:', nombre);
+
         // Redirigir según el rol
         const rol = response.rol.toUpperCase();
         console.log('🔍 Redirigiendo con rol:', rol);

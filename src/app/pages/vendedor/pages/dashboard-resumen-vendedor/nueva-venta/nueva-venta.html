@@ -1,8 +1,8 @@
-<div class="min-h-screen bg-base-100 p-6">
+<div class="min-h-screen bg-white p-6">
   <!-- HEADER -->
   <div class="mb-8">
-    <h1 class="text-3xl font-bold text-white">📝 Nueva Venta</h1>
-    <p class="text-white/80 mt-1">Registra una nueva venta en el sistema</p>
+    <h1 class="text-3xl font-bold text-slate-800">📝 Nueva Venta</h1>
+    <p class="text-slate-500 mt-1">Registra una nueva venta en el sistema</p>
   </div>
 
   <!-- FORMULARIO -->
@@ -11,29 +11,27 @@
       <!-- COLUMNA IZQUIERDA -->
       <div class="lg:col-span-2 space-y-6">
         <!-- Cliente -->
-        <div class="card bg-base-200 shadow-xl border border-base-300">
+        <div class="card bg-white shadow-md rounded-xl border border-slate-200">
           <div class="card-body">
-            <h2 class="card-title text-lg text-white">👤 Cliente</h2>
+            <h2 class="card-title text-lg text-slate-800">👤 Cliente</h2>
 
             <div class="form-control">
               <label class="label">
-                <span class="label-text font-medium text-white">Seleccionar Cliente *</span>
+                <span class="label-text font-medium text-slate-700">Seleccionar Cliente *</span>
               </label>
               <select
-                class="select select-bordered w-full text-white bg-base-300"
+                class="select select-bordered w-full bg-white text-slate-800"
                 formControlName="clienteId"
                 [class.select-error]="isValidField('clienteId')"
               >
-                <option value="" class="text-white">-- Seleccionar cliente --</option>
+                <option value="">-- Seleccionar cliente --</option>
                 @for (cliente of clientes; track cliente.id) {
-                  <option [value]="cliente.id" class="text-white">
-                    {{ cliente.nombre }} - {{ cliente.email }}
-                  </option>
+                  <option [value]="cliente.id">{{ cliente.nombre }} - {{ cliente.email }}</option>
                 }
               </select>
               @if (isValidField('clienteId')) {
                 <label class="label">
-                  <span class="label-text-alt text-error">{{ getFieldError('clienteId') }}</span>
+                  <span class="label-text-alt text-red-500">{{ getFieldError('clienteId') }}</span>
                 </label>
               }
             </div>
@@ -41,19 +39,19 @@
             <div class="mt-2">
               <button
                 type="button"
-                class="btn btn-outline btn-primary btn-sm text-white"
+                class="btn btn-outline btn-primary btn-sm text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white"
                 (click)="abrirModalCliente()"
               >
                 ➕ Crear nuevo cliente
               </button>
-              <span class="text-xs text-white/50 ml-2">¿No encuentras al cliente?</span>
+              <span class="text-xs text-slate-400 ml-2">¿No encuentras al cliente?</span>
             </div>
 
             @if (clienteSeleccionado) {
-              <div class="mt-3 p-3 bg-base-300 rounded-lg">
-                <p class="text-sm font-medium text-white">Cliente seleccionado:</p>
-                <p class="text-sm text-white">{{ clienteSeleccionado.nombre }}</p>
-                <p class="text-xs text-white/60">
+              <div class="mt-3 p-3 bg-slate-50 rounded-lg border border-slate-200">
+                <p class="text-sm font-medium text-slate-800">Cliente seleccionado:</p>
+                <p class="text-sm text-slate-700">{{ clienteSeleccionado.nombre }}</p>
+                <p class="text-xs text-slate-500">
                   {{ clienteSeleccionado.email }} | {{ clienteSeleccionado.telefono }}
                 </p>
               </div>
@@ -62,40 +60,40 @@
         </div>
 
         <!-- Producto -->
-        <div class="card bg-base-200 shadow-xl border border-base-300">
+        <div class="card bg-white shadow-md rounded-xl border border-slate-200">
           <div class="card-body">
-            <h2 class="card-title text-lg text-white">📦 Producto</h2>
+            <h2 class="card-title text-lg text-slate-800">📦 Producto</h2>
 
             <div class="form-control">
               <label class="label">
-                <span class="label-text font-medium text-white">Seleccionar Producto *</span>
+                <span class="label-text font-medium text-slate-700">Seleccionar Producto *</span>
               </label>
               <select
-                class="select select-bordered w-full text-white bg-base-300"
+                class="select select-bordered w-full bg-white text-slate-800"
                 formControlName="productoId"
                 [class.select-error]="isValidField('productoId')"
               >
-                <option value="" class="text-white">-- Seleccionar producto --</option>
+                <option value="">-- Seleccionar producto --</option>
                 @for (producto of productos; track producto.id) {
-                  <option [value]="producto.id" class="text-white">
+                  <option [value]="producto.id">
                     {{ producto.nombre }} - S/ {{ producto.precio }} (Stock: {{ producto.stock }})
                   </option>
                 }
               </select>
               @if (isValidField('productoId')) {
                 <label class="label">
-                  <span class="label-text-alt text-error">{{ getFieldError('productoId') }}</span>
+                  <span class="label-text-alt text-red-500">{{ getFieldError('productoId') }}</span>
                 </label>
               }
             </div>
 
             <div class="form-control mt-2">
               <label class="label">
-                <span class="label-text font-medium text-white">Cantidad *</span>
+                <span class="label-text font-medium text-slate-700">Cantidad *</span>
               </label>
               <input
                 type="number"
-                class="input input-bordered w-full text-white bg-base-300"
+                class="input input-bordered w-full bg-white text-slate-800"
                 formControlName="cantidad"
                 placeholder="Ingresa la cantidad"
                 [class.input-error]="isValidField('cantidad')"
@@ -103,25 +101,27 @@
               />
               @if (isValidField('cantidad')) {
                 <label class="label">
-                  <span class="label-text-alt text-error">{{ getFieldError('cantidad') }}</span>
+                  <span class="label-text-alt text-red-500">{{ getFieldError('cantidad') }}</span>
                 </label>
               }
             </div>
 
             @if (productoSeleccionado) {
-              <div class="mt-3 p-3 bg-base-300 rounded-lg">
+              <div class="mt-3 p-3 bg-slate-50 rounded-lg border border-slate-200">
                 <div class="flex justify-between items-center">
                   <div>
-                    <p class="text-sm font-medium text-white">{{ productoSeleccionado.nombre }}</p>
-                    <p class="text-xs text-white/60">
+                    <p class="text-sm font-medium text-slate-800">
+                      {{ productoSeleccionado.nombre }}
+                    </p>
+                    <p class="text-xs text-slate-500">
                       Stock disponible: {{ productoSeleccionado.stock }}
                     </p>
                   </div>
                   <div class="text-right">
-                    <p class="text-sm font-bold text-primary">
+                    <p class="text-sm font-bold text-blue-600">
                       S/ {{ productoSeleccionado.precio }}
                     </p>
-                    <p class="text-xs text-white/60">por unidad</p>
+                    <p class="text-xs text-slate-500">por unidad</p>
                   </div>
                 </div>
               </div>
@@ -133,46 +133,46 @@
       <!-- COLUMNA DERECHA -->
       <div class="space-y-6">
         <!-- Pago -->
-        <div class="card bg-base-200 shadow-xl border border-base-300">
+        <div class="card bg-white shadow-md rounded-xl border border-slate-200">
           <div class="card-body">
-            <h2 class="card-title text-lg text-white">💳 Pago</h2>
+            <h2 class="card-title text-lg text-slate-800">💳 Pago</h2>
 
             <div class="form-control">
               <label class="label">
-                <span class="label-text font-medium text-white">Método de Pago *</span>
+                <span class="label-text font-medium text-slate-700">Método de Pago *</span>
               </label>
               <select
-                class="select select-bordered w-full text-white bg-base-300"
+                class="select select-bordered w-full bg-white text-slate-800"
                 formControlName="metodoPago"
                 [class.select-error]="isValidField('metodoPago')"
               >
-                <option value="" class="text-white">-- Seleccionar método --</option>
-                <option value="EFECTIVO" class="text-white">💵 Efectivo</option>
-                <option value="TARJETA" class="text-white">💳 Tarjeta</option>
-                <option value="YAPE" class="text-white">📱 Yape</option>
-                <option value="PLIN" class="text-white">📱 Plin</option>
-                <option value="TRANSFERENCIA" class="text-white">🏦 Transferencia</option>
+                <option value="">-- Seleccionar método --</option>
+                <option value="EFECTIVO">💵 Efectivo</option>
+                <option value="TARJETA">💳 Tarjeta</option>
+                <option value="YAPE">📱 Yape</option>
+                <option value="PLIN">📱 Plin</option>
+                <option value="TRANSFERENCIA">🏦 Transferencia</option>
               </select>
               @if (isValidField('metodoPago')) {
                 <label class="label">
-                  <span class="label-text-alt text-error">{{ getFieldError('metodoPago') }}</span>
+                  <span class="label-text-alt text-red-500">{{ getFieldError('metodoPago') }}</span>
                 </label>
               }
             </div>
 
             <div class="form-control mt-2">
               <label class="label">
-                <span class="label-text font-medium text-white">Fecha de Venta *</span>
+                <span class="label-text font-medium text-slate-700">Fecha de Venta *</span>
               </label>
               <input
                 type="date"
-                class="input input-bordered w-full text-white bg-base-300"
+                class="input input-bordered w-full bg-white text-slate-800"
                 formControlName="fechaVenta"
                 [class.input-error]="isValidField('fechaVenta')"
               />
               @if (isValidField('fechaVenta')) {
                 <label class="label">
-                  <span class="label-text-alt text-error">{{ getFieldError('fechaVenta') }}</span>
+                  <span class="label-text-alt text-red-500">{{ getFieldError('fechaVenta') }}</span>
                 </label>
               }
             </div>
@@ -180,27 +180,27 @@
         </div>
 
         <!-- Resumen -->
-        <div class="card bg-primary text-white shadow-xl">
+        <div class="card bg-blue-50 shadow-md rounded-xl border border-blue-200">
           <div class="card-body">
-            <h2 class="card-title text-lg text-white">📊 Resumen</h2>
+            <h2 class="card-title text-lg text-slate-800">📊 Resumen</h2>
 
             <div class="space-y-2">
-              <div class="flex justify-between text-white">
+              <div class="flex justify-between text-slate-700">
                 <span>Producto:</span>
                 <span class="font-medium">{{
                   productoSeleccionado?.nombre || 'No seleccionado'
                 }}</span>
               </div>
-              <div class="flex justify-between text-white">
+              <div class="flex justify-between text-slate-700">
                 <span>Cantidad:</span>
                 <span class="font-medium">{{ ventaForm.get('cantidad')?.value || 0 }}</span>
               </div>
-              <div class="flex justify-between text-white">
+              <div class="flex justify-between text-slate-700">
                 <span>Precio unitario:</span>
                 <span class="font-medium">S/ {{ productoSeleccionado?.precio || 0 }}</span>
               </div>
-              <div class="divider my-2 border-white/20"></div>
-              <div class="flex justify-between text-lg font-bold text-white">
+              <div class="divider my-2 border-slate-200"></div>
+              <div class="flex justify-between text-lg font-bold text-blue-600">
                 <span>TOTAL:</span>
                 <span>S/ {{ getTotal() | number: '1.2-2' }}</span>
               </div>
@@ -211,7 +211,7 @@
         <!-- Botón Registrar -->
         <button
           type="submit"
-          class="btn btn-success w-full text-lg text-white"
+          class="btn w-full text-lg text-white bg-green-600 hover:bg-green-700 border-0"
           [disabled]="loading || ventaForm.invalid"
         >
           @if (!loading) {
@@ -226,10 +226,10 @@
         <!-- Observaciones -->
         <div class="form-control">
           <label class="label">
-            <span class="label-text font-medium text-white">Observaciones</span>
+            <span class="label-text font-medium text-slate-700">Observaciones</span>
           </label>
           <textarea
-            class="textarea textarea-bordered h-24 text-white bg-base-300"
+            class="textarea textarea-bordered h-24 bg-white text-slate-800"
             formControlName="observaciones"
             placeholder="Observaciones adicionales (opcional)"
           ></textarea>
@@ -242,105 +242,113 @@
 <!-- MODAL CREAR CLIENTE -->
 @if (showModalCliente) {
   <dialog class="modal modal-open">
-    <div class="modal-box max-w-lg bg-base-200">
-      <h3 class="font-bold text-2xl mb-4 text-white">➕ Crear Nuevo Cliente</h3>
+    <div class="modal-box max-w-lg bg-white">
+      <h3 class="font-bold text-2xl mb-4 text-slate-800">➕ Crear Nuevo Cliente</h3>
 
       <form [formGroup]="clienteForm">
         <div class="form-control">
           <label class="label">
-            <span class="label-text font-medium text-white">Nombre Completo *</span>
+            <span class="label-text font-medium text-slate-700">Nombre Completo *</span>
           </label>
           <input
             type="text"
-            class="input input-bordered w-full text-white bg-base-300"
+            class="input input-bordered w-full bg-white text-slate-800"
             formControlName="nombre"
             placeholder="Ej: Juan Pérez"
             [class.input-error]="isValidClienteField('nombre')"
           />
           @if (isValidClienteField('nombre')) {
             <label class="label">
-              <span class="label-text-alt text-error">{{ getClienteFieldError('nombre') }}</span>
+              <span class="label-text-alt text-red-500">{{ getClienteFieldError('nombre') }}</span>
             </label>
           }
         </div>
 
         <div class="form-control mt-4">
           <label class="label">
-            <span class="label-text font-medium text-white">Email *</span>
+            <span class="label-text font-medium text-slate-700">Email *</span>
           </label>
           <input
             type="email"
-            class="input input-bordered w-full text-white bg-base-300"
+            class="input input-bordered w-full bg-white text-slate-800"
             formControlName="email"
             placeholder="Ej: juan@email.com"
             [class.input-error]="isValidClienteField('email')"
           />
           @if (isValidClienteField('email')) {
             <label class="label">
-              <span class="label-text-alt text-error">{{ getClienteFieldError('email') }}</span>
+              <span class="label-text-alt text-red-500">{{ getClienteFieldError('email') }}</span>
             </label>
           }
         </div>
 
         <div class="form-control mt-4">
           <label class="label">
-            <span class="label-text font-medium text-white">Teléfono *</span>
+            <span class="label-text font-medium text-slate-700">Teléfono *</span>
           </label>
           <input
             type="tel"
-            class="input input-bordered w-full text-white bg-base-300"
+            class="input input-bordered w-full bg-white text-slate-800"
             formControlName="telefono"
             placeholder="Ej: 987654321"
             [class.input-error]="isValidClienteField('telefono')"
           />
           @if (isValidClienteField('telefono')) {
             <label class="label">
-              <span class="label-text-alt text-error">{{ getClienteFieldError('telefono') }}</span>
+              <span class="label-text-alt text-red-500">{{
+                getClienteFieldError('telefono')
+              }}</span>
             </label>
           }
         </div>
 
         <div class="form-control mt-4">
           <label class="label">
-            <span class="label-text font-medium text-white">Dirección *</span>
+            <span class="label-text font-medium text-slate-700">Dirección *</span>
           </label>
           <input
             type="text"
-            class="input input-bordered w-full text-white bg-base-300"
+            class="input input-bordered w-full bg-white text-slate-800"
             formControlName="direccion"
             placeholder="Ej: Av. Principal 123"
             [class.input-error]="isValidClienteField('direccion')"
           />
           @if (isValidClienteField('direccion')) {
             <label class="label">
-              <span class="label-text-alt text-error">{{ getClienteFieldError('direccion') }}</span>
+              <span class="label-text-alt text-red-500">{{
+                getClienteFieldError('direccion')
+              }}</span>
             </label>
           }
         </div>
 
         <div class="form-control mt-4">
           <label class="label">
-            <span class="label-text font-medium text-white">Documento *</span>
+            <span class="label-text font-medium text-slate-700">Documento *</span>
           </label>
           <input
             type="text"
-            class="input input-bordered w-full text-white bg-base-300"
+            class="input input-bordered w-full bg-white text-slate-800"
             formControlName="documento"
             placeholder="Ej: 12345678"
             [class.input-error]="isValidClienteField('documento')"
           />
           @if (isValidClienteField('documento')) {
             <label class="label">
-              <span class="label-text-alt text-error">{{ getClienteFieldError('documento') }}</span>
+              <span class="label-text-alt text-red-500">{{
+                getClienteFieldError('documento')
+              }}</span>
             </label>
           }
         </div>
       </form>
 
       <div class="modal-action">
-        <button class="btn btn-ghost text-white" (click)="cerrarModalCliente()">Cancelar</button>
+        <button class="btn btn-ghost text-slate-600" (click)="cerrarModalCliente()">
+          Cancelar
+        </button>
         <button
-          class="btn btn-primary text-white"
+          class="btn btn-primary text-white bg-blue-600 hover:bg-blue-700 border-0"
           (click)="crearCliente()"
           [disabled]="loading || clienteForm.invalid"
         >
@@ -355,7 +363,7 @@
     </div>
 
     <div class="modal-backdrop" (click)="cerrarModalCliente()">
-      <button type="button" class="text-white">Cerrar</button>
+      <button type="button">Cerrar</button>
     </div>
   </dialog>
 }

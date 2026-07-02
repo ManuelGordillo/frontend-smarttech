@@ -5,30 +5,53 @@
     <a routerLink="/productos/tablets" class="btn btn-ghost text-xl">Tablets</a>
     <a routerLink="/productos/accesorios" class="btn btn-ghost text-xl">Accesorios</a>
   </div>
+
   <div class="flex gap-2">
     <input type="text" placeholder="Buscar" class="input input-bordered w-24 md:w-auto" />
-    <div class="dropdown dropdown-end">
-      <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+
+    <div class="flex items-center gap-1">
+      <!-- 🔥 Avatar - SOLO para ir al dashboard -->
+      <div
+        class="btn btn-ghost btn-circle avatar cursor-pointer hover:opacity-80 transition-opacity"
+        (click)="irAlDashboard()"
+      >
         <div class="w-10 rounded-full">
           <img
-            alt="Tailwind CSS Navbar component"
+            alt="Avatar"
             src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
           />
         </div>
       </div>
-      <ul
-        tabindex="-1"
-        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
-      >
-        <li>
-          <a class="justify-between">
-            Perfil
-            <span class="badge">Editar</span>
-          </a>
-        </li>
-        <li><a routerLink="/registrar-cliente">Registrate</a></li>
-        <li><a routerLink="/login">Inicia Sesion</a></li>
-      </ul>
+
+      <!-- 🔥 Flecha para abrir el menú -->
+      <div class="dropdown dropdown-end">
+        <div tabindex="0" role="button" class="btn btn-ghost btn-sm btn-square">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+          </svg>
+        </div>
+
+        <ul
+          tabindex="-1"
+          class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+        >
+          <li>
+            <a class="justify-between">
+              Perfil
+              <span class="badge">Editar</span>
+            </a>
+          </li>
+          <li><a routerLink="/registrar-cliente">Registrate</a></li>
+          <li><a routerLink="/login">Inicia Sesion</a></li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
