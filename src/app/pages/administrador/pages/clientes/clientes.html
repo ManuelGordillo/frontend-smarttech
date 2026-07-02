@@ -1,4 +1,4 @@
-<div class="p-6">
+<!-- <div class="p-6">
   <h1 class="text-3xl font-bold text-slate-900 mb-2">Clientes</h1>
 
   <p class="text-slate-500 mb-6">Clientes registrados en la plataforma</p>
@@ -15,7 +15,6 @@
           <th class="font-semibold">Correo</th>
           <th class="font-semibold">Direccion</th>
           <th class="font-semibold">Fecha Registro</th>
-          <th class="font-semibold">Estado</th>
           <th class="font-semibold">Acciones</th>
         </tr>
       </thead>
@@ -39,5 +38,86 @@
         </tr>
       </tbody>
     </table>
+  </div>
+</div> -->
+<div class="p-6">
+  <h1 class="text-3xl font-bold text-slate-900 mb-2">Clientes</h1>
+  <p class="text-slate-500 mb-6">Clientes registrados en la plataforma</p>
+
+  <!-- 🔥 Mensajes de estado -->
+  @if (loading) {
+    <div class="alert alert-info mb-4">
+      <span>Cargando clientes...</span>
+    </div>
+  }
+
+  @if (error) {
+    <div class="alert alert-error mb-4">
+      <span>{{ error }}</span>
+    </div>
+  }
+
+  @if (mensaje) {
+    <div class="alert alert-success mb-4">
+      <span>{{ mensaje }}</span>
+    </div>
+  }
+
+  <!-- 🔥 Tabla de clientes -->
+  <div class="bg-white rounded-xl shadow overflow-hidden text-slate-900">
+    @if (clientes.length === 0 && !loading) {
+      <div class="p-8 text-center text-slate-500">
+        <p>No hay clientes registrados</p>
+      </div>
+    }
+
+    @if (clientes.length > 0) {
+      <table class="table w-full text-slate-900">
+        <thead class="bg-slate-100 text-slate-900">
+          <tr>
+            <th class="font-semibold">ID</th>
+            <th class="font-semibold">Nombre</th>
+            <th class="font-semibold">Apellido</th>
+            <th class="font-semibold">DNI</th>
+            <th class="font-semibold">Teléfono</th>
+            <th class="font-semibold">Correo</th>
+            <th class="font-semibold">Dirección</th>
+            <th class="font-semibold">Fecha Registro</th>
+            <th class="font-semibold">Estado</th>
+            <th class="font-semibold">Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <!-- 🔥 @for en lugar de *ngFor -->
+          @for (cliente of clientes; track cliente.id) {
+            <tr class="hover:bg-slate-50">
+              <td>{{ cliente.id }}</td>
+              <td>{{ cliente.nombre }}</td>
+              <td>{{ cliente.apellido }}</td>
+              <td>{{ cliente.dni }}</td>
+              <td>{{ cliente.telefono }}</td>
+              <td>{{ cliente.correo }}</td>
+              <td>{{ cliente.direccion }}</td>
+              <td>{{ cliente.fechaRegistro || 'No registrada' }}</td>
+              <td>
+                <span class="badge badge-success">Activo</span>
+              </td>
+              <td>
+                <button class="btn btn-sm btn-error" (click)="eliminarCliente(cliente)">
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="10" class="text-center py-4 text-slate-500">
+                No hay clientes disponibles
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
   </div>
 </div>

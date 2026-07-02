@@ -20,7 +20,6 @@ import { Vendedor } from '../../../../models/vendedor.model/vendedor.model';
 })
 export default class VendedoresComponent implements OnInit {
   private usuarioService = inject(UsuarioService);
-  private cdr = inject(ChangeDetectorRef);
 
   vendedores: Vendedor[] = [];
   loading: boolean = false;

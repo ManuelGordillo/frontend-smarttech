@@ -1,4 +1,3 @@
-// inventario-tabla/inventario-tabla.ts
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductoInterface } from '../../../../../interfaces/producto.interface';
