@@ -24,43 +24,43 @@ export class SideMenuOpcionesVendedor {
       icono: 'fa-solid fa-chart-line',
     },
     {
-      titulo: 'Comprar',
-      subtitulo: 'Catalogo',
-      ruta: '/cliente/dashboard-cliente/comprar',
+      titulo: 'Carrito',
+      subtitulo: 'Productos',
+      ruta: '/vendedor/vendedor-dashboard/carrito',
       icono: 'fa-solid fa-bag-shopping',
     },
     {
-      titulo: 'Carrito de compras',
-      subtitulo: 'Productos Agregados',
-      ruta: '/cliente/dashboard-cliente/carrito-de-compras',
+      titulo: 'Clientes',
+      subtitulo: 'Clientes del vendedor',
+      ruta: '/vendedor/vendedor-dashboard/clientes-vendedor',
       icono: 'fa-solid fa-cart-shopping',
     },
     {
-      titulo: 'Pago',
-      subtitulo: 'Metodo de Pago',
-      ruta: '/cliente/dashboard-cliente/pago',
+      titulo: 'Historial de Ventas',
+      subtitulo: 'Resumen ventas',
+      ruta: '/vendedor/vendedor-dashboard/historial-ventas',
       icono: 'fa-solid fa-coins',
     },
     {
-      titulo: 'Historial de Compras',
-      subtitulo: 'Lista de pedidos',
-      ruta: '/cliente/dashboard-cliente/historial-de-compras',
+      titulo: 'Ventas',
+      subtitulo: 'Lista de Ventas',
+      ruta: '/vendedor/vendedor-dashboard/ventas',
       icono: 'fa-solid fa-clock-rotate-left',
     },
     {
       titulo: 'Configuracion',
       subtitulo: 'Editar Perfil',
-      ruta: '/cliente/dashboard-cliente/configuracion-cliente',
+      ruta: '/vendedor/vendedor-dashboard/configuracion-vendedor',
       icono: 'fa-solid fa-chart-line',
     },
     {
-      titulo: 'Cerrar sesión',
+      titulo: 'Cerrar Sesión',
       subtitulo: 'Salir',
-      ruta: '/cliente/dashboard-cliente/cerrar-sesion-cliente',
+      ruta: '/vendedor/vendedor-dashboard/cerrar-sesion',
       icono: 'fa-solid fa-screwdriver-wrench',
     },
   ];
-  cerrarSesion(): void {
+  cerrarSesionVendedor(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('rol');
     this.router.navigate(['/pagina-principal']);

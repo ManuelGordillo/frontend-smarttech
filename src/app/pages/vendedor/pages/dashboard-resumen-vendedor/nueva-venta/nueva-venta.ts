@@ -18,7 +18,7 @@ interface Cliente {
 }
 
 @Component({
-  selector: 'app-nueva-venta',
+  selector: 'smarttech-nueva-venta',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './nueva-venta.html',

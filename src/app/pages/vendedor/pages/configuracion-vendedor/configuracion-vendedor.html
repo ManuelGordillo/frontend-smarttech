@@ -1,16 +1,26 @@
-<div class="min-h-screen bg-base-100 p-6">
+<div class="min-h-screen bg-white p-6">
+  <!-- ⬅️ Cambiado a bg-white -->
+
   <!-- HEADER -->
   <div class="mb-8">
-    <h1 class="text-3xl font-bold">Configuración</h1>
+    <h1 class="text-3xl font-bold text-slate-900">
+      <!-- ⬅️ Texto oscuro -->
+      Configuración
+    </h1>
 
-    <p class="text-base-content/70 mt-1">Administra tu perfil y preferencias.</p>
+    <p class="text-slate-600 mt-1">
+      <!-- ⬅️ Texto gris -->
+      Administra tu perfil y preferencias.
+    </p>
   </div>
 
   <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
     <!-- PERFIL -->
-    <div class="card bg-base-100 shadow-xl border border-base-300">
+    <div class="card bg-white shadow-xl border border-gray-200">
+      <!-- ⬅️ Cambiado bg-base-100 a bg-white y border-base-300 a border-gray-200 -->
       <div class="card-body">
-        <h2 class="card-title">Mi Perfil</h2>
+        <h2 class="card-title text-slate-900">Mi Perfil</h2>
+        <!-- ⬅️ Texto oscuro -->
 
         <div class="flex flex-col items-center mt-4">
           <div class="avatar">
@@ -20,26 +30,46 @@
           </div>
 
           <div class="mt-4 text-center">
-            <div class="font-bold text-lg">Juan Pérez</div>
-            <div class="text-base-content/70">Vendedor</div>
+            <div class="font-bold text-lg text-slate-900">Juan Pérez</div>
+            <!-- ⬅️ Texto oscuro -->
+            <div class="text-slate-500">Vendedor</div>
+            <!-- ⬅️ Texto gris -->
           </div>
         </div>
       </div>
     </div>
 
     <!-- DATOS -->
-    <div class="card bg-base-100 shadow-xl border border-base-300 xl:col-span-2">
+    <div class="card bg-white shadow-xl border border-gray-200 xl:col-span-2">
+      <!-- ⬅️ Cambiado bg-base-100 a bg-white y border-base-300 a border-gray-200 -->
       <div class="card-body">
-        <h2 class="card-title">Datos Personales</h2>
+        <h2 class="card-title text-slate-900">Datos Personales</h2>
+        <!-- ⬅️ Texto oscuro -->
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          <input type="text" class="input input-bordered" placeholder="Nombre" />
+          <input
+            type="text"
+            class="input input-bordered bg-white border-gray-300 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none"
+            placeholder="Nombre"
+          />
 
-          <input type="text" class="input input-bordered" placeholder="Apellido" />
+          <input
+            type="text"
+            class="input input-bordered bg-white border-gray-300 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none"
+            placeholder="Apellido"
+          />
 
-          <input type="email" class="input input-bordered" placeholder="Correo" />
+          <input
+            type="email"
+            class="input input-bordered bg-white border-gray-300 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none"
+            placeholder="Correo"
+          />
 
-          <input type="text" class="input input-bordered" placeholder="Teléfono" />
+          <input
+            type="text"
+            class="input input-bordered bg-white border-gray-300 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none"
+            placeholder="Teléfono"
+          />
         </div>
 
         <div class="mt-6 flex justify-end">
@@ -50,16 +80,30 @@
   </div>
 
   <!-- SEGURIDAD -->
-  <div class="card bg-base-100 shadow-xl border border-base-300 mt-6">
+  <div class="card bg-white shadow-xl border border-gray-200 mt-6">
+    <!-- ⬅️ Cambiado bg-base-100 a bg-white y border-base-300 a border-gray-200 -->
     <div class="card-body">
-      <h2 class="card-title">Seguridad</h2>
+      <h2 class="card-title text-slate-900">Seguridad</h2>
+      <!-- ⬅️ Texto oscuro -->
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-        <input type="password" class="input input-bordered" placeholder="Contraseña actual" />
+        <input
+          type="password"
+          class="input input-bordered bg-white border-gray-300 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none"
+          placeholder="Contraseña actual"
+        />
 
-        <input type="password" class="input input-bordered" placeholder="Nueva contraseña" />
+        <input
+          type="password"
+          class="input input-bordered bg-white border-gray-300 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none"
+          placeholder="Nueva contraseña"
+        />
 
-        <input type="password" class="input input-bordered" placeholder="Confirmar contraseña" />
+        <input
+          type="password"
+          class="input input-bordered bg-white border-gray-300 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none"
+          placeholder="Confirmar contraseña"
+        />
       </div>
 
       <div class="mt-6 flex justify-end">

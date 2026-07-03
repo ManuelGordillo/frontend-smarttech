@@ -1,71 +1,74 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ClientesService } from '../../../../services/clientes.service';
 import { ClientesInterface } from '../../../../interfaces/clientes.interface';
 
 @Component({
   selector: 'app-clientes',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './clientes.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class Clientes implements OnInit {
   private clientesService = inject(ClientesService);
 
-  clientes: ClientesInterface[] = [];
-  loading: boolean = false;
-  error: string = '';
-  mensaje: string = '';
+  // 🔥 Signals para Angular 20
+  clientes = signal<ClientesInterface[]>([]);
+  loading = signal<boolean>(false);
+  error = signal<string>('');
+  mensaje = signal<string>('');
 
   ngOnInit(): void {
     const token = localStorage.getItem('token');
     if (!token) {
-      this.error = '⚠️ No has iniciado sesión. Por favor, inicia sesión primero.';
+      this.error.set('⚠️ No has iniciado sesión. Por favor, inicia sesión primero.');
       return;
     }
     this.cargarClientes();
   }
 
   cargarClientes(): void {
-    this.loading = true;
-    this.error = '';
+    this.loading.set(true);
+    this.error.set('');
 
     this.clientesService.getClientes().subscribe({
       next: (data) => {
-        this.clientes = data;
-        this.loading = false;
+        this.clientes.set(data); // Actualizar signal
+        this.loading.set(false);
         console.log('✅ Clientes cargados:', data);
       },
       error: (error) => {
         console.error('❌ Error:', error);
         if (error.status === 401) {
-          this.error = '⚠️ Sesión expirada. Por favor, inicia sesión nuevamente.';
+          this.error.set('⚠️ Sesión expirada. Por favor, inicia sesión nuevamente.');
         } else {
-          this.error = 'Error al cargar los vendedores. Verifica tu conexión.';
+          this.error.set('Error al cargar los clientes. Verifica tu conexión.');
         }
-        this.loading = false;
+        this.loading.set(false);
       },
     });
   }
 
-  eliminarCliente(clientes: ClientesInterface): void {
+  eliminarCliente(cliente: ClientesInterface): void {
     if (
       !confirm(
-        `¿Estás seguro de eliminar a "${clientes.nombre}"? Esta acción no se puede deshacer.`,
+        `¿Estás seguro de eliminar a "${cliente.nombre} ${cliente.apellido}"? Esta acción no se puede deshacer.`,
       )
     ) {
       return;
     }
 
-    this.clientesService.eliminarCliente(clientes.id).subscribe({
+    this.clientesService.eliminarCliente(cliente.id).subscribe({
       next: () => {
-        this.clientes = this.clientes.filter((c) => c.id !== clientes.id);
-        this.mensaje = `✅ ${clientes.nombre} eliminado correctamente`;
-        setTimeout(() => (this.mensaje = ''), 3000);
+        // 🔥 Actualizar signal con filter
+        this.clientes.update((current) => current.filter((c) => c.id !== cliente.id));
+        this.mensaje.set(`✅ ${cliente.nombre} ${cliente.apellido} eliminado correctamente`);
+        setTimeout(() => this.mensaje.set(''), 3000);
       },
       error: (error) => {
         console.error('❌ Error:', error);
-        this.error = 'Error al eliminar el vendedor';
-        setTimeout(() => (this.error = ''), 3000);
+        this.error.set('Error al eliminar el cliente');
+        setTimeout(() => this.error.set(''), 3000);
       },
     });
   }

@@ -2,34 +2,34 @@
   <h1 class="text-3xl font-bold text-slate-900 mb-2">Clientes</h1>
   <p class="text-slate-500 mb-6">Clientes registrados en la plataforma</p>
 
-  <!-- 🔥 Mensajes de estado -->
-  @if (loading) {
+  <!-- 🔥 Mensajes de estado con signals -->
+  @if (loading()) {
     <div class="alert alert-info mb-4">
       <span>Cargando clientes...</span>
     </div>
   }
 
-  @if (error) {
+  @if (error()) {
     <div class="alert alert-error mb-4">
-      <span>{{ error }}</span>
+      <span>{{ error() }}</span>
     </div>
   }
 
-  @if (mensaje) {
+  @if (mensaje()) {
     <div class="alert alert-success mb-4">
-      <span>{{ mensaje }}</span>
+      <span>{{ mensaje() }}</span>
     </div>
   }
 
   <!-- 🔥 Tabla de clientes -->
   <div class="bg-white rounded-xl shadow overflow-hidden text-slate-900">
-    @if (clientes.length === 0 && !loading) {
+    @if (clientes().length === 0 && !loading()) {
       <div class="p-8 text-center text-slate-500">
         <p>No hay clientes registrados</p>
       </div>
     }
 
-    @if (clientes.length > 0) {
+    @if (clientes().length > 0) {
       <table class="table w-full text-slate-900">
         <thead class="bg-slate-100 text-slate-900">
           <tr>
@@ -47,8 +47,8 @@
         </thead>
 
         <tbody>
-          <!-- 🔥 @for en lugar de *ngFor -->
-          @for (cliente of clientes; track cliente.id) {
+          <!-- 🔥 @for con signals -->
+          @for (cliente of clientes(); track cliente.id) {
             <tr class="hover:bg-slate-50">
               <td>{{ cliente.id }}</td>
               <td>{{ cliente.nombre }}</td>

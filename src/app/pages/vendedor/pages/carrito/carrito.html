@@ -1,34 +1,48 @@
-<div class="min-h-screen bg-base-100 p-6">
+<div class="min-h-screen bg-white p-6">
+  <!-- ⬅️ Cambiar bg-base-100 a bg-white -->
+
   <!-- HEADER -->
   <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-8">
     <div>
-      <h1 class="text-3xl font-bold">Carrito de Compras</h1>
+      <h1 class="text-3xl font-bold text-slate-900">
+        <!-- ⬅️ Agregar color de texto oscuro -->
+        Carrito de Compras
+      </h1>
 
-      <p class="text-base-content/70 mt-1">Revisa los productos antes de finalizar la venta.</p>
+      <p class="text-slate-600 mt-1">
+        <!-- ⬅️ Cambiar text-base-content/70 a text-slate-600 -->
+        Revisa los productos antes de finalizar la venta.
+      </p>
     </div>
 
-    <button class="btn btn-outline">← Seguir Comprando</button>
+    <button routerLink="../nueva-venta" class="btn btn-outline">Nueva Venta +</button>
   </div>
 
   <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
     <!-- PRODUCTOS -->
     <div class="xl:col-span-2">
-      <div class="card bg-base-100 shadow-xl border border-base-300">
+      <div class="card bg-white shadow-xl border border-gray-200">
+        <!-- ⬅️ Cambiar bg-base-100 a bg-white y border-base-300 a border-gray-200 -->
         <div class="card-body">
           <div class="flex justify-between items-center mb-4">
-            <h2 class="card-title text-xl">Productos Agregados</h2>
+            <h2 class="card-title text-xl text-slate-900">
+              <!-- ⬅️ Texto oscuro -->
+              Productos Agregados
+            </h2>
 
             <div class="badge badge-primary badge-lg">3 Productos</div>
           </div>
 
           <div class="overflow-x-auto">
-            <table class="table">
+            <table class="table text-slate-900">
+              <!-- ⬅️ Texto oscuro en tabla -->
               <thead>
                 <tr>
-                  <th>Producto</th>
-                  <th>Precio</th>
-                  <th>Cantidad</th>
-                  <th>Subtotal</th>
+                  <th class="text-slate-700">Producto</th>
+                  <!-- ⬅️ Encabezados oscuros -->
+                  <th class="text-slate-700">Precio</th>
+                  <th class="text-slate-700">Cantidad</th>
+                  <th class="text-slate-700">Subtotal</th>
                   <th></th>
                 </tr>
               </thead>
@@ -44,26 +58,34 @@
                       />
 
                       <div>
-                        <div class="font-bold">Samsung Galaxy S25</div>
+                        <div class="font-bold text-slate-900">
+                          <!-- ⬅️ Texto oscuro -->
+                          Samsung Galaxy S25
+                        </div>
 
-                        <div class="text-sm text-gray-500">Samsung</div>
+                        <div class="text-sm text-slate-500">
+                          <!-- ⬅️ Texto gris -->
+                          Samsung
+                        </div>
                       </div>
                     </div>
                   </td>
 
-                  <td class="font-semibold">S/ 3,499</td>
+                  <td class="font-semibold text-slate-900">S/ 3,499</td>
+                  <!-- ⬅️ Texto oscuro -->
 
                   <td>
                     <div class="join">
                       <button class="btn btn-sm join-item">-</button>
 
-                      <button class="btn btn-sm join-item btn-disabled">1</button>
+                      <button class="btn btn-sm join-item btn-disabled text-slate-900">1</button>
 
                       <button class="btn btn-sm join-item">+</button>
                     </div>
                   </td>
 
-                  <td class="font-bold">S/ 3,499</td>
+                  <td class="font-bold text-slate-900">S/ 3,499</td>
+                  <!-- ⬅️ Texto oscuro -->
 
                   <td>
                     <button class="btn btn-error btn-sm btn-outline">Eliminar</button>
@@ -80,26 +102,34 @@
                       />
 
                       <div>
-                        <div class="font-bold">AirPods Pro</div>
+                        <div class="font-bold text-slate-900">
+                          <!-- ⬅️ Texto oscuro -->
+                          AirPods Pro
+                        </div>
 
-                        <div class="text-sm text-gray-500">Apple</div>
+                        <div class="text-sm text-slate-500">
+                          <!-- ⬅️ Texto gris -->
+                          Apple
+                        </div>
                       </div>
                     </div>
                   </td>
 
-                  <td class="font-semibold">S/ 999</td>
+                  <td class="font-semibold text-slate-900">S/ 999</td>
+                  <!-- ⬅️ Texto oscuro -->
 
                   <td>
                     <div class="join">
                       <button class="btn btn-sm join-item">-</button>
 
-                      <button class="btn btn-sm join-item btn-disabled">2</button>
+                      <button class="btn btn-sm join-item btn-disabled text-slate-900">2</button>
 
                       <button class="btn btn-sm join-item">+</button>
                     </div>
                   </td>
 
-                  <td class="font-bold">S/ 1,998</td>
+                  <td class="font-bold text-slate-900">S/ 1,998</td>
+                  <!-- ⬅️ Texto oscuro -->
 
                   <td>
                     <button class="btn btn-error btn-sm btn-outline">Eliminar</button>
@@ -115,11 +145,14 @@
     <!-- PANEL DERECHO -->
     <div class="space-y-6">
       <!-- CLIENTE -->
-      <div class="card bg-base-100 shadow-xl border border-base-300">
+      <div class="card bg-white shadow-xl border border-gray-200">
+        <!-- ⬅️ Cambiar bg-base-100 a bg-white y border-base-300 a border-gray-200 -->
         <div class="card-body">
-          <h2 class="card-title">Cliente Asociado</h2>
+          <h2 class="card-title text-slate-900">Cliente Asociado</h2>
+          <!-- ⬅️ Texto oscuro -->
 
-          <div class="alert alert-success mt-2">
+          <div class="alert alert-success mt-2 text-slate-900">
+            <!-- ⬅️ Texto oscuro -->
             <span> Juan Pérez Gómez </span>
           </div>
 
@@ -128,11 +161,14 @@
       </div>
 
       <!-- COMPROBANTE -->
-      <div class="card bg-base-100 shadow-xl border border-base-300">
+      <div class="card bg-white shadow-xl border border-gray-200">
+        <!-- ⬅️ Cambiar bg-base-100 a bg-white y border-base-300 a border-gray-200 -->
         <div class="card-body">
-          <h2 class="card-title">Tipo de Comprobante</h2>
+          <h2 class="card-title text-slate-900">Tipo de Comprobante</h2>
+          <!-- ⬅️ Texto oscuro -->
 
-          <select class="select select-bordered mt-2">
+          <select class="select select-bordered mt-2 text-slate-900 bg-white border-gray-300">
+            <!-- ⬅️ Texto oscuro -->
             <option selected>Boleta</option>
 
             <option>Factura</option>
@@ -141,24 +177,29 @@
       </div>
 
       <!-- RESUMEN -->
-      <div class="card bg-base-100 shadow-xl border border-base-300">
+      <div class="card bg-white shadow-xl border border-gray-200">
+        <!-- ⬅️ Cambiar bg-base-100 a bg-white y border-base-300 a border-gray-200 -->
         <div class="card-body">
-          <h2 class="card-title">Resumen de Compra</h2>
+          <h2 class="card-title text-slate-900">Resumen de Compra</h2>
+          <!-- ⬅️ Texto oscuro -->
 
           <div class="space-y-3 mt-3">
-            <div class="flex justify-between">
+            <div class="flex justify-between text-slate-700">
+              <!-- ⬅️ Texto oscuro -->
               <span>Productos</span>
 
               <span>3</span>
             </div>
 
-            <div class="flex justify-between">
+            <div class="flex justify-between text-slate-700">
+              <!-- ⬅️ Texto oscuro -->
               <span>Subtotal</span>
 
               <span>S/ 5,497.00</span>
             </div>
 
-            <div class="flex justify-between">
+            <div class="flex justify-between text-slate-700">
+              <!-- ⬅️ Texto oscuro -->
               <span>IGV (18%)</span>
 
               <span>S/ 989.46</span>
@@ -167,7 +208,8 @@
             <div class="divider"></div>
 
             <div class="flex justify-between text-xl font-bold">
-              <span>Total</span>
+              <span class="text-slate-900">Total</span>
+              <!-- ⬅️ Texto oscuro -->
 
               <span class="text-primary"> S/ 6,486.46 </span>
             </div>
@@ -176,9 +218,10 @@
       </div>
 
       <!-- ACCIONES -->
-      <div class="card bg-base-100 shadow-xl border border-base-300">
+      <div class="card bg-white shadow-xl border border-gray-200">
+        <!-- ⬅️ Cambiar bg-base-100 a bg-white y border-base-300 a border-gray-200 -->
         <div class="card-body space-y-3">
-          <button class="btn btn-success btn-lg w-full">Finalizar Venta</button>
+          <button class="btn btn-success btn-lg w-full text-white">Finalizar Venta</button>
 
           <button class="btn btn-outline btn-error w-full">Vaciar Carrito</button>
         </div>
