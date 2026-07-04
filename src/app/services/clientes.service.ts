@@ -34,6 +34,12 @@ export class ClientesService {
     });
   }
 
+  crearCliente(cliente: ClientesInterface): Observable<ClientesInterface> {
+    return this.http.post<ClientesInterface>(`${this.apiUrl}/clientes/crear`, cliente, {
+      headers: this.getHeaders(),
+    });
+  }
+
   eliminarCliente(id: number): Observable<any> {
     return this.http.get<ClientesInterface[]>(`${this.apiUrl}/clientes/eliminar/${id}`, {
       headers: this.getHeaders(),

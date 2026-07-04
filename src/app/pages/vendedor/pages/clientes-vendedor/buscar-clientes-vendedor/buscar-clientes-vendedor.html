@@ -1,0 +1,26 @@
+<div class="card bg-white shadow-xl border border-gray-200 mb-8">
+  <div class="card-body">
+    <h2 class="card-title text-slate-900">Buscar Cliente</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <input
+        type="text"
+        placeholder="DNI"
+        [(ngModel)]="filtroDni"
+        class="input input-bordered bg-white border-gray-300 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none"
+      />
+
+      <input
+        type="text"
+        placeholder="Nombre o Apellido"
+        [(ngModel)]="filtroNombre"
+        class="input input-bordered bg-white border-gray-300 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none"
+      />
+
+      <div class="flex gap-2">
+        <button class="btn btn-primary flex-1" (click)="onBuscar()">Buscar</button>
+        <button class="btn btn-outline" (click)="onLimpiar()">Limpiar</button>
+      </div>
+    </div>
+  </div>
+</div>

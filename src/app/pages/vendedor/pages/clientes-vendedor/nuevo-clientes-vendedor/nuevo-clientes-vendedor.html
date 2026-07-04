@@ -1,0 +1,134 @@
+<div class="card bg-white shadow-xl border border-gray-200 mt-8">
+  <div class="card-body">
+    <h2 class="card-title text-slate-900">Registrar Nuevo Cliente</h2>
+
+    <!-- MENSAJES -->
+    @if (mensajeExito) {
+      <div class="alert alert-success shadow-lg mt-4">
+        <span>{{ mensajeExito }}</span>
+      </div>
+    }
+
+    @if (mensajeError) {
+      <div class="alert alert-error shadow-lg mt-4">
+        <span>{{ mensajeError }}</span>
+      </div>
+    }
+
+    <form [formGroup]="clienteForm" (ngSubmit)="guardarCliente()">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- DNI -->
+        <div>
+          <input
+            type="text"
+            placeholder="DNI"
+            formControlName="dni"
+            class="input input-bordered bg-white border-gray-300 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none w-full"
+            [class.border-error]="
+              clienteForm.get('dni')?.invalid && clienteForm.get('dni')?.touched
+            "
+          />
+          @if (clienteForm.get('dni')?.invalid && clienteForm.get('dni')?.touched) {
+            <span class="text-error text-sm">DNI es requerido</span>
+          }
+        </div>
+
+        <!-- NOMBRES -->
+        <div>
+          <input
+            type="text"
+            placeholder="Nombres"
+            formControlName="nombre"
+            [value]="clienteForm.get('nombre')?.value | titlecase"
+            (input)="clienteForm.get('nombre')?.setValue($event.target.value)"
+            class="input input-bordered bg-white border-gray-300 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none w-full"
+            [class.border-error]="
+              clienteForm.get('nombre')?.invalid && clienteForm.get('nombre')?.touched
+            "
+          />
+          @if (clienteForm.get('nombre')?.invalid && clienteForm.get('nombre')?.touched) {
+            <span class="text-error text-sm">Nombre es requerido</span>
+          }
+        </div>
+
+        <!-- APELLIDOS -->
+        <div>
+          <input
+            type="text"
+            placeholder="Apellidos"
+            formControlName="apellido"
+            [value]="clienteForm.get('apellido')?.value | titlecase"
+            (input)="clienteForm.get('apellido')?.setValue($event.target.value)"
+            class="input input-bordered bg-white border-gray-300 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none w-full"
+            [class.border-error]="
+              clienteForm.get('apellido')?.invalid && clienteForm.get('apellido')?.touched
+            "
+          />
+          @if (clienteForm.get('apellido')?.invalid && clienteForm.get('apellido')?.touched) {
+            <span class="text-error text-sm">Apellido es requerido</span>
+          }
+        </div>
+
+        <!-- CORREO -->
+        <div>
+          <input
+            type="email"
+            placeholder="Correo"
+            formControlName="correo"
+            class="input input-bordered bg-white border-gray-300 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none w-full"
+            [class.border-error]="
+              clienteForm.get('correo')?.invalid && clienteForm.get('correo')?.touched
+            "
+          />
+          @if (clienteForm.get('correo')?.invalid && clienteForm.get('correo')?.touched) {
+            <span class="text-error text-sm">
+              @if (clienteForm.get('correo')?.errors?.['required']) {
+                Correo es requerido
+              } @else if (clienteForm.get('correo')?.errors?.['email']) {
+                Correo inválido
+              }
+            </span>
+          }
+        </div>
+
+        <!-- TELÉFONO -->
+        <div>
+          <input
+            type="text"
+            placeholder="Teléfono"
+            formControlName="telefono"
+            class="input input-bordered bg-white border-gray-300 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none w-full"
+            [class.border-error]="
+              clienteForm.get('telefono')?.invalid && clienteForm.get('telefono')?.touched
+            "
+          />
+          @if (clienteForm.get('telefono')?.invalid && clienteForm.get('telefono')?.touched) {
+            <span class="text-error text-sm">Teléfono es requerido</span>
+          }
+        </div>
+
+        <!-- DIRECCIÓN -->
+        <div>
+          <input
+            type="text"
+            placeholder="Dirección"
+            formControlName="direccion"
+            [value]="clienteForm.get('direccion')?.value | titlecase"
+            (input)="clienteForm.get('direccion')?.setValue($event.target.value)"
+            class="input input-bordered bg-white border-gray-300 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none w-full"
+          />
+        </div>
+      </div>
+
+      <div class="flex justify-end mt-6 gap-3">
+        <button type="button" class="btn btn-outline" (click)="limpiarFormulario()">Limpiar</button>
+        <button type="submit" class="btn btn-primary" [disabled]="loading || clienteForm.invalid">
+          @if (loading) {
+            <span class="loading loading-spinner"></span>
+          }
+          Guardar Cliente
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

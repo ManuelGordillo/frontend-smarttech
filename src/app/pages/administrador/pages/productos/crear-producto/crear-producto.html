@@ -36,6 +36,8 @@
             type="text"
             formControlName="marca"
             placeholder="Ej: Samsung"
+            [value]="productoForm.get('marca')?.value | titlecase"
+            (input)="productoForm.get('marca')?.setValue($event.target.value)"
             class="w-full px-4 py-3 bg-slate-700 text-white border border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500"
           />
 

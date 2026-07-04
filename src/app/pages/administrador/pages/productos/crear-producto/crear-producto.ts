@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Location } from '@angular/common';
+import { Location, TitleCasePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { ProductoService } from '../../../../../services/producto.service';
 
 @Component({
   selector: 'app-crear-producto',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, TitleCasePipe],
   templateUrl: './crear-producto.html',
 })
 export class CrearProducto {
