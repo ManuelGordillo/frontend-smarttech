@@ -19,16 +19,27 @@
               <label class="label">
                 <span class="label-text font-medium text-slate-700">Seleccionar Cliente *</span>
               </label>
-              <select
-                class="select select-bordered w-full bg-white text-slate-800"
-                formControlName="clienteId"
-                [class.select-error]="isValidField('clienteId')"
-              >
-                <option value="">-- Seleccionar cliente --</option>
-                @for (cliente of clientes; track cliente.id) {
-                  <option [value]="cliente.id">{{ cliente.nombre }} - {{ cliente.email }}</option>
-                }
-              </select>
+
+              @if (cargandoClientes) {
+                <div class="flex items-center gap-2 text-slate-500">
+                  <span class="loading loading-spinner loading-sm"></span>
+                  <span>Cargando clientes...</span>
+                </div>
+              } @else {
+                <select
+                  class="select select-bordered w-full bg-white text-slate-800"
+                  formControlName="clienteId"
+                  [class.select-error]="isValidField('clienteId')"
+                >
+                  <option value="">-- Seleccionar cliente --</option>
+                  @for (cliente of clientes; track cliente.id) {
+                    <option [value]="cliente.id">
+                      {{ cliente.nombre }} {{ cliente.apellido }} - {{ cliente.dni }}
+                    </option>
+                  }
+                </select>
+              }
+
               @if (isValidField('clienteId')) {
                 <label class="label">
                   <span class="label-text-alt text-red-500">{{ getFieldError('clienteId') }}</span>
@@ -48,11 +59,14 @@
             </div>
 
             @if (clienteSeleccionado) {
-              <div class="mt-3 p-3 bg-slate-50 rounded-lg border border-slate-200">
-                <p class="text-sm font-medium text-slate-800">Cliente seleccionado:</p>
-                <p class="text-sm text-slate-700">{{ clienteSeleccionado.nombre }}</p>
+              <div class="mt-3 p-3 bg-green-50 rounded-lg border border-green-200">
+                <p class="text-sm font-medium text-green-800">✅ Cliente seleccionado:</p>
+                <p class="text-sm text-slate-700">
+                  {{ clienteSeleccionado.nombre }} {{ clienteSeleccionado.apellido }}
+                </p>
                 <p class="text-xs text-slate-500">
-                  {{ clienteSeleccionado.email }} | {{ clienteSeleccionado.telefono }}
+                  {{ clienteSeleccionado.correo }} | {{ clienteSeleccionado.telefono }} | DNI:
+                  {{ clienteSeleccionado.dni }}
                 </p>
               </div>
             }
@@ -68,18 +82,27 @@
               <label class="label">
                 <span class="label-text font-medium text-slate-700">Seleccionar Producto *</span>
               </label>
-              <select
-                class="select select-bordered w-full bg-white text-slate-800"
-                formControlName="productoId"
-                [class.select-error]="isValidField('productoId')"
-              >
-                <option value="">-- Seleccionar producto --</option>
-                @for (producto of productos; track producto.id) {
-                  <option [value]="producto.id">
-                    {{ producto.nombre }} - S/ {{ producto.precio }} (Stock: {{ producto.stock }})
-                  </option>
-                }
-              </select>
+
+              @if (cargandoProductos) {
+                <div class="flex items-center gap-2 text-slate-500">
+                  <span class="loading loading-spinner loading-sm"></span>
+                  <span>Cargando productos...</span>
+                </div>
+              } @else {
+                <select
+                  class="select select-bordered w-full bg-white text-slate-800"
+                  formControlName="productoId"
+                  [class.select-error]="isValidField('productoId')"
+                >
+                  <option value="">-- Seleccionar producto --</option>
+                  @for (producto of productos; track producto.id) {
+                    <option [value]="producto.id">
+                      {{ producto.modelo }} - S/ {{ producto.precio }} (Stock: {{ producto.stock }})
+                    </option>
+                  }
+                </select>
+              }
+
               @if (isValidField('productoId')) {
                 <label class="label">
                   <span class="label-text-alt text-red-500">{{ getFieldError('productoId') }}</span>
@@ -106,15 +129,31 @@
               }
             </div>
 
+            <!-- ✅ BOTONES AGREGAR PRODUCTO Y VER CARRITO -->
+            <div class="flex gap-2 mt-4">
+              <button
+                type="button"
+                class="btn btn-primary flex-1"
+                (click)="agregarProducto()"
+                [disabled]="!productoSeleccionado || cargandoProductos"
+              >
+                📦 Agregar Producto
+              </button>
+              <button type="button" class="btn btn-outline btn-success" (click)="irAlCarrito()">
+                🛒 Ver Carrito ({{ carritoService.getCarritoSnapshot().productos.length }})
+              </button>
+            </div>
+
             @if (productoSeleccionado) {
               <div class="mt-3 p-3 bg-slate-50 rounded-lg border border-slate-200">
                 <div class="flex justify-between items-center">
                   <div>
                     <p class="text-sm font-medium text-slate-800">
-                      {{ productoSeleccionado.nombre }}
+                      {{ productoSeleccionado.modelo }}
                     </p>
                     <p class="text-xs text-slate-500">
-                      Stock disponible: {{ productoSeleccionado.stock }}
+                      Marca: {{ productoSeleccionado.marca }} | Stock:
+                      {{ productoSeleccionado.stock }}
                     </p>
                   </div>
                   <div class="text-right">
@@ -179,30 +218,28 @@
           </div>
         </div>
 
-        <!-- Resumen -->
+        <!-- ✅ RESUMEN DEL CARRITO -->
         <div class="card bg-blue-50 shadow-md rounded-xl border border-blue-200">
           <div class="card-body">
-            <h2 class="card-title text-lg text-slate-800">📊 Resumen</h2>
+            <h2 class="card-title text-lg text-slate-800">📊 Resumen del Carrito</h2>
 
             <div class="space-y-2">
               <div class="flex justify-between text-slate-700">
-                <span>Producto:</span>
+                <span>Productos en carrito:</span>
                 <span class="font-medium">{{
-                  productoSeleccionado?.nombre || 'No seleccionado'
+                  carritoService.getCarritoSnapshot().productos.length
                 }}</span>
               </div>
               <div class="flex justify-between text-slate-700">
-                <span>Cantidad:</span>
-                <span class="font-medium">{{ ventaForm.get('cantidad')?.value || 0 }}</span>
-              </div>
-              <div class="flex justify-between text-slate-700">
-                <span>Precio unitario:</span>
-                <span class="font-medium">S/ {{ productoSeleccionado?.precio || 0 }}</span>
+                <span>Cliente:</span>
+                <span class="font-medium">{{
+                  clienteSeleccionado?.nombre || 'No seleccionado'
+                }}</span>
               </div>
               <div class="divider my-2 border-slate-200"></div>
               <div class="flex justify-between text-lg font-bold text-blue-600">
-                <span>TOTAL:</span>
-                <span>S/ {{ getTotal() | number: '1.2-2' }}</span>
+                <span>TOTAL CARRITO:</span>
+                <span>S/ {{ carritoService.getCarritoSnapshot().total | number: '1.2-2' }}</span>
               </div>
             </div>
           </div>
@@ -248,13 +285,13 @@
       <form [formGroup]="clienteForm">
         <div class="form-control">
           <label class="label">
-            <span class="label-text font-medium text-slate-700">Nombre Completo *</span>
+            <span class="label-text font-medium text-slate-700">Nombre *</span>
           </label>
           <input
             type="text"
             class="input input-bordered w-full bg-white text-slate-800"
             formControlName="nombre"
-            placeholder="Ej: Juan Pérez"
+            placeholder="Ej: Juan"
             [class.input-error]="isValidClienteField('nombre')"
           />
           @if (isValidClienteField('nombre')) {
@@ -266,18 +303,56 @@
 
         <div class="form-control mt-4">
           <label class="label">
-            <span class="label-text font-medium text-slate-700">Email *</span>
+            <span class="label-text font-medium text-slate-700">Apellido *</span>
+          </label>
+          <input
+            type="text"
+            class="input input-bordered w-full bg-white text-slate-800"
+            formControlName="apellido"
+            placeholder="Ej: Pérez"
+            [class.input-error]="isValidClienteField('apellido')"
+          />
+          @if (isValidClienteField('apellido')) {
+            <label class="label">
+              <span class="label-text-alt text-red-500">{{
+                getClienteFieldError('apellido')
+              }}</span>
+            </label>
+          }
+        </div>
+
+        <div class="form-control mt-4">
+          <label class="label">
+            <span class="label-text font-medium text-slate-700">DNI *</span>
+          </label>
+          <input
+            type="text"
+            class="input input-bordered w-full bg-white text-slate-800"
+            formControlName="dni"
+            placeholder="Ej: 12345678"
+            [class.input-error]="isValidClienteField('dni')"
+          />
+          @if (isValidClienteField('dni')) {
+            <label class="label">
+              <span class="label-text-alt text-red-500">{{ getClienteFieldError('dni') }}</span>
+            </label>
+          }
+        </div>
+
+        <div class="form-control mt-4">
+          <label class="label">
+            <span class="label-text font-medium text-slate-700">Correo *</span>
           </label>
           <input
             type="email"
             class="input input-bordered w-full bg-white text-slate-800"
-            formControlName="email"
+            formControlName="correo"
             placeholder="Ej: juan@email.com"
-            [class.input-error]="isValidClienteField('email')"
+            [class.input-error]="isValidClienteField('correo')"
           />
-          @if (isValidClienteField('email')) {
+          @if (isValidClienteField('correo')) {
             <label class="label">
-              <span class="label-text-alt text-red-500">{{ getClienteFieldError('email') }}</span>
+              <span class="label-text-alt text-red-500">{{ getClienteFieldError('correo') }}</span>
             </label>
           }
         </div>
@@ -317,26 +392,6 @@
             <label class="label">
               <span class="label-text-alt text-red-500">{{
                 getClienteFieldError('direccion')
-              }}</span>
-            </label>
-          }
-        </div>
-
-        <div class="form-control mt-4">
-          <label class="label">
-            <span class="label-text font-medium text-slate-700">Documento *</span>
-          </label>
-          <input
-            type="text"
-            class="input input-bordered w-full bg-white text-slate-800"
-            formControlName="documento"
-            placeholder="Ej: 12345678"
-            [class.input-error]="isValidClienteField('documento')"
-          />
-          @if (isValidClienteField('documento')) {
-            <label class="label">
-              <span class="label-text-alt text-red-500">{{
-                getClienteFieldError('documento')
               }}</span>
             </label>
           }

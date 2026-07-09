@@ -1,20 +1,10 @@
 <div class="min-h-screen bg-white p-6">
-  <!-- ⬅️ Cambiar bg-base-100 a bg-white -->
-
   <!-- HEADER -->
   <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-8">
     <div>
-      <h1 class="text-3xl font-bold text-slate-900">
-        <!-- ⬅️ Agregar color de texto oscuro -->
-        Carrito de Compras
-      </h1>
-
-      <p class="text-slate-600 mt-1">
-        <!-- ⬅️ Cambiar text-base-content/70 a text-slate-600 -->
-        Revisa los productos antes de finalizar la venta.
-      </p>
+      <h1 class="text-3xl font-bold text-slate-900">Carrito de Compras</h1>
+      <p class="text-slate-600 mt-1">Revisa los productos antes de finalizar la venta.</p>
     </div>
-
     <button routerLink="../nueva-venta" class="btn btn-outline">Nueva Venta +</button>
   </div>
 
@@ -22,196 +12,175 @@
     <!-- PRODUCTOS -->
     <div class="xl:col-span-2">
       <div class="card bg-white shadow-xl border border-gray-200">
-        <!-- ⬅️ Cambiar bg-base-100 a bg-white y border-base-300 a border-gray-200 -->
         <div class="card-body">
           <div class="flex justify-between items-center mb-4">
-            <h2 class="card-title text-xl text-slate-900">
-              <!-- ⬅️ Texto oscuro -->
-              Productos Agregados
-            </h2>
-
-            <div class="badge badge-primary badge-lg">3 Productos</div>
+            <h2 class="card-title text-xl text-slate-900">Productos Agregados</h2>
+            <div class="badge badge-primary badge-lg">{{ carrito.productos.length }} Productos</div>
           </div>
 
-          <div class="overflow-x-auto">
-            <table class="table text-slate-900">
-              <!-- ⬅️ Texto oscuro en tabla -->
-              <thead>
-                <tr>
-                  <th class="text-slate-700">Producto</th>
-                  <!-- ⬅️ Encabezados oscuros -->
-                  <th class="text-slate-700">Precio</th>
-                  <th class="text-slate-700">Cantidad</th>
-                  <th class="text-slate-700">Subtotal</th>
-                  <th></th>
-                </tr>
-              </thead>
+          <!-- ✅ NUEVA SINTAXIS @if -->
+          @if (carrito.productos.length === 0) {
+            <div class="text-center py-8">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-16 w-16 mx-auto text-gray-300 mb-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4m1.6 8L5.4 5M7 13l-1 5h12m-9 0a1 1 0 100 2 1 1 0 000-2zm8 0a1 1 0 100 2 1 1 0 000-2z"
+                />
+              </svg>
+              <p class="text-slate-500">No hay productos en el carrito</p>
+              <p class="text-slate-400 text-sm">Agrega productos desde la lista de productos</p>
+            </div>
+          }
 
-              <tbody>
-                <!-- Producto -->
-                <tr>
-                  <td>
-                    <div class="flex items-center gap-4">
-                      <img
-                        src="https://via.placeholder.com/80"
-                        class="w-16 h-16 rounded-lg object-cover"
-                      />
-
-                      <div>
-                        <div class="font-bold text-slate-900">
-                          <!-- ⬅️ Texto oscuro -->
-                          Samsung Galaxy S25
+          <!-- ✅ NUEVA SINTAXIS @if -->
+          @if (carrito.productos.length > 0) {
+            <div class="overflow-x-auto">
+              <table class="table text-slate-900">
+                <thead>
+                  <tr>
+                    <th class="text-slate-700">Producto</th>
+                    <th class="text-slate-700">Precio</th>
+                    <th class="text-slate-700">Cantidad</th>
+                    <th class="text-slate-700">Subtotal</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- ✅ NUEVA SINTAXIS @for -->
+                  @for (producto of carrito.productos; track producto.id) {
+                    <tr>
+                      <td>
+                        <div class="flex items-center gap-4">
+                          <img
+                            [src]="producto.imagen || 'https://via.placeholder.com/80'"
+                            class="w-16 h-16 rounded-lg object-cover"
+                            [alt]="producto.nombre"
+                          />
+                          <div>
+                            <div class="font-bold text-slate-900">{{ producto.nombre }}</div>
+                            <div class="text-sm text-slate-500">{{ producto.marca }}</div>
+                          </div>
                         </div>
-
-                        <div class="text-sm text-slate-500">
-                          <!-- ⬅️ Texto gris -->
-                          Samsung
+                      </td>
+                      <td class="font-semibold text-slate-900">
+                        S/ {{ producto.precio | number: '1.2-2' }}
+                      </td>
+                      <td>
+                        <div class="join">
+                          <button
+                            class="btn btn-sm join-item"
+                            (click)="disminuirCantidad(producto.id)"
+                          >
+                            -
+                          </button>
+                          <button class="btn btn-sm join-item btn-disabled text-slate-900">
+                            {{ producto.cantidad }}
+                          </button>
+                          <button
+                            class="btn btn-sm join-item"
+                            (click)="aumentarCantidad(producto.id)"
+                          >
+                            +
+                          </button>
                         </div>
-                      </div>
-                    </div>
-                  </td>
-
-                  <td class="font-semibold text-slate-900">S/ 3,499</td>
-                  <!-- ⬅️ Texto oscuro -->
-
-                  <td>
-                    <div class="join">
-                      <button class="btn btn-sm join-item">-</button>
-
-                      <button class="btn btn-sm join-item btn-disabled text-slate-900">1</button>
-
-                      <button class="btn btn-sm join-item">+</button>
-                    </div>
-                  </td>
-
-                  <td class="font-bold text-slate-900">S/ 3,499</td>
-                  <!-- ⬅️ Texto oscuro -->
-
-                  <td>
-                    <button class="btn btn-error btn-sm btn-outline">Eliminar</button>
-                  </td>
-                </tr>
-
-                <!-- Producto -->
-                <tr>
-                  <td>
-                    <div class="flex items-center gap-4">
-                      <img
-                        src="https://via.placeholder.com/80"
-                        class="w-16 h-16 rounded-lg object-cover"
-                      />
-
-                      <div>
-                        <div class="font-bold text-slate-900">
-                          <!-- ⬅️ Texto oscuro -->
-                          AirPods Pro
-                        </div>
-
-                        <div class="text-sm text-slate-500">
-                          <!-- ⬅️ Texto gris -->
-                          Apple
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-
-                  <td class="font-semibold text-slate-900">S/ 999</td>
-                  <!-- ⬅️ Texto oscuro -->
-
-                  <td>
-                    <div class="join">
-                      <button class="btn btn-sm join-item">-</button>
-
-                      <button class="btn btn-sm join-item btn-disabled text-slate-900">2</button>
-
-                      <button class="btn btn-sm join-item">+</button>
-                    </div>
-                  </td>
-
-                  <td class="font-bold text-slate-900">S/ 1,998</td>
-                  <!-- ⬅️ Texto oscuro -->
-
-                  <td>
-                    <button class="btn btn-error btn-sm btn-outline">Eliminar</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                      </td>
+                      <td class="font-bold text-slate-900">
+                        S/ {{ producto.subtotal | number: '1.2-2' }}
+                      </td>
+                      <td>
+                        <button
+                          class="btn btn-error btn-sm btn-outline"
+                          (click)="eliminarProducto(producto.id)"
+                        >
+                          Eliminar
+                        </button>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
         </div>
       </div>
     </div>
 
     <!-- PANEL DERECHO -->
     <div class="space-y-6">
-      <!-- CLIENTE -->
+      <!-- CLIENTE ASOCIADO -->
       <div class="card bg-white shadow-xl border border-gray-200">
-        <!-- ⬅️ Cambiar bg-base-100 a bg-white y border-base-300 a border-gray-200 -->
         <div class="card-body">
           <h2 class="card-title text-slate-900">Cliente Asociado</h2>
-          <!-- ⬅️ Texto oscuro -->
 
-          <div class="alert alert-success mt-2 text-slate-900">
-            <!-- ⬅️ Texto oscuro -->
-            <span> Juan Pérez Gómez </span>
-          </div>
+          <!-- ✅ NUEVA SINTAXIS @if -->
+          @if (carrito.cliente) {
+            <div class="alert alert-success mt-2 text-slate-900">
+              <span>✅ {{ carrito.cliente.nombre }} {{ carrito.cliente.apellido }}</span>
+              <span class="badge badge-ghost ml-2">{{ carrito.cliente.dni }}</span>
+            </div>
+          }
 
-          <button class="btn btn-outline btn-primary mt-3">Seleccionar Cliente</button>
+          <!-- ✅ NUEVA SINTAXIS @if -->
+          @if (!carrito.cliente) {
+            <div class="alert alert-warning mt-2 text-slate-900">
+              <span>⚠️ No hay cliente seleccionado</span>
+            </div>
+          }
+
+          <button class="btn btn-outline btn-primary mt-3" routerLink="/clientes-vendedor">
+            {{ carrito.cliente ? 'Cambiar Cliente' : 'Seleccionar Cliente' }}
+          </button>
         </div>
       </div>
 
       <!-- COMPROBANTE -->
       <div class="card bg-white shadow-xl border border-gray-200">
-        <!-- ⬅️ Cambiar bg-base-100 a bg-white y border-base-300 a border-gray-200 -->
         <div class="card-body">
           <h2 class="card-title text-slate-900">Tipo de Comprobante</h2>
-          <!-- ⬅️ Texto oscuro -->
-
-          <select class="select select-bordered mt-2 text-slate-900 bg-white border-gray-300">
-            <!-- ⬅️ Texto oscuro -->
-            <option selected>Boleta</option>
-
-            <option>Factura</option>
+          <select
+            class="select select-bordered mt-2 text-slate-900 bg-white border-gray-300"
+            [(ngModel)]="tipoComprobante"
+          >
+            <option value="BOLETA">Boleta</option>
+            <option value="FACTURA">Factura</option>
           </select>
         </div>
       </div>
 
-      <!-- RESUMEN -->
+      <!-- RESUMEN DE COMPRA -->
       <div class="card bg-white shadow-xl border border-gray-200">
-        <!-- ⬅️ Cambiar bg-base-100 a bg-white y border-base-300 a border-gray-200 -->
         <div class="card-body">
           <h2 class="card-title text-slate-900">Resumen de Compra</h2>
-          <!-- ⬅️ Texto oscuro -->
 
           <div class="space-y-3 mt-3">
             <div class="flex justify-between text-slate-700">
-              <!-- ⬅️ Texto oscuro -->
               <span>Productos</span>
-
-              <span>3</span>
+              <span>{{ carrito.productos.length }}</span>
             </div>
 
             <div class="flex justify-between text-slate-700">
-              <!-- ⬅️ Texto oscuro -->
               <span>Subtotal</span>
-
-              <span>S/ 5,497.00</span>
+              <span>S/ {{ carrito.subtotal | number: '1.2-2' }}</span>
             </div>
 
             <div class="flex justify-between text-slate-700">
-              <!-- ⬅️ Texto oscuro -->
               <span>IGV (18%)</span>
-
-              <span>S/ 989.46</span>
+              <span>S/ {{ carrito.igv | number: '1.2-2' }}</span>
             </div>
 
             <div class="divider"></div>
 
             <div class="flex justify-between text-xl font-bold">
               <span class="text-slate-900">Total</span>
-              <!-- ⬅️ Texto oscuro -->
-
-              <span class="text-primary"> S/ 6,486.46 </span>
+              <span class="text-primary">S/ {{ carrito.total | number: '1.2-2' }}</span>
             </div>
           </div>
         </div>
@@ -219,11 +188,13 @@
 
       <!-- ACCIONES -->
       <div class="card bg-white shadow-xl border border-gray-200">
-        <!-- ⬅️ Cambiar bg-base-100 a bg-white y border-base-300 a border-gray-200 -->
         <div class="card-body space-y-3">
-          <button class="btn btn-success btn-lg w-full text-white">Finalizar Venta</button>
-
-          <button class="btn btn-outline btn-error w-full">Vaciar Carrito</button>
+          <button class="btn btn-success btn-lg w-full text-white" (click)="finalizarVenta()">
+            Finalizar Venta
+          </button>
+          <button class="btn btn-outline btn-error w-full" (click)="vaciarCarrito()">
+            Vaciar Carrito
+          </button>
         </div>
       </div>
     </div>

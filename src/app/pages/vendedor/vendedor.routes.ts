@@ -8,7 +8,7 @@ import { HistorialVentas } from './pages/historial-ventas/historial-ventas';
 import { Reportes } from './pages/reportes/reportes';
 import { ConfiguracionVendedor } from './pages/configuracion-vendedor/configuracion-vendedor';
 import { authGuard } from '../../guards/auth.guard';
-import { NuevaVenta } from './pages/dashboard-resumen-vendedor/nueva-venta/nueva-venta';
+import { NuevaVenta } from './pages/carrito/nueva-venta/nueva-venta';
 
 export const vendedorRoutes: Routes = [
   {
