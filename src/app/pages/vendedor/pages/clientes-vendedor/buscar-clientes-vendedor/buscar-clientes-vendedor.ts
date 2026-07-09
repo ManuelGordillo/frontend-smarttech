@@ -1,3 +1,4 @@
+// buscar-clientes-vendedor.ts
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -9,27 +10,23 @@ import { FormsModule } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BuscarClientesVendedor {
-  // FILTROS
   filtroDni: string = '';
   filtroNombre: string = '';
 
-  // EMITIR EVENTOS AL PADRE
   @Output() buscar = new EventEmitter<{ dni: string; nombre: string }>();
   @Output() limpiar = new EventEmitter<void>();
 
-  // ==========================================
-  // BUSCAR CLIENTES
-  // ==========================================
+  // ✅ MÉTODO CORREGIDO
   onBuscar(): void {
-    this.buscar.emit({
-      dni: this.filtroDni,
-      nombre: this.filtroNombre,
-    });
+    // Pequeño delay para asegurar que ngModel se actualice
+    setTimeout(() => {
+      this.buscar.emit({
+        dni: this.filtroDni,
+        nombre: this.filtroNombre,
+      });
+    }, 0);
   }
 
-  // ==========================================
-  // LIMPIAR FILTROS
-  // ==========================================
   onLimpiar(): void {
     this.filtroDni = '';
     this.filtroNombre = '';

@@ -2,11 +2,16 @@
   <!-- HEADER -->
   <smarttech-clientes-vendedor-header />
 
-  <!-- BUSCAR CLIENTES  -->
-  <smarttech-buscar-clientes-vendedor />
+  <!-- BUSCAR CLIENTES -->
+  <smarttech-buscar-clientes-vendedor (buscar)="onBuscar($event)" (limpiar)="onLimpiar()" />
+
   <!-- TABLA CLIENTES -->
-  <smarttech-tabla-clientes-vendedor />
+  <smarttech-tabla-clientes-vendedor
+    [clientes]="clientesFiltrados"
+    [cargando]="cargando"
+    (seleccionarCliente)="onSeleccionarCliente($event)"
+  />
 
   <!-- NUEVO CLIENTE -->
-  <smarttech-nuevo-clientes-vendedor />
+  <smarttech-nuevo-clientes-vendedor (clienteCreado)="onClienteCreado()" />
 </div>

@@ -1,10 +1,9 @@
-<div class="p-6 bg-base-100 min-h-screen">
+<div class="p-6 bg-white min-h-screen">
   <!-- ENCABEZADO -->
   <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-8">
     <div>
-      <h1 class="text-3xl font-bold text-base-content">Ventas</h1>
-
-      <p class="text-base-content/70 mt-1">Busca productos y agrégalos al carrito.</p>
+      <h1 class="text-3xl font-bold text-gray-900">Ventas</h1>
+      <p class="text-gray-600 mt-1">Busca productos y agrégalos al carrito.</p>
     </div>
 
     <button class="btn btn-primary gap-2">
@@ -22,166 +21,136 @@
           d="M3 3h2l.4 2M7 13h10l4-8H5.4m1.6 8L5.4 5M7 13l-1 5h12m-9 0a1 1 0 100 2 1 1 0 000-2zm8 0a1 1 0 100 2 1 1 0 000-2z"
         />
       </svg>
-
       Carrito
-
       <div class="badge badge-secondary">3</div>
     </button>
   </div>
 
   <!-- FILTROS -->
-  <div class="card bg-base-200 shadow-md mb-8">
+  <div class="card bg-white shadow-md border border-gray-200 mb-8">
     <div class="card-body">
       <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4">
-        <!-- Buscar -->
-        <input type="text" placeholder="Buscar producto..." class="input input-bordered w-full" />
-
-        <!-- Marca -->
-        <select class="select select-bordered">
+        <input
+          type="text"
+          placeholder="Buscar producto..."
+          class="input input-bordered bg-white text-gray-900 border-2 border-gray-300 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+        />
+        <select
+          class="select select-bordered bg-white text-gray-900 border-2 border-gray-300 focus:border-primary focus:outline-none"
+        >
           <option selected>Todas las marcas</option>
-
           <option>Samsung</option>
           <option>Apple</option>
           <option>Xiaomi</option>
           <option>Motorola</option>
         </select>
-
-        <!-- Modelo -->
-        <input type="text" placeholder="Modelo" class="input input-bordered" />
-
-        <!-- Categoría -->
-        <select class="select select-bordered">
+        <input
+          type="text"
+          placeholder="Modelo"
+          class="input input-bordered bg-white text-gray-900 border-2 border-gray-300 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+        />
+        <select
+          class="select select-bordered bg-white text-gray-900 border-2 border-gray-300 focus:border-primary focus:outline-none"
+        >
           <option selected>Todas las categorías</option>
-
           <option>Celulares</option>
           <option>Tablets</option>
           <option>Audífonos</option>
           <option>Accesorios</option>
         </select>
-
-        <!-- Buscar -->
         <button class="btn btn-primary">Buscar</button>
       </div>
     </div>
   </div>
 
   <!-- RESUMEN -->
-  <div class="stats shadow w-full mb-8">
-    <div class="stat">
-      <div class="stat-title">Productos Disponibles</div>
-
-      <div class="stat-value text-primary">152</div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="bg-white rounded-lg shadow-md border-2 border-gray-200 p-6">
+      <p class="text-sm text-gray-500">Productos Disponibles</p>
+      <p class="text-3xl font-bold text-gray-900">152</p>
     </div>
-
-    <div class="stat">
-      <div class="stat-title">Marcas</div>
-
-      <div class="stat-value">12</div>
+    <div class="bg-white rounded-lg shadow-md border-2 border-gray-200 p-6">
+      <p class="text-sm text-gray-500">Marcas</p>
+      <p class="text-3xl font-bold text-gray-900">12</p>
     </div>
-
-    <div class="stat">
-      <div class="stat-title">En Carrito</div>
-
-      <div class="stat-value text-secondary">3</div>
+    <div class="bg-white rounded-lg shadow-md border-2 border-gray-200 p-6">
+      <p class="text-sm text-gray-500">En Carrito</p>
+      <p class="text-3xl font-bold text-secondary">3</p>
     </div>
   </div>
 
   <!-- PRODUCTOS -->
   <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-    <!-- PRODUCTO -->
-    <div class="card bg-base-100 shadow-xl border border-base-300">
+    <!-- PRODUCTO 1 -->
+    <div class="card bg-white shadow-md border-2 border-gray-200 hover:shadow-xl transition-shadow">
       <figure class="p-4">
         <img src="https://via.placeholder.com/300" alt="Samsung" class="h-52 object-contain" />
       </figure>
-
       <div class="card-body">
         <div class="flex justify-between items-center">
           <div class="badge badge-primary">Samsung</div>
-
           <div class="badge badge-success">Stock: 15</div>
         </div>
-
-        <h2 class="card-title mt-2">Galaxy S25</h2>
-
-        <p class="text-sm text-base-content/70">256GB Negro</p>
-
+        <h2 class="card-title text-gray-900 mt-2">Galaxy S25</h2>
+        <p class="text-sm text-gray-500">256GB Negro</p>
         <div class="text-2xl font-bold text-primary mt-2">S/ 3,499</div>
-
         <div class="card-actions mt-4">
           <button class="btn btn-primary w-full">Agregar al carrito</button>
         </div>
       </div>
     </div>
 
-    <!-- PRODUCTO -->
-    <div class="card bg-base-100 shadow-xl border border-base-300">
+    <!-- PRODUCTO 2 -->
+    <div class="card bg-white shadow-md border-2 border-gray-200 hover:shadow-xl transition-shadow">
       <figure class="p-4">
         <img src="https://via.placeholder.com/300" alt="iPhone" class="h-52 object-contain" />
       </figure>
-
       <div class="card-body">
         <div class="flex justify-between items-center">
           <div class="badge badge-secondary">Apple</div>
-
           <div class="badge badge-warning">Stock: 4</div>
         </div>
-
-        <h2 class="card-title mt-2">iPhone 17 Pro</h2>
-
-        <p class="text-sm text-base-content/70">512GB Titanio</p>
-
+        <h2 class="card-title text-gray-900 mt-2">iPhone 17 Pro</h2>
+        <p class="text-sm text-gray-500">512GB Titanio</p>
         <div class="text-2xl font-bold text-primary mt-2">S/ 5,999</div>
-
         <div class="card-actions mt-4">
           <button class="btn btn-primary w-full">Agregar al carrito</button>
         </div>
       </div>
     </div>
 
-    <!-- PRODUCTO -->
-    <div class="card bg-base-100 shadow-xl border border-base-300">
+    <!-- PRODUCTO 3 -->
+    <div class="card bg-white shadow-md border-2 border-gray-200 hover:shadow-xl transition-shadow">
       <figure class="p-4">
         <img src="https://via.placeholder.com/300" alt="Xiaomi" class="h-52 object-contain" />
       </figure>
-
       <div class="card-body">
         <div class="flex justify-between items-center">
           <div class="badge badge-accent">Xiaomi</div>
-
           <div class="badge badge-success">Stock: 22</div>
         </div>
-
-        <h2 class="card-title mt-2">Redmi Note 15 Pro</h2>
-
-        <p class="text-sm text-base-content/70">256GB Azul</p>
-
+        <h2 class="card-title text-gray-900 mt-2">Redmi Note 15 Pro</h2>
+        <p class="text-sm text-gray-500">256GB Azul</p>
         <div class="text-2xl font-bold text-primary mt-2">S/ 1,499</div>
-
         <div class="card-actions mt-4">
           <button class="btn btn-primary w-full">Agregar al carrito</button>
         </div>
       </div>
     </div>
 
-    <!-- PRODUCTO -->
-    <div class="card bg-base-100 shadow-xl border border-base-300">
+    <!-- PRODUCTO 4 -->
+    <div class="card bg-white shadow-md border-2 border-gray-200 hover:shadow-xl transition-shadow">
       <figure class="p-4">
         <img src="https://via.placeholder.com/300" alt="AirPods" class="h-52 object-contain" />
       </figure>
-
       <div class="card-body">
         <div class="flex justify-between items-center">
           <div class="badge badge-error">Apple</div>
-
           <div class="badge badge-error">Sin Stock</div>
         </div>
-
-        <h2 class="card-title mt-2">AirPods Pro</h2>
-
-        <p class="text-sm text-base-content/70">2da Generación</p>
-
+        <h2 class="card-title text-gray-900 mt-2">AirPods Pro</h2>
+        <p class="text-sm text-gray-500">2da Generación</p>
         <div class="text-2xl font-bold text-primary mt-2">S/ 999</div>
-
         <div class="card-actions mt-4">
           <button class="btn btn-disabled w-full">Sin Stock</button>
         </div>

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ClientesInterface } from '../interfaces/clientes.interface';
@@ -28,20 +28,58 @@ export class ClientesService {
     return headers;
   }
 
+  // ==========================================
+  // OBTENER TODOS LOS CLIENTES
+  // ==========================================
   getClientes(): Observable<ClientesInterface[]> {
     return this.http.get<ClientesInterface[]>(`${this.apiUrl}/clientes/listar`, {
       headers: this.getHeaders(),
     });
   }
 
+  // ==========================================
+  // BUSCAR CLIENTES POR DNI O NOMBRE ✅ NUEVO
+  // ==========================================
+  buscarClientes(dni?: string, nombre?: string): Observable<ClientesInterface[]> {
+    let params = new HttpParams();
+
+    if (dni && dni.trim() !== '') {
+      params = params.set('dni', dni.trim());
+    }
+
+    if (nombre && nombre.trim() !== '') {
+      params = params.set('nombre', nombre.trim());
+    }
+
+    return this.http.get<ClientesInterface[]>(`${this.apiUrl}/clientes/buscar`, {
+      headers: this.getHeaders(),
+      params: params,
+    });
+  }
+
+  // ==========================================
+  // CREAR CLIENTE
+  // ==========================================
   crearCliente(cliente: ClientesInterface): Observable<ClientesInterface> {
     return this.http.post<ClientesInterface>(`${this.apiUrl}/clientes/crear`, cliente, {
       headers: this.getHeaders(),
     });
   }
 
+  // ==========================================
+  // ELIMINAR CLIENTE
+  // ==========================================
   eliminarCliente(id: number): Observable<any> {
-    return this.http.get<ClientesInterface[]>(`${this.apiUrl}/clientes/eliminar/${id}`, {
+    return this.http.delete(`${this.apiUrl}/clientes/eliminar/${id}`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  // ==========================================
+  // ACTUALIZAR CLIENTE ✅ OPCIONAL
+  // ==========================================
+  actualizarCliente(id: number, cliente: ClientesInterface): Observable<ClientesInterface> {
+    return this.http.put<ClientesInterface>(`${this.apiUrl}/clientes/actualizar/${id}`, cliente, {
       headers: this.getHeaders(),
     });
   }

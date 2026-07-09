@@ -1,8 +1,33 @@
+<!-- tabla-clientes-vendedor.html -->
 <div class="card bg-white shadow-xl border border-gray-200">
   <div class="card-body">
-    <h2 class="card-title text-slate-900 mb-4">Clientes Encontrados</h2>
+    <h2 class="card-title text-slate-900 mb-4">
+      Clientes Encontrados
+      <span *ngIf="clientes.length > 0" class="badge badge-primary">{{ clientes.length }}</span>
+    </h2>
 
-    <div class="overflow-x-auto">
+    <!-- Mensaje cuando no hay clientes -->
+    <div *ngIf="clientes.length === 0" class="text-center py-8">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-16 w-16 mx-auto text-gray-300 mb-4"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+        />
+      </svg>
+      <p class="text-slate-500">No hay clientes para mostrar</p>
+      <p class="text-slate-400 text-sm">Realiza una búsqueda para ver resultados</p>
+    </div>
+
+    <!-- Tabla de clientes -->
+    <div class="overflow-x-auto" *ngIf="clientes.length > 0">
       <table class="table text-slate-900">
         <thead>
           <tr>
@@ -15,23 +40,16 @@
         </thead>
 
         <tbody>
-          <tr class="hover:bg-gray-50">
-            <td class="text-slate-900">75896321</td>
-            <td class="text-slate-900">Juan Pérez Gómez</td>
-            <td class="text-slate-900">987654321</td>
-            <td class="text-slate-900">juan@gmail.com</td>
+          <tr *ngFor="let cliente of clientes" class="hover:bg-gray-50 transition-colors">
+            <td class="text-slate-900 font-medium">{{ cliente.dni }}</td>
+            <td class="text-slate-900">{{ cliente.nombre }} {{ cliente.apellido }}</td>
+            <!-- ✅ Cambiado -->
+            <td class="text-slate-900">{{ cliente.telefono }}</td>
+            <td class="text-slate-900">{{ cliente.correo }}</td>
             <td>
-              <button class="btn btn-success btn-sm">Seleccionar</button>
-            </td>
-          </tr>
-
-          <tr class="hover:bg-gray-50">
-            <td class="text-slate-900">74589632</td>
-            <td class="text-slate-900">María Torres Ruiz</td>
-            <td class="text-slate-900">945632178</td>
-            <td class="text-slate-900">maria@gmail.com</td>
-            <td>
-              <button class="btn btn-success btn-sm">Seleccionar</button>
+              <button class="btn btn-success btn-sm" (click)="onSeleccionar(cliente)">
+                Seleccionar
+              </button>
             </td>
           </tr>
         </tbody>
