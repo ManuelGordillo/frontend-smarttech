@@ -178,7 +178,7 @@ export class NuevaVenta implements OnInit {
   }
 
   // ==========================================
-  // AGREGAR PRODUCTO AL CARRITO
+  // AGREGAR PRODUCTO AL CARRITO - CORREGIDO ✅
   // ==========================================
   agregarProducto(): void {
     if (!this.productoSeleccionado) {
@@ -193,32 +193,21 @@ export class NuevaVenta implements OnInit {
       return;
     }
 
-    const productoCarrito = {
-      id: this.productoSeleccionado.id!,
-      nombre: this.productoSeleccionado.modelo,
-      marca: this.productoSeleccionado.marca,
-      precio: this.productoSeleccionado.precio,
-      cantidad: cantidad,
-      subtotal: this.productoSeleccionado.precio * cantidad,
-      imagen:
-        this.productoSeleccionado.imagenPrincipal ||
-        this.productoSeleccionado.imagen ||
-        'https://via.placeholder.com/80',
-      stock: this.productoSeleccionado.stock,
-    };
+    // ✅ CORRECCIÓN: Agregar el producto directamente
+    // El CarritoService se encarga de convertirlo a CarritoProducto internamente
+    for (let i = 0; i < cantidad; i++) {
+      this.carritoService.agregarProducto(this.productoSeleccionado);
+    }
 
-    // ✅ Agregar al carrito
-    this.carritoService.agregarProducto(productoCarrito);
-
-    alert(`✅ ${productoCarrito.nombre} agregado al carrito`);
-    console.log('🛒 Producto agregado:', productoCarrito);
+    alert(`✅ ${this.productoSeleccionado.modelo} x${cantidad} agregado al carrito`);
+    console.log(`🛒 Producto agregado: ${this.productoSeleccionado.modelo} x${cantidad}`);
   }
 
   // ==========================================
   // IR AL CARRITO
   // ==========================================
   irAlCarrito(): void {
-    this.router.navigate(['/carrito']);
+    this.router.navigate(['/vendedor/carrito']);
   }
 
   // ==========================================

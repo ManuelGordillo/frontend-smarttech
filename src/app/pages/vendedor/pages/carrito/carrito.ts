@@ -1,6 +1,6 @@
 // carrito.ts
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CarritoService } from '../../../../services/carrito.service';
@@ -8,9 +8,10 @@ import { CarritoInterface } from '../../../../interfaces/carrito.interface';
 
 @Component({
   selector: 'smarttech-carrito',
+  standalone: true,
   imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './carrito.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // ✅ SIN ChangeDetectionStrategy
 })
 export class Carrito implements OnInit {
   carrito: CarritoInterface = {
@@ -29,11 +30,8 @@ export class Carrito implements OnInit {
     // ✅ Suscribirse al carrito para recibir actualizaciones
     this.carritoService.carrito$.subscribe((carrito) => {
       this.carrito = carrito;
-      console.log('🛒 Carrito actualizado:', carrito);
-
-      if (carrito.cliente) {
-        console.log('👤 Cliente en carrito:', carrito.cliente.nombre, carrito.cliente.apellido);
-      }
+      console.log('🛒 Carrito actualizado en carrito.component:', carrito);
+      console.log('📦 Productos en carrito:', carrito.productos.length);
     });
   }
 

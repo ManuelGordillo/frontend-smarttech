@@ -1,0 +1,121 @@
+<div class="card bg-white shadow-md border border-gray-200 mb-8">
+  <div class="card-body">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4">
+      <!-- Buscar producto -->
+      <div class="relative">
+        <input
+          type="text"
+          placeholder="Buscar producto..."
+          class="input input-bordered bg-white text-gray-900 border-2 border-gray-300 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 w-full"
+          [(ngModel)]="filtroBusqueda"
+          (ngModelChange)="aplicarFiltros()"
+          (keyup.enter)="aplicarFiltros()"
+        />
+        @if (isLoading()) {
+          <div class="absolute right-3 top-3">
+            <span class="loading loading-spinner loading-xs"></span>
+          </div>
+        }
+      </div>
+
+      <!-- Filtrar por marca -->
+      <select
+        class="select select-bordered bg-white text-gray-900 border-2 border-gray-300 focus:border-primary focus:outline-none"
+        [(ngModel)]="filtroMarca"
+        (ngModelChange)="aplicarFiltros()"
+      >
+        <option value="">Todas las marcas</option>
+        @for (marca of marcas(); track marca) {
+          <option [value]="marca">{{ marca }}</option>
+        }
+      </select>
+
+      <!-- Filtrar por modelo -->
+      <input
+        type="text"
+        placeholder="Modelo"
+        class="input input-bordered bg-white text-gray-900 border-2 border-gray-300 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+        [(ngModel)]="filtroModelo"
+        (ngModelChange)="aplicarFiltros()"
+        (keyup.enter)="aplicarFiltros()"
+      />
+
+      <!-- Filtrar por categoría -->
+      <select
+        class="select select-bordered bg-white text-gray-900 border-2 border-gray-300 focus:border-primary focus:outline-none"
+        [(ngModel)]="filtroCategoria"
+        (ngModelChange)="aplicarFiltros()"
+      >
+        <option value="">Todas las categorías</option>
+        @for (categoria of categorias(); track categoria) {
+          <option [value]="categoria">{{ categoria }}</option>
+        }
+      </select>
+
+      <!-- Botón Buscar -->
+      <button class="btn btn-primary" (click)="aplicarFiltros()" [disabled]="isLoading()">
+        @if (isLoading()) {
+          <span class="loading loading-spinner loading-sm"></span>
+        }
+        Buscar
+      </button>
+    </div>
+
+    <!-- Mostrar filtros activos y contador de resultados -->
+    <div class="flex flex-wrap items-center justify-between mt-4 pt-4 border-t border-gray-200">
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="text-sm text-gray-600 font-medium">Filtros activos:</span>
+
+        @if (filtroBusqueda()) {
+          <span class="badge badge-primary badge-outline flex items-center gap-1">
+            Buscar: {{ filtroBusqueda() }}
+            <button class="ml-1 hover:text-error" (click)="limpiarFiltro('busqueda')">✕</button>
+          </span>
+        }
+
+        @if (filtroMarca()) {
+          <span class="badge badge-primary badge-outline flex items-center gap-1">
+            Marca: {{ filtroMarca() }}
+            <button class="ml-1 hover:text-error" (click)="limpiarFiltro('marca')">✕</button>
+          </span>
+        }
+
+        @if (filtroModelo()) {
+          <span class="badge badge-primary badge-outline flex items-center gap-1">
+            Modelo: {{ filtroModelo() }}
+            <button class="ml-1 hover:text-error" (click)="limpiarFiltro('modelo')">✕</button>
+          </span>
+        }
+
+        @if (filtroCategoria()) {
+          <span class="badge badge-primary badge-outline flex items-center gap-1">
+            Categoría: {{ filtroCategoria() }}
+            <button class="ml-1 hover:text-error" (click)="limpiarFiltro('categoria')">✕</button>
+          </span>
+        }
+
+        @if (!filtrosActivos()) {
+          <span class="text-sm text-gray-400">Ningún filtro activo</span>
+        }
+      </div>
+
+      <div class="flex items-center gap-2">
+        <!-- Contador de resultados -->
+        <span class="text-sm text-gray-600">
+          {{ productosFiltrados().length }} productos encontrados
+        </span>
+
+        <!-- Botón limpiar todos -->
+        @if (filtrosActivos()) {
+          <button
+            class="btn btn-ghost btn-xs text-gray-500 hover:text-gray-700"
+            (click)="limpiarFiltros()"
+          >
+            <span class="material-icons text-sm">clear</span>
+            Limpiar todos
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+</div>

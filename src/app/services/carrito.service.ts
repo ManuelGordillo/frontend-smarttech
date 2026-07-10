@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ClientesInterface } from '../interfaces/clientes.interface';
 import { CarritoProducto, CarritoInterface } from '../interfaces/carrito.interface';
+import { ProductoInterface } from '../interfaces/producto.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -47,10 +48,23 @@ export class CarritoService {
   }
 
   // ==========================================
-  // AGREGAR PRODUCTO
+  // AGREGAR PRODUCTO (recibe ProductoInterface)
   // ==========================================
-  agregarProducto(producto: CarritoProducto): void {
+  agregarProducto(producto: ProductoInterface): void {
     const currentState = this.carritoSubject.getValue();
+
+    // Convertir ProductoInterface a CarritoProducto
+    const productoCarrito: CarritoProducto = {
+      id: producto.id!,
+      modelo: producto.modelo, // ← Usar modelo
+      marca: producto.marca,
+      precio: producto.precio,
+      cantidad: 1,
+      imagen: producto.imagen || producto.imagenPrincipal || '',
+      stock: producto.stock,
+      subtotal: producto.precio,
+    };
+
     const productoExistente = currentState.productos.find((p) => p.id === producto.id);
 
     let nuevosProductos: CarritoProducto[];
@@ -68,18 +82,11 @@ export class CarritoService {
       );
     } else {
       // Si no existe, agregar nuevo
-      nuevosProductos = [
-        ...currentState.productos,
-        {
-          ...producto,
-          cantidad: 1,
-          subtotal: producto.precio,
-        },
-      ];
+      nuevosProductos = [...currentState.productos, productoCarrito];
     }
 
     this.actualizarTotales(nuevosProductos);
-    console.log('✅ Producto agregado:', producto.nombre);
+    console.log('✅ Producto agregado:', producto.modelo);
   }
 
   // ==========================================
@@ -116,16 +123,11 @@ export class CarritoService {
   }
 
   // ==========================================
-  // ACTUALIZAR TOTALES (CON IGV INCLUIDO EN PRECIO)
+  // ACTUALIZAR TOTALES
   // ==========================================
   private actualizarTotales(productos: CarritoProducto[]): void {
-    // ✅ Total = suma de subtotales (precio con IGV incluido)
     const total = productos.reduce((sum, p) => sum + p.subtotal, 0);
-
-    // ✅ IGV = Total - (Total / 1.18)
     const igv = total - total / (1 + this.IGV);
-
-    // ✅ Subtotal = Total - IGV
     const subtotal = total - igv;
 
     const currentState = this.carritoSubject.getValue();
@@ -156,7 +158,7 @@ export class CarritoService {
   }
 
   // ==========================================
-  // VACIAR CARRITO (sin perder cliente)
+  // VACIAR PRODUCTOS (sin perder cliente)
   // ==========================================
   vaciarProductos(): void {
     const currentState = this.carritoSubject.getValue();

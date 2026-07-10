@@ -1,0 +1,82 @@
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+  @for (producto of productos(); track producto.id) {
+    <div class="card bg-white shadow-md border-2 border-gray-200 hover:shadow-xl transition-shadow">
+      <figure class="p-4">
+        @if (producto.imagen) {
+          <img
+            [src]="'data:image/jpeg;base64,' + producto.imagen"
+            [alt]="producto.modelo"
+            class="h-52 object-contain"
+          />
+        } @else if (producto.imagenPrincipal) {
+          <img
+            [src]="producto.imagenPrincipal"
+            [alt]="producto.modelo"
+            class="h-52 object-contain"
+          />
+        } @else {
+          <img
+            src="https://via.placeholder.com/300"
+            [alt]="producto.modelo"
+            class="h-52 object-contain"
+          />
+        }
+      </figure>
+      <div class="card-body">
+        <div class="flex justify-between items-center">
+          <div
+            class="badge"
+            [class.badge-primary]="producto.marca === 'Samsung'"
+            [class.badge-secondary]="producto.marca === 'Apple'"
+            [class.badge-accent]="producto.marca === 'Xiaomi'"
+            [class.badge-ghost]="
+              producto.marca !== 'Samsung' &&
+              producto.marca !== 'Apple' &&
+              producto.marca !== 'Xiaomi'
+            "
+          >
+            {{ producto.marca }}
+          </div>
+          <div
+            class="badge"
+            [class.badge-success]="producto.stock > 10"
+            [class.badge-warning]="producto.stock > 0 && producto.stock <= 10"
+            [class.badge-error]="producto.stock === 0"
+          >
+            Stock: {{ producto.stock }}
+          </div>
+        </div>
+        <h2 class="card-title text-gray-900 mt-2">{{ producto.modelo }}</h2>
+        <p class="text-sm text-gray-500">{{ producto.descripcion }}</p>
+        <p class="text-xs text-gray-400">Color: {{ producto.color }}</p>
+        <p class="text-xs text-gray-400">Categoría: {{ producto.categoria }}</p>
+        <div class="text-2xl font-bold text-primary mt-2">
+          {{ producto.precio | currency: 'PEN' : 'S/ ' : '1.2-2' }}
+        </div>
+        <div class="card-actions mt-4">
+          <button
+            class="btn w-full"
+            [class.btn-primary]="producto.stock > 0"
+            [class.btn-disabled]="producto.stock === 0"
+            [disabled]="producto.stock === 0 || producto.estado === false"
+            (click)="agregarAlCarrito.emit(producto)"
+          >
+            @if (producto.estado === false) {
+              No disponible
+            } @else if (producto.stock === 0) {
+              Sin Stock
+            } @else {
+              Agregar al carrito
+            }
+          </button>
+        </div>
+      </div>
+    </div>
+  } @empty {
+    <div class="col-span-full text-center py-12">
+      <div class="text-gray-400 text-6xl mb-4">📦</div>
+      <h3 class="text-xl font-medium text-gray-600">No se encontraron productos</h3>
+      <p class="text-gray-400">Intenta con otros filtros</p>
+    </div>
+  }
+</div>

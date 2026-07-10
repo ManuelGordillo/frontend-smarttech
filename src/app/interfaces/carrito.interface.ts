@@ -1,19 +1,16 @@
-import { ClientesInterface } from './clientes.interface';
-
-// models/carrito.interface.ts
 export interface CarritoProducto {
   id: number;
-  nombre: string;
+  modelo: string; // ← Cambiar de nombre a modelo
   marca: string;
   precio: number;
   cantidad: number;
+  imagen?: string;
+  stock?: number;
   subtotal: number;
-  imagen: string;
-  stock: number;
 }
 
 export interface CarritoInterface {
-  cliente: ClientesInterface | null;
+  cliente: any | null;
   productos: CarritoProducto[];
   subtotal: number;
   igv: number;
