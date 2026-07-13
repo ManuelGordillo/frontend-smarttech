@@ -1,112 +1,322 @@
 <div class="min-h-screen bg-white p-6">
-  <!-- HEADER -->
-  <div class="mb-8">
-    <h1 class="text-3xl font-bold text-slate-800">Dashboard Vendedor</h1>
-    <p class="text-slate-500 mt-1">Resumen general de tu rendimiento de ventas.</p>
-  </div>
-
-  <!-- KPI -->
-  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
-    <div class="stat bg-white shadow-md rounded-xl border border-slate-200">
-      <div class="stat-title text-slate-500">Ventas Hoy</div>
-      <div class="stat-value text-blue-600">S/ 1,250</div>
-      <div class="stat-desc text-green-500">↑ 8% vs ayer</div>
+  <!-- HEADER CON ACCIONES -->
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+    <div>
+      <h1 class="text-3xl font-bold text-slate-800 flex items-center gap-2">
+        <span>📊</span> Dashboard Vendedor
+      </h1>
+      <p class="text-slate-500 mt-1">
+        Resumen general de tu rendimiento de ventas.
+        <span class="text-xs text-blue-600 ml-2 bg-blue-50 px-2 py-1 rounded-full">
+          Actualizado: {{ ultimaActualizacion | date: 'HH:mm:ss' }}
+        </span>
+      </p>
     </div>
-
-    <div class="stat bg-white shadow-md rounded-xl border border-slate-200">
-      <div class="stat-title text-slate-500">Ventas Mes</div>
-      <div class="stat-value text-indigo-600">S/ 32,400</div>
-      <div class="stat-desc text-green-500">↑ 12% vs mes anterior</div>
-    </div>
-
-    <div class="stat bg-white shadow-md rounded-xl border border-slate-200">
-      <div class="stat-title text-slate-500">Productos Vendidos</div>
-      <div class="stat-value text-purple-600">142</div>
-      <div class="stat-desc text-slate-500">Este mes</div>
-    </div>
-
-    <div class="stat bg-white shadow-md rounded-xl border border-slate-200">
-      <div class="stat-title text-slate-500">Clientes Atendidos</div>
-      <div class="stat-value text-emerald-600">58</div>
-      <div class="stat-desc text-slate-500">Este mes</div>
+    <div class="flex gap-2 flex-wrap">
+      <button (click)="refrescarDashboard()" class="btn btn-ghost btn-sm" [disabled]="estaCargando">
+        <span [class.loading]="estaCargando">🔄</span> Actualizar
+      </button>
+      <button routerLink="../ventas-filtros" class="btn btn-outline btn-sm">📈 Ver detalles</button>
+      <button routerLink="../nueva-venta" class="btn btn-primary btn-sm">🛒 Nueva Venta</button>
     </div>
   </div>
 
-  <!-- GRAFICOS -->
-  <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
-    <div class="card bg-white shadow-md rounded-xl border border-slate-200">
-      <div class="card-body">
-        <h2 class="card-title text-slate-800">Ventas Semanales</h2>
-        <div class="h-64 flex items-center justify-center text-slate-400">[Gráfico Lineal]</div>
+  <!-- KPI CARDS - Datos desde la BD -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6 mb-8">
+    <!-- Ventas Hoy -->
+    <div
+      class="stat bg-white shadow-md rounded-xl border border-slate-200 hover:shadow-lg transition-all duration-300 p-4 md:p-6"
+    >
+      <div class="flex items-center justify-between">
+        <div class="flex-1">
+          <div class="stat-title text-slate-500 text-sm font-medium flex items-center gap-2">
+            <span class="text-blue-500">💰</span> Ventas Hoy
+          </div>
+          <div class="stat-value text-2xl md:text-3xl font-bold text-blue-600 mt-2">
+            {{ estadisticas.ventasHoy | currency: 'PEN' : 'symbol' : '1.0-0' }}
+          </div>
+          <div
+            class="stat-desc text-sm mt-2 flex items-center gap-1"
+            [class.text-green-500]="estadisticas.cambioHoy >= 0"
+            [class.text-red-500]="estadisticas.cambioHoy < 0"
+          >
+            <span>{{ estadisticas.cambioHoy >= 0 ? '↑' : '↓' }}</span>
+            {{ estadisticas.cambioHoy | number: '1.1-1' }}% vs ayer
+          </div>
+        </div>
+        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-2xl">
+          💰
+        </div>
       </div>
     </div>
 
-    <div class="card bg-white shadow-md rounded-xl border border-slate-200">
-      <div class="card-body">
-        <h2 class="card-title text-slate-800">Productos Más Vendidos</h2>
-        <div class="space-y-3 mt-3">
-          <div class="flex justify-between items-center border-b border-slate-100 pb-2">
-            <span class="text-slate-700">iPhone 17 Pro</span>
-            <span class="font-bold text-blue-600">32 uds</span>
+    <!-- Ventas Mes -->
+    <div
+      class="stat bg-white shadow-md rounded-xl border border-slate-200 hover:shadow-lg transition-all duration-300 p-4 md:p-6"
+    >
+      <div class="flex items-center justify-between">
+        <div class="flex-1">
+          <div class="stat-title text-slate-500 text-sm font-medium flex items-center gap-2">
+            <span class="text-indigo-500">📈</span> Ventas Mes
           </div>
-          <div class="flex justify-between items-center border-b border-slate-100 pb-2">
-            <span class="text-slate-700">Samsung S25</span>
-            <span class="font-bold text-blue-600">28 uds</span>
+          <div class="stat-value text-2xl md:text-3xl font-bold text-indigo-600 mt-2">
+            {{ estadisticas.ventasMes | currency: 'PEN' : 'symbol' : '1.0-0' }}
           </div>
-          <div class="flex justify-between items-center">
-            <span class="text-slate-700">Redmi Note 15</span>
-            <span class="font-bold text-blue-600">22 uds</span>
+          <div
+            class="stat-desc text-sm mt-2 flex items-center gap-1"
+            [class.text-green-500]="estadisticas.cambioMes >= 0"
+            [class.text-red-500]="estadisticas.cambioMes < 0"
+          >
+            <span>{{ estadisticas.cambioMes >= 0 ? '↑' : '↓' }}</span>
+            {{ estadisticas.cambioMes | number: '1.1-1' }}% vs mes anterior
+          </div>
+        </div>
+        <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center text-2xl">
+          📈
+        </div>
+      </div>
+    </div>
+
+    <!-- Productos Vendidos -->
+    <div
+      class="stat bg-white shadow-md rounded-xl border border-slate-200 hover:shadow-lg transition-all duration-300 p-4 md:p-6"
+    >
+      <div class="flex items-center justify-between">
+        <div class="flex-1">
+          <div class="stat-title text-slate-500 text-sm font-medium flex items-center gap-2">
+            <span class="text-purple-500">📦</span> Productos Vendidos
+          </div>
+          <div class="stat-value text-2xl md:text-3xl font-bold text-purple-600 mt-2">
+            {{ estadisticas.productosVendidos }}
+          </div>
+          <div class="stat-desc text-sm mt-2 text-slate-500">
+            {{ estadisticas.productosComparados > 0 ? '+' : ''
+            }}{{ estadisticas.productosComparados }} vs mes anterior
+          </div>
+        </div>
+        <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-2xl">
+          📦
+        </div>
+      </div>
+    </div>
+
+    <!-- Clientes Atendidos -->
+    <div
+      class="stat bg-white shadow-md rounded-xl border border-slate-200 hover:shadow-lg transition-all duration-300 p-4 md:p-6"
+    >
+      <div class="flex items-center justify-between">
+        <div class="flex-1">
+          <div class="stat-title text-slate-500 text-sm font-medium flex items-center gap-2">
+            <span class="text-emerald-500">👥</span> Clientes Atendidos
+          </div>
+          <div class="stat-value text-2xl md:text-3xl font-bold text-emerald-600 mt-2">
+            {{ estadisticas.clientesAtendidos }}
+          </div>
+          <div class="stat-desc text-sm mt-2 text-slate-500">
+            {{ estadisticas.clientesComparados > 0 ? '+' : ''
+            }}{{ estadisticas.clientesComparados }} nuevos este mes
+          </div>
+        </div>
+        <div
+          class="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center text-2xl"
+        >
+          👥
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRÁFICOS Y TOP PRODUCTOS -->
+  <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-8">
+    <!-- Gráfico de Ventas (ocupa 2 columnas en XL) -->
+    <div class="xl:col-span-2">
+      <div class="card bg-white shadow-md rounded-xl border border-slate-200 p-4 md:p-6">
+        <div class="card-body">
+          <div
+            class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3"
+          >
+            <h2 class="card-title text-slate-800 text-lg font-semibold flex items-center gap-2">
+              <span>📊</span> Ventas Semanales
+            </h2>
+            <select
+              (change)="cambiarPeriodo($event)"
+              class="select select-bordered border-slate-200 rounded-lg px-3 py-1.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="7">Últimos 7 días</option>
+              <option value="14">Últimos 14 días</option>
+              <option value="30">Últimos 30 días</option>
+            </select>
+          </div>
+          <div class="h-64 md:h-72 relative">
+            <!-- Canvas para el gráfico -->
+            <canvas #salesChart id="salesChart"></canvas>
+
+            <!-- Skeleton loader con @if -->
+            @if (estado.cargando) {
+              <div class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75">
+                <span class="loading loading-spinner loading-lg text-blue-600"></span>
+              </div>
+            }
+
+            <!-- Mensaje sin datos con @if -->
+            @if (!estado.cargando && todasLasVentas.length === 0) {
+              <div class="absolute inset-0 flex flex-col items-center justify-center">
+                <span class="text-4xl mb-2">📭</span>
+                <p class="text-slate-500">No hay ventas registradas aún</p>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Productos Más Vendidos (1 columna) -->
+    <div class="xl:col-span-1">
+      <div class="card bg-white shadow-md rounded-xl border border-slate-200 p-4 md:p-6">
+        <div class="card-body">
+          <h2 class="card-title text-slate-800 text-lg font-semibold mb-4 flex items-center gap-2">
+            <span>🏆</span> Top Productos Más Vendidos
+          </h2>
+
+          <!-- Estado de carga con @if -->
+          @if (estado.cargandoProductos) {
+            <div class="flex justify-center items-center h-48">
+              <span class="loading loading-spinner loading-md"></span>
+            </div>
+          }
+
+          <!-- Lista de productos desde la BD con @if -->
+          @if (!estado.cargandoProductos) {
+            <div class="space-y-3">
+              @for (producto of topProductos; track producto.productoId; let i = $index) {
+                <div
+                  class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 transition-colors"
+                >
+                  <div
+                    class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm"
+                  >
+                    {{ i + 1 }}
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div class="flex justify-between items-center">
+                      <span class="text-slate-700 font-medium truncate">{{ producto.nombre }}</span>
+                      <span class="font-bold text-blue-600 text-sm ml-2"
+                        >{{ producto.unidades }} uds</span
+                      >
+                    </div>
+                    <div class="w-full bg-slate-100 rounded-full h-2 mt-1">
+                      <div
+                        class="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full transition-all duration-1000"
+                        [style.width.%]="producto.porcentaje || 0"
+                      ></div>
+                    </div>
+                    <div class="flex justify-between text-xs text-slate-400 mt-0.5">
+                      <span>{{ producto.ingresos | currency: 'PEN' : 'symbol' : '1.0-0' }}</span>
+                      <span>{{ producto.porcentaje | number: '1.0-0' }}%</span>
+                    </div>
+                  </div>
+                </div>
+              } @empty {
+                <!-- Mensaje sin productos -->
+                <div class="text-center py-8">
+                  <span class="text-4xl">📭</span>
+                  <p class="text-slate-500 mt-2">No hay productos vendidos aún</p>
+                </div>
+              }
+            </div>
+          }
+
+          <!-- Ver todos -->
+          <div class="mt-4 text-center border-t border-slate-100 pt-4">
+            <button
+              (click)="verTodosLosProductos()"
+              class="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors"
+            >
+              Ver todos los productos →
+            </button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ACCESO RAPIDO -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <!-- ACCESO RÁPIDO -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+    <!-- Nueva Venta -->
     <div
-      class="card bg-white shadow-md rounded-xl border border-slate-200 hover:shadow-lg transition-shadow"
+      class="card bg-white shadow-md rounded-xl border border-slate-200 hover:shadow-xl transition-all duration-300 p-4 md:p-6"
     >
       <div class="card-body">
-        <h2 class="card-title text-slate-800">🛒 Nueva Venta</h2>
-        <p class="text-slate-500">Ir a productos para vender rápido</p>
+        <div class="flex items-center gap-3 mb-2">
+          <span class="text-2xl">🛒</span>
+          <h2 class="card-title text-slate-800 text-lg font-semibold">Nueva Venta</h2>
+        </div>
+        <p class="text-slate-500 text-sm">Ir a productos para vender rápido</p>
         <div class="card-actions justify-end mt-4">
           <button
             routerLink="../nueva-venta"
-            class="btn bg-blue-600 hover:bg-blue-700 text-white border-0 rounded-lg px-6"
+            class="btn bg-blue-600 hover:bg-blue-700 text-white border-0 rounded-lg px-6 py-2 transition-colors w-full sm:w-auto"
           >
-            Ir
+            Ir a vender
           </button>
         </div>
       </div>
     </div>
 
+    <!-- Carrito -->
     <div
-      class="card bg-white shadow-md rounded-xl border border-slate-200 hover:shadow-lg transition-shadow"
+      class="card bg-white shadow-md rounded-xl border border-slate-200 hover:shadow-xl transition-all duration-300 p-4 md:p-6"
     >
       <div class="card-body">
-        <h2 class="card-title text-slate-800">🛍️ Carrito</h2>
-        <p class="text-slate-500">Revisar ventas pendientes</p>
+        <div class="flex items-center gap-3 mb-2">
+          <span class="text-2xl">🛍️</span>
+          <h2 class="card-title text-slate-800 text-lg font-semibold">Carrito</h2>
+        </div>
+        <p class="text-slate-500 text-sm">
+          {{ itemsCarrito }} venta{{ itemsCarrito !== 1 ? 's' : '' }} pendiente{{
+            itemsCarrito !== 1 ? 's' : ''
+          }}
+        </p>
         <div class="card-actions justify-end mt-4">
-          <button class="btn bg-indigo-600 hover:bg-indigo-700 text-white border-0 rounded-lg px-6">
-            Ver
+          <button
+            routerLink="../carrito"
+            class="btn bg-indigo-600 hover:bg-indigo-700 text-white border-0 rounded-lg px-6 py-2 transition-colors w-full sm:w-auto"
+          >
+            Ver carrito
           </button>
         </div>
       </div>
     </div>
 
+    <!-- Clientes -->
     <div
-      class="card bg-white shadow-md rounded-xl border border-slate-200 hover:shadow-lg transition-shadow"
+      class="card bg-white shadow-md rounded-xl border border-slate-200 hover:shadow-xl transition-all duration-300 p-4 md:p-6"
     >
       <div class="card-body">
-        <h2 class="card-title text-slate-800">👥 Clientes</h2>
-        <p class="text-slate-500">Buscar o registrar cliente</p>
+        <div class="flex items-center gap-3 mb-2">
+          <span class="text-2xl">👥</span>
+          <h2 class="card-title text-slate-800 text-lg font-semibold">Clientes</h2>
+        </div>
+        <p class="text-slate-500 text-sm">Buscar o registrar cliente</p>
         <div class="card-actions justify-end mt-4">
-          <button class="btn bg-purple-600 hover:bg-purple-700 text-white border-0 rounded-lg px-6">
-            Abrir
+          <button
+            routerLink="../clientes-vendedor"
+            class="btn bg-purple-600 hover:bg-purple-700 text-white border-0 rounded-lg px-6 py-2 transition-colors w-full sm:w-auto"
+          >
+            Gestionar
           </button>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Mensaje de Error con @if -->
+  @if (hayError) {
+    <div class="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+      <div class="flex items-center gap-2 text-red-600">
+        <span class="text-xl">⚠️</span>
+        <span>{{ estado.error }}</span>
+      </div>
+    </div>
+  }
 </div>
