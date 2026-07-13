@@ -7,6 +7,7 @@ import { ClientesInterface } from '../../../../../interfaces/clientes.interface'
 import { ProductoInterface } from '../../../../../interfaces/producto.interface';
 import { ClientesService } from '../../../../../services/clientes.service';
 import { ProductoService } from '../../../../../services/producto.service';
+import { VentasService } from '../../../../../services/ventas.service';
 
 @Component({
   selector: 'smarttech-nueva-venta',
@@ -21,6 +22,7 @@ export class NuevaVenta implements OnInit {
   public carritoService = inject(CarritoService);
   private clientesService = inject(ClientesService);
   private productoService = inject(ProductoService);
+  private ventasService = inject(VentasService);
 
   ventaForm: FormGroup;
   clienteForm: FormGroup;
@@ -55,11 +57,9 @@ export class NuevaVenta implements OnInit {
   }
 
   ngOnInit() {
-    // ✅ Cargar clientes y productos desde la BD
     this.cargarClientes();
     this.cargarProductos();
 
-    // ✅ Escuchar cambios en productoId
     this.ventaForm.get('productoId')?.valueChanges.subscribe((id) => {
       if (id) {
         this.productoSeleccionado = this.productos.find((p) => p.id === Number(id)) || null;
@@ -68,7 +68,6 @@ export class NuevaVenta implements OnInit {
       }
     });
 
-    // ✅ Escuchar cambios en clienteId
     this.ventaForm.get('clienteId')?.valueChanges.subscribe((id) => {
       if (id) {
         this.clienteSeleccionado = this.clientes.find((c) => c.id === Number(id)) || null;
@@ -80,7 +79,6 @@ export class NuevaVenta implements OnInit {
       }
     });
 
-    // ✅ Cargar cliente desde el carrito si existe
     const carritoActual = this.carritoService.getCarritoSnapshot();
     if (carritoActual.cliente) {
       this.clienteSeleccionado = carritoActual.cliente;
@@ -88,9 +86,6 @@ export class NuevaVenta implements OnInit {
     }
   }
 
-  // ==========================================
-  // CARGAR CLIENTES DESDE LA BD
-  // ==========================================
   cargarClientes(): void {
     this.cargandoClientes = true;
     this.clientesService.getClientes().subscribe({
@@ -107,14 +102,10 @@ export class NuevaVenta implements OnInit {
     });
   }
 
-  // ==========================================
-  // CARGAR PRODUCTOS DESDE LA BD
-  // ==========================================
   cargarProductos(): void {
     this.cargandoProductos = true;
     this.productoService.getProductos().subscribe({
       next: (productos) => {
-        // ✅ Filtrar solo productos activos y con stock
         this.productos = productos.filter((p) => p.estado !== false && p.stock > 0);
         this.cargandoProductos = false;
         console.log('✅ Productos cargados:', this.productos.length);
@@ -127,25 +118,16 @@ export class NuevaVenta implements OnInit {
     });
   }
 
-  // ==========================================
-  // ABRIR MODAL CLIENTE
-  // ==========================================
   abrirModalCliente() {
     this.showModalCliente = true;
     this.clienteForm.reset();
   }
 
-  // ==========================================
-  // CERRAR MODAL CLIENTE
-  // ==========================================
   cerrarModalCliente() {
     this.showModalCliente = false;
     this.clienteForm.reset();
   }
 
-  // ==========================================
-  // CREAR CLIENTE (GUARDAR EN BD)
-  // ==========================================
   crearCliente() {
     if (this.clienteForm.invalid) {
       this.clienteForm.markAllAsTouched();
@@ -157,13 +139,9 @@ export class NuevaVenta implements OnInit {
 
     this.clientesService.crearCliente(nuevoCliente).subscribe({
       next: (clienteCreado) => {
-        // ✅ Agregar a la lista local
         this.clientes.push(clienteCreado);
         this.ventaForm.patchValue({ clienteId: clienteCreado.id });
-
-        // ✅ Guardar en carrito
         this.carritoService.seleccionarCliente(clienteCreado);
-
         this.cerrarModalCliente();
         this.loading = false;
         alert('✅ Cliente creado exitosamente');
@@ -177,9 +155,6 @@ export class NuevaVenta implements OnInit {
     });
   }
 
-  // ==========================================
-  // AGREGAR PRODUCTO AL CARRITO - CORREGIDO ✅
-  // ==========================================
   agregarProducto(): void {
     if (!this.productoSeleccionado) {
       alert('⚠️ Selecciona un producto');
@@ -193,8 +168,6 @@ export class NuevaVenta implements OnInit {
       return;
     }
 
-    // ✅ CORRECCIÓN: Agregar el producto directamente
-    // El CarritoService se encarga de convertirlo a CarritoProducto internamente
     for (let i = 0; i < cantidad; i++) {
       this.carritoService.agregarProducto(this.productoSeleccionado);
     }
@@ -203,15 +176,12 @@ export class NuevaVenta implements OnInit {
     console.log(`🛒 Producto agregado: ${this.productoSeleccionado.modelo} x${cantidad}`);
   }
 
-  // ==========================================
-  // IR AL CARRITO
-  // ==========================================
   irAlCarrito(): void {
-    this.router.navigate(['/vendedor/carrito']);
+    this.router.navigate(['/vendedor/vendedor-dashboard/carrito']);
   }
 
   // ==========================================
-  // REGISTRAR VENTA
+  // ✅ REGISTRAR VENTA - GUARDAR EN BD (SIN LIMPIAR CARRITO)
   // ==========================================
   registrarVenta() {
     if (this.ventaForm.invalid) {
@@ -226,44 +196,73 @@ export class NuevaVenta implements OnInit {
       return;
     }
 
+    if (!carritoActual.cliente.id) {
+      alert('⚠️ El cliente seleccionado no tiene ID válido');
+      return;
+    }
+
     if (carritoActual.productos.length === 0) {
       alert('⚠️ Agrega al menos un producto al carrito');
       return;
     }
 
     this.loading = true;
-    const ventaData = {
-      cliente: carritoActual.cliente,
-      productos: carritoActual.productos,
+
+    // ✅ Obtener usuarioId desde localStorage
+    const usuarioId = localStorage.getItem('usuarioId') || '1';
+    console.log('🆔 Usuario ID desde localStorage:', usuarioId);
+    console.log('👤 Cliente ID:', carritoActual.cliente.id);
+
+    // ✅ Fecha con formato ISO completo
+    const fechaVenta = this.ventaForm.value.fechaVenta
+      ? new Date(this.ventaForm.value.fechaVenta).toISOString()
+      : new Date().toISOString();
+
+    // ✅ Crear objeto VENTA según el modelo del backend
+    const venta = {
+      cliente: { id: Number(carritoActual.cliente.id) },
+      usuario: { id: Number(usuarioId) },
+      fecha_venta: fechaVenta,
       total: carritoActual.total,
-      metodoPago: this.ventaForm.value.metodoPago,
-      fechaVenta: this.ventaForm.value.fechaVenta,
-      observaciones: this.ventaForm.value.observaciones,
+      tipoPago: this.ventaForm.value.metodoPago || 'EFECTIVO',
+      estado: 'COMPLETADO',
     };
 
-    console.log('📦 Registrando venta:', ventaData);
+    console.log('📤 Registrando venta en BD:', venta);
 
-    // ✅ Aquí llamarías a tu servicio de ventas
-    setTimeout(() => {
-      this.loading = false;
-      this.carritoService.vaciarProductos();
-      alert('✅ Venta registrada exitosamente');
-      this.router.navigate(['/vendedor/dashboard']);
-    }, 1500);
+    // ✅ Guardar en la base de datos
+    this.ventasService.crearVenta(venta).subscribe({
+      next: (response) => {
+        console.log('✅ Venta registrada en BD:', response);
+        this.loading = false;
+
+        // ❌ ELIMINADO: this.carritoService.vaciarProductos();
+        // ✅ El carrito NO se limpia para poder generar el PDF
+
+        alert('✅ Venta registrada exitosamente. Ahora ve al carrito para generar el comprobante.');
+        this.router.navigate(['/vendedor/vendedor-dashboard/carrito']);
+      },
+      error: (error) => {
+        console.error('❌ Error al registrar venta:', error);
+        this.loading = false;
+
+        let mensajeError = 'Error al registrar la venta.';
+        if (error.error?.mensaje) {
+          mensajeError = error.error.mensaje;
+        } else if (error.error?.message) {
+          mensajeError = error.error.message;
+        }
+        alert(`❌ ${mensajeError}`);
+      },
+    });
   }
 
-  // ==========================================
-  // TOTAL DEL PRODUCTO ACTUAL
-  // ==========================================
   getTotal(): number {
     if (!this.productoSeleccionado) return 0;
     const cantidad = this.ventaForm.get('cantidad')?.value || 0;
     return this.productoSeleccionado.precio * cantidad;
   }
 
-  // ==========================================
-  // VALIDACIONES
-  // ==========================================
   isValidField(field: string): boolean {
     const control = this.ventaForm.get(field);
     return !!control && control.invalid && (control.dirty || control.touched);

@@ -9,6 +9,7 @@ import { Reportes } from './pages/reportes/reportes';
 import { ConfiguracionVendedor } from './pages/configuracion-vendedor/configuracion-vendedor';
 import { authGuard } from '../../guards/auth.guard';
 import { NuevaVenta } from './pages/carrito/nueva-venta/nueva-venta';
+import { BuscarClientesVendedor } from './pages/clientes-vendedor/buscar-clientes-vendedor/buscar-clientes-vendedor';
 
 export const vendedorRoutes: Routes = [
   {
@@ -32,6 +33,10 @@ export const vendedorRoutes: Routes = [
       {
         path: 'clientes-vendedor',
         component: ClientesVendedor,
+      },
+      {
+        path: 'buscar-clientes-vendedor',
+        component: BuscarClientesVendedor,
       },
       {
         path: 'historial-ventas',

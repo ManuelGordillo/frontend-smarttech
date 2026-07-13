@@ -1,17 +1,16 @@
-// carrito.ts
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CarritoService } from '../../../../services/carrito.service';
 import { CarritoInterface } from '../../../../interfaces/carrito.interface';
+import { PdfService } from '../../../../services/pdf.service';
 
 @Component({
   selector: 'smarttech-carrito',
   standalone: true,
   imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './carrito.html',
-  // ✅ SIN ChangeDetectionStrategy
 })
 export class Carrito implements OnInit {
   carrito: CarritoInterface = {
@@ -24,14 +23,23 @@ export class Carrito implements OnInit {
 
   tipoComprobante: string = 'BOLETA';
 
-  constructor(private carritoService: CarritoService) {}
+  // Para el modal de factura
+  mostrarModalFactura: boolean = false;
+  datosFactura = {
+    ruc: '',
+    razonSocial: '',
+    direccion: '',
+  };
+
+  constructor(
+    private carritoService: CarritoService,
+    private pdfService: PdfService,
+  ) {}
 
   ngOnInit(): void {
-    // ✅ Suscribirse al carrito para recibir actualizaciones
     this.carritoService.carrito$.subscribe((carrito) => {
       this.carrito = carrito;
-      console.log('🛒 Carrito actualizado en carrito.component:', carrito);
-      console.log('📦 Productos en carrito:', carrito.productos.length);
+      console.log('🛒 Carrito actualizado:', carrito);
     });
   }
 
@@ -65,7 +73,7 @@ export class Carrito implements OnInit {
   }
 
   // ==========================================
-  // FINALIZAR VENTA
+  // ✅ FINALIZAR VENTA - SOLO GENERA PDF
   // ==========================================
   finalizarVenta(): void {
     if (!this.carrito.cliente) {
@@ -78,14 +86,64 @@ export class Carrito implements OnInit {
       return;
     }
 
-    console.log('✅ Finalizando venta:', {
-      cliente: this.carrito.cliente,
-      productos: this.carrito.productos,
-      total: this.carrito.total,
-      tipoComprobante: this.tipoComprobante,
-    });
+    // Si es FACTURA, mostrar modal
+    if (this.tipoComprobante === 'FACTURA') {
+      this.mostrarModalFactura = true;
+      return;
+    }
 
-    alert(`✅ Venta finalizada por S/ ${this.carrito.total.toFixed(2)}`);
+    // Si es BOLETA, generar PDF directamente
+    this.generarPDF();
+  }
+
+  // ==========================================
+  // ✅ GENERAR PDF (SIN GUARDAR EN BD)
+  // ==========================================
+  generarPDF(datosFactura?: any): void {
+    try {
+      if (this.tipoComprobante === 'BOLETA') {
+        this.pdfService.generarBoleta(this.carrito);
+      } else {
+        this.pdfService.generarFactura(this.carrito, datosFactura);
+      }
+
+      // Cerrar modal
+      this.mostrarModalFactura = false;
+      this.datosFactura = { ruc: '', razonSocial: '', direccion: '' };
+
+      alert('✅ Comprobante generado exitosamente');
+
+      // Limpiar carrito
+      this.carritoService.vaciarProductos();
+    } catch (error) {
+      console.error('❌ Error al generar PDF:', error);
+      alert('❌ Error al generar el comprobante');
+    }
+  }
+
+  // ==========================================
+  // ✅ CERRAR MODAL FACTURA
+  // ==========================================
+  cerrarModalFactura(): void {
+    this.mostrarModalFactura = false;
+    this.datosFactura = { ruc: '', razonSocial: '', direccion: '' };
+  }
+
+  // ==========================================
+  // ✅ CONFIRMAR FACTURA
+  // ==========================================
+  confirmarFactura(): void {
+    if (!this.datosFactura.ruc || this.datosFactura.ruc.length < 11) {
+      alert('⚠️ Ingrese un RUC válido (11 dígitos)');
+      return;
+    }
+
+    if (!this.datosFactura.razonSocial) {
+      alert('⚠️ Ingrese la Razón Social');
+      return;
+    }
+
+    this.generarPDF(this.datosFactura);
   }
 
   // ==========================================
