@@ -1,119 +1,188 @@
 <div class="min-h-screen bg-white p-6">
-  <!-- ⬅️ Cambiado a bg-white -->
-
   <!-- HEADER -->
   <div class="mb-8">
-    <h1 class="text-3xl font-bold text-slate-900">
-      <!-- ⬅️ Texto oscuro -->
-      Configuración
-    </h1>
-
-    <p class="text-slate-600 mt-1">
-      <!-- ⬅️ Texto gris -->
-      Administra tu perfil y preferencias.
-    </p>
+    <h1 class="text-3xl font-bold text-slate-900">Configuración</h1>
+    <p class="text-slate-600 mt-1">Administra tu perfil y preferencias.</p>
   </div>
 
-  <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
-    <!-- PERFIL -->
-    <div class="card bg-white shadow-xl border border-gray-200">
-      <!-- ⬅️ Cambiado bg-base-100 a bg-white y border-base-300 a border-gray-200 -->
-      <div class="card-body">
-        <h2 class="card-title text-slate-900">Mi Perfil</h2>
-        <!-- ⬅️ Texto oscuro -->
+  <!-- MENSAJES -->
+  @if (mensajeExito) {
+    <div
+      class="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg text-green-700 flex items-center gap-2"
+    >
+      <span class="text-xl">✅</span>
+      <span>{{ mensajeExito }}</span>
+    </div>
+  }
 
-        <div class="flex flex-col items-center mt-4">
-          <div class="avatar">
-            <div class="w-24 rounded-full">
-              <img src="https://i.pravatar.cc/150?img=12" />
+  @if (mensajeError) {
+    <div
+      class="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 flex items-center gap-2"
+    >
+      <span class="text-xl">❌</span>
+      <span>{{ mensajeError }}</span>
+    </div>
+  }
+
+  @if (cargando) {
+    <div class="flex justify-center items-center py-12">
+      <span class="loading loading-spinner loading-lg text-blue-600"></span>
+    </div>
+  }
+
+  @if (!cargando) {
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+      <!-- PERFIL -->
+      <div class="card bg-white shadow-xl border border-gray-200">
+        <div class="card-body">
+          <h2 class="card-title text-slate-900">Mi Perfil</h2>
+          <div class="flex flex-col items-center mt-4">
+            <div class="avatar">
+              <div class="w-24 rounded-full ring ring-primary ring-offset-2">
+                <img
+                  src="https://i.pravatar.cc/150?img=12"
+                  [alt]="vendedorActual?.nombreUsuario || 'Vendedor'"
+                />
+              </div>
+            </div>
+            <div class="mt-4 text-center">
+              <div class="font-bold text-lg text-slate-900">
+                {{ vendedorActual?.nombreUsuario || 'Vendedor' }}
+              </div>
+              <div class="text-slate-500">{{ vendedorActual?.rol || 'Vendedor' }}</div>
+              <div class="mt-2">
+                <span
+                  class="badge"
+                  [class.badge-success]="vendedorActual?.estado"
+                  [class.badge-error]="!vendedorActual?.estado"
+                >
+                  {{ vendedorActual?.estado ? 'Activo' : 'Inactivo' }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DATOS - SOLO nombreUsuario -->
+      <div class="card bg-white shadow-xl border border-gray-200 xl:col-span-2">
+        <div class="card-body">
+          <h2 class="card-title text-slate-900">Datos Personales</h2>
+          <p class="text-sm text-slate-500">Actualiza tu nombre de usuario</p>
+
+          <form [formGroup]="formPerfil" (ngSubmit)="guardarPerfil()">
+            <div class="grid grid-cols-1 gap-4 mt-4">
+              <div>
+                <label class="label text-sm font-medium text-slate-700">Nombre de Usuario</label>
+                <input
+                  type="text"
+                  formControlName="nombreUsuario"
+                  class="input input-bordered bg-white border-gray-300 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none w-full"
+                  [class.border-red-500]="nombreUsuarioInvalid"
+                  placeholder="usuario123"
+                />
+                @if (nombreUsuarioInvalid) {
+                  <p class="text-red-500 text-xs mt-1">
+                    El nombre de usuario es requerido (mínimo 3 caracteres)
+                  </p>
+                }
+              </div>
+            </div>
+
+            <div class="mt-6 flex justify-end">
+              <button
+                type="submit"
+                class="btn btn-primary w-full md:w-auto"
+                [disabled]="cargandoPerfil || formPerfil.invalid"
+              >
+                @if (cargandoPerfil) {
+                  <span class="loading loading-spinner loading-sm"></span>
+                }
+                Guardar Cambios
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEGURIDAD - Cambiar Contraseña -->
+    <div class="card bg-white shadow-xl border border-gray-200 mt-6">
+      <div class="card-body">
+        <h2 class="card-title text-slate-900">🔒 Seguridad</h2>
+        <p class="text-sm text-slate-500">Cambia tu contraseña de acceso</p>
+
+        <form [formGroup]="formContrasena" (ngSubmit)="cambiarContrasena()">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+            <div>
+              <label class="label text-sm font-medium text-slate-700">Contraseña Actual</label>
+              <input
+                type="password"
+                formControlName="contrasenaActual"
+                class="input input-bordered bg-white border-gray-300 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none w-full"
+                [class.border-red-500]="contrasenaActualInvalid"
+                placeholder="••••••••"
+              />
+              @if (contrasenaActualInvalid) {
+                <p class="text-red-500 text-xs mt-1">
+                  La contraseña es requerida (mínimo 6 caracteres)
+                </p>
+              }
+            </div>
+
+            <div>
+              <label class="label text-sm font-medium text-slate-700">Nueva Contraseña</label>
+              <input
+                type="password"
+                formControlName="nuevaContrasena"
+                class="input input-bordered bg-white border-gray-300 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none w-full"
+                [class.border-red-500]="nuevaContrasenaInvalid"
+                placeholder="••••••••"
+              />
+              @if (nuevaContrasenaInvalid) {
+                <p class="text-red-500 text-xs mt-1">Mínimo 6 caracteres</p>
+              }
+            </div>
+
+            <div>
+              <label class="label text-sm font-medium text-slate-700">Confirmar Contraseña</label>
+              <input
+                type="password"
+                formControlName="confirmarContrasena"
+                class="input input-bordered bg-white border-gray-300 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none w-full"
+                [class.border-red-500]="confirmarContrasenaInvalid || contrasenasNoCoinciden"
+                placeholder="••••••••"
+              />
+              @if (contrasenasNoCoinciden) {
+                <p class="text-red-500 text-xs mt-1">⚠️ Las contraseñas no coinciden</p>
+              }
+              @if (confirmarContrasenaInvalid && !contrasenasNoCoinciden) {
+                <p class="text-red-500 text-xs mt-1">Confirma tu nueva contraseña</p>
+              }
             </div>
           </div>
 
-          <div class="mt-4 text-center">
-            <div class="font-bold text-lg text-slate-900">Juan Pérez</div>
-            <!-- ⬅️ Texto oscuro -->
-            <div class="text-slate-500">Vendedor</div>
-            <!-- ⬅️ Texto gris -->
+          <div class="mt-6 flex justify-end">
+            <button
+              type="submit"
+              class="btn btn-warning w-full md:w-auto"
+              [disabled]="cargandoContrasena || formContrasena.invalid"
+            >
+              @if (cargandoContrasena) {
+                <span class="loading loading-spinner loading-sm"></span>
+              }
+              Actualizar Contraseña
+            </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
 
-    <!-- DATOS -->
-    <div class="card bg-white shadow-xl border border-gray-200 xl:col-span-2">
-      <!-- ⬅️ Cambiado bg-base-100 a bg-white y border-base-300 a border-gray-200 -->
-      <div class="card-body">
-        <h2 class="card-title text-slate-900">Datos Personales</h2>
-        <!-- ⬅️ Texto oscuro -->
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          <input
-            type="text"
-            class="input input-bordered bg-white border-gray-300 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none"
-            placeholder="Nombre"
-          />
-
-          <input
-            type="text"
-            class="input input-bordered bg-white border-gray-300 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none"
-            placeholder="Apellido"
-          />
-
-          <input
-            type="email"
-            class="input input-bordered bg-white border-gray-300 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none"
-            placeholder="Correo"
-          />
-
-          <input
-            type="text"
-            class="input input-bordered bg-white border-gray-300 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none"
-            placeholder="Teléfono"
-          />
-        </div>
-
-        <div class="mt-6 flex justify-end">
-          <button class="btn btn-primary">Guardar Cambios</button>
-        </div>
-      </div>
+    <!-- BOTÓN CERRAR SESIÓN -->
+    <div class="mt-6 flex justify-end">
+      <button (click)="cerrarSesion()" class="btn btn-error w-full md:w-auto">
+        🚪 Cerrar Sesión
+      </button>
     </div>
-  </div>
-
-  <!-- SEGURIDAD -->
-  <div class="card bg-white shadow-xl border border-gray-200 mt-6">
-    <!-- ⬅️ Cambiado bg-base-100 a bg-white y border-base-300 a border-gray-200 -->
-    <div class="card-body">
-      <h2 class="card-title text-slate-900">Seguridad</h2>
-      <!-- ⬅️ Texto oscuro -->
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-        <input
-          type="password"
-          class="input input-bordered bg-white border-gray-300 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none"
-          placeholder="Contraseña actual"
-        />
-
-        <input
-          type="password"
-          class="input input-bordered bg-white border-gray-300 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none"
-          placeholder="Nueva contraseña"
-        />
-
-        <input
-          type="password"
-          class="input input-bordered bg-white border-gray-300 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:outline-none"
-          placeholder="Confirmar contraseña"
-        />
-      </div>
-
-      <div class="mt-6 flex justify-end">
-        <button class="btn btn-warning">Actualizar Contraseña</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ACCIONES -->
-  <div class="mt-6 flex justify-end">
-    <button class="btn btn-error">Cerrar Sesión</button>
-  </div>
+  }
 </div>

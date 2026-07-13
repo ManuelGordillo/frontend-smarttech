@@ -67,9 +67,22 @@ export class UsuarioService {
       headers: this.getHeaders(),
     });
   }
-  // ✅ ACTUALIZAR VENDEDOR
-  actualizarVendedor(vendedor: Vendedor): Observable<any> {
+
+  // ✅ ACTUALIZAR VENDEDOR - CAMBIADO para aceptar cualquier objeto
+  // Esto permite enviar solo los campos que necesitamos sin la contraseña
+  actualizarVendedor(vendedor: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/usuarios/actualizar/${vendedor.id}`, vendedor, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  // ✅ CAMBIAR CONTRASEÑA - AGREGADO ID
+  cambiarContrasena(datos: {
+    id: number;
+    contrasenaActual: string;
+    nuevaContrasena: string;
+  }): Observable<any> {
+    return this.http.put(`${this.apiUrl}/usuarios/cambiar-contrasena`, datos, {
       headers: this.getHeaders(),
     });
   }

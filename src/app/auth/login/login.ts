@@ -41,10 +41,12 @@ export class Login {
     this.authService.login(data).subscribe({
       next: (response: any) => {
         console.log('✅ Respuesta del login:', response);
-        console.log('📌 Token:', response.jwt); // 🔥 CAMBIADO: jwt en lugar de token
+        console.log('📌 Token:', response.jwt);
         console.log('📌 Rol:', response.rol);
+        console.log('📌 Usuario ID:', response.id);
+        console.log('📌 Usuario completo:', response);
 
-        // 🔥 CAMBIADO: jwt en lugar de token
+        // ✅ GUARDAR TOKEN
         if (response.jwt) {
           const cleanToken = response.jwt.trim();
           localStorage.setItem('token', cleanToken);
@@ -55,6 +57,7 @@ export class Login {
           return;
         }
 
+        // ✅ GUARDAR ROL
         if (response.rol) {
           localStorage.setItem('rol', response.rol.trim());
           console.log('✅ Rol guardado:', response.rol);
@@ -64,10 +67,55 @@ export class Login {
           return;
         }
 
-        // Guardar el nombre del usuario (usar el usuario ingresado como fallback)
+        // ✅ GUARDAR NOMBRE
         const nombre = response.nombre || this.loginForm.value.usuario || 'Usuario';
         localStorage.setItem('nombreVendedor', nombre);
         console.log('✅ Nombre guardado:', nombre);
+
+        // ✅ ✅ ✅ NUEVO: GUARDAR USUARIO COMPLETO CON ID
+        const usuarioData = {
+          id: response.id || response.usuarioId || response.vendedor?.id || null,
+          nombreUsuario: response.nombreUsuario || response.nombre || this.loginForm.value.usuario,
+          rol: response.rol,
+          estado: response.estado !== undefined ? response.estado : true,
+        };
+
+        if (usuarioData.id) {
+          localStorage.setItem('usuario', JSON.stringify(usuarioData));
+          console.log('✅ Usuario guardado en localStorage:', usuarioData);
+        } else {
+          console.warn('⚠️ No se encontró ID en la respuesta. Respuesta:', response);
+          // Intentar buscar el ID en otras partes de la respuesta
+          let idEncontrado = null;
+          if (response.vendedor && response.vendedor.id) {
+            idEncontrado = response.vendedor.id;
+          } else if (response.id) {
+            idEncontrado = response.id;
+          } else if (response.usuarioId) {
+            idEncontrado = response.usuarioId;
+          }
+
+          if (idEncontrado) {
+            usuarioData.id = idEncontrado;
+            localStorage.setItem('usuario', JSON.stringify(usuarioData));
+            console.log('✅ Usuario guardado con ID encontrado:', usuarioData);
+          } else {
+            console.error('❌ No se pudo encontrar el ID del usuario');
+          }
+        }
+
+        // También guardar en 'vendedor' para compatibilidad
+        if (usuarioData.id) {
+          localStorage.setItem(
+            'vendedor',
+            JSON.stringify({
+              id: usuarioData.id,
+              nombreUsuario: usuarioData.nombreUsuario,
+              rol: usuarioData.rol,
+              estado: usuarioData.estado,
+            }),
+          );
+        }
 
         // Redirigir según el rol
         const rol = response.rol.toUpperCase();
