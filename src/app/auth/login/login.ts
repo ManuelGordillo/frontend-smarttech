@@ -104,7 +104,7 @@ export class Login {
           }
         }
 
-        // También guardar en 'vendedor' para compatibilidad
+        // También guardar id de usuario para compatibilidad
         if (usuarioData.id) {
           localStorage.setItem(
             'vendedor',
