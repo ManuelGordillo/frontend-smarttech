@@ -10,6 +10,6 @@ export class AcercaDeNosotros {
   constructor(private location: Location) {}
 
   cerrar() {
-    this.location.back(); // Vuelve a la página anterior
+    this.location.back();
   }
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -13,7 +13,6 @@ import { Location } from '@angular/common';
   selector: 'app-registrar-cliente',
   imports: [ReactiveFormsModule],
   templateUrl: './registrar-cliente.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegistrarCliente {
   private location = inject(Location);

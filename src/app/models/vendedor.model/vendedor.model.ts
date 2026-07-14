@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 export interface Vendedor {
   id: number;
@@ -11,6 +11,5 @@ export interface Vendedor {
   selector: 'app-vendedor.model',
   imports: [],
   templateUrl: './vendedor.model.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VendedorModel {}

@@ -1,1 +1,101 @@
-<p>contactanos works!</p>,
+<!-- modals/contactanos/contactanos.html -->
+<!-- Fondo transparente con difuminado -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4">
+  <!-- Fondo difuminado -->
+  <div class="absolute inset-0 backdrop-blur-md pointer-events-none"></div>
+
+  <!-- Modal que cubre casi toda la pantalla -->
+  <div
+    class="relative bg-white rounded-2xl border-2 border-white/80 shadow-2xl shadow-black/50 w-full max-w-2xl max-h-[90vh] overflow-y-auto animate-fadeIn"
+  >
+    <!-- Botón de cierre (X) -->
+    <button
+      (click)="cerrar()"
+      class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white hover:bg-gray-100 transition-all duration-300 flex items-center justify-center text-gray-600 hover:text-gray-900 shadow-lg z-10 border border-gray-200"
+      aria-label="Cerrar"
+    >
+      <i class="fas fa-times text-xl"></i>
+    </button>
+
+    <!-- Contenido del modal -->
+    <div class="p-6 md:p-8">
+      <!-- Título -->
+      <div class="text-center mb-8">
+        <div
+          class="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-500/30 mx-auto mb-4"
+        >
+          <i class="fas fa-envelope text-3xl"></i>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Contáctanos</h1>
+        <p class="text-gray-500">Déjanos tu mensaje y te responderemos a la brevedad</p>
+        <div
+          class="w-20 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto mt-4 rounded-full"
+        ></div>
+      </div>
+
+      <!-- Formulario -->
+      <div class="space-y-5">
+        <!-- Nombre -->
+        <div>
+          <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">
+            <i class="fas fa-user text-blue-500 mr-2"></i>Nombre completo
+          </label>
+          <input
+            type="text"
+            id="nombre"
+            class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300 outline-none text-gray-700"
+            placeholder="Ej: Juan Pérez"
+          />
+        </div>
+
+        <!-- Teléfono -->
+        <div>
+          <label for="telefono" class="block text-sm font-medium text-gray-700 mb-1">
+            <i class="fas fa-phone text-blue-500 mr-2"></i>Teléfono
+          </label>
+          <input
+            type="tel"
+            id="telefono"
+            class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300 outline-none text-gray-700"
+            placeholder="Ej: 987654321"
+          />
+        </div>
+
+        <!-- Correo -->
+        <div>
+          <label for="correo" class="block text-sm font-medium text-gray-700 mb-1">
+            <i class="fas fa-envelope text-blue-500 mr-2"></i>Correo electrónico
+          </label>
+          <input
+            type="email"
+            id="correo"
+            class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300 outline-none text-gray-700"
+            placeholder="Ej: juan@ejemplo.com"
+          />
+        </div>
+
+        <!-- Mensaje -->
+        <div>
+          <label for="mensaje" class="block text-sm font-medium text-gray-700 mb-1">
+            <i class="fas fa-comment text-blue-500 mr-2"></i>Mensaje
+          </label>
+          <textarea
+            id="mensaje"
+            rows="4"
+            class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300 outline-none text-gray-700 resize-none"
+            placeholder="Escribe tu mensaje aquí..."
+          ></textarea>
+        </div>
+
+        <!-- Botón enviar -->
+        <button
+          type="button"
+          class="w-full py-3 px-6 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2"
+        >
+          <i class="fas fa-paper-plane"></i>
+          Enviar mensaje
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

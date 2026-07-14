@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClientesService } from '../../../../services/clientes.service';
 import { ClientesInterface } from '../../../../interfaces/clientes.interface';
@@ -7,7 +7,6 @@ import { ClientesInterface } from '../../../../interfaces/clientes.interface';
   selector: 'app-clientes',
   imports: [CommonModule],
   templateUrl: './clientes.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class Clientes implements OnInit {
   private clientesService = inject(ClientesService);

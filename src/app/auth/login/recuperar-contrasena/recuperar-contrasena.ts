@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 
@@ -6,7 +6,6 @@ import { Location } from '@angular/common';
   selector: 'app-recuperar-contrasena',
   imports: [ReactiveFormsModule],
   templateUrl: './recuperar-contrasena.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RecuperarContrasena {
   private location = inject(Location);
