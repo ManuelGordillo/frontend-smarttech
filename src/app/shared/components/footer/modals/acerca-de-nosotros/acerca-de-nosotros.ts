@@ -1,9 +1,15 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-acerca-de-nosotros',
   imports: [],
   templateUrl: './acerca-de-nosotros.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AcercaDeNosotros {}
+export class AcercaDeNosotros {
+  constructor(private location: Location) {}
+
+  cerrar() {
+    this.location.back(); // Vuelve a la página anterior
+  }
+}
