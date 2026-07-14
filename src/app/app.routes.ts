@@ -5,6 +5,7 @@ import { PaginaPrincipal } from './pages/home/pagina-principal/pagina-principal'
 import { Login } from './auth/login/login';
 import { RegistrarCliente } from './auth/registrar-cliente/registrar-cliente';
 import { RecuperarContrasena } from './auth/login/recuperar-contrasena/recuperar-contrasena';
+import { AcercaDeNosotros } from './shared/components/footer/modals/acerca-de-nosotros/acerca-de-nosotros';
 
 export const routes: Routes = [
   {
@@ -45,6 +46,10 @@ export const routes: Routes = [
   {
     path: 'vendedor',
     loadChildren: () => import('./pages/vendedor/vendedor.routes'),
+  },
+  {
+    path: 'footer',
+    loadChildren: () => import('./shared/components/footer/footer.routes'),
   },
 
   {
