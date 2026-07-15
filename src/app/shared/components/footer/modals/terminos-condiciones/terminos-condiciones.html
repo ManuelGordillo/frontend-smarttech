@@ -1,1 +1,152 @@
-<p>terminos-condiciones works!</p>,
+<div class="min-h-screen w-full bg-white flex items-start justify-center p-8 md:p-12 relative">
+  <!-- Botón Cerrar (X) -->
+  <button
+    (click)="cerrar()"
+    class="absolute top-4 right-4 w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-2xl font-bold text-gray-600 transition-colors duration-200 z-10"
+  >
+    ✕
+  </button>
+
+  <div class="w-full max-w-4xl mx-auto">
+    <!-- Título -->
+    <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-8">
+      Términos y Condiciones
+    </h2>
+
+    <!-- Contenido -->
+    <div class="space-y-6 text-gray-700 text-base md:text-lg leading-relaxed">
+      <!-- Sección 1 -->
+      <div>
+        <h3 class="text-xl md:text-2xl font-semibold text-gray-800 mb-3">
+          1. Aceptación de los Términos
+        </h3>
+        <p>
+          Al acceder y utilizar este sitio web y realizar compras en [Nombre de tu Tienda], aceptas
+          cumplir con los siguientes Términos y Condiciones. Si no estás de acuerdo con alguno de
+          estos términos, te recomendamos no utilizar nuestros servicios.
+        </p>
+      </div>
+
+      <!-- Sección 2 -->
+      <div>
+        <h3 class="text-xl md:text-2xl font-semibold text-gray-800 mb-3">2. Productos y Precios</h3>
+        <p>
+          Todos los productos ofrecidos en nuestra tienda están sujetos a disponibilidad. Los
+          precios pueden ser modificados sin previo aviso, pero los precios aplicables serán los
+          vigentes al momento de la compra. Nos reservamos el derecho de corregir errores de precios
+          o descripciones.
+        </p>
+        <ul class="list-disc list-inside mt-2 space-y-1 pl-4">
+          <li>Los precios están expresados en la moneda local.</li>
+          <li>Los productos incluyen garantía limitada de 7 días hábiles.</li>
+          <li>Las ofertas y promociones tienen una duración limitada.</li>
+        </ul>
+      </div>
+
+      <!-- Sección 3 -->
+      <div>
+        <h3 class="text-xl md:text-2xl font-semibold text-gray-800 mb-3">
+          3. Garantía y Devoluciones
+        </h3>
+        <p>
+          Todos nuestros productos cuentan con una
+          <strong>garantía limitada de 7 días hábiles</strong> contra fallas de fábrica. La garantía
+          no cubre daños causados por:
+        </p>
+        <ul class="list-disc list-inside mt-2 space-y-1 pl-4">
+          <li>Caídas, golpes, arañones o roturas.</li>
+          <li>Manchas de agua o exposición a líquidos.</li>
+          <li>Mala manipulación o instalación de software no autorizado.</li>
+          <li>Apertura del equipo por personal no autorizado.</li>
+        </ul>
+        <p class="mt-2">
+          Para hacer válida la garantía, el producto debe presentarse con su empaque original,
+          accesorios completos y comprobante de compra.
+        </p>
+      </div>
+
+      <!-- Sección 4 -->
+      <div>
+        <h3 class="text-xl md:text-2xl font-semibold text-gray-800 mb-3">
+          4. Política de Privacidad
+        </h3>
+        <p>
+          Tus datos personales serán tratados con absoluta confidencialidad y solo serán utilizados
+          para procesar tus pedidos, enviar información sobre tus compras y mejorar nuestra
+          experiencia de servicio. No compartiremos tu información con terceros sin tu
+          consentimiento expreso.
+        </p>
+      </div>
+
+      <!-- Sección 5 -->
+      <div>
+        <h3 class="text-xl md:text-2xl font-semibold text-gray-800 mb-3">5. Formas de Pago</h3>
+        <p>Aceptamos las siguientes formas de pago:</p>
+        <ul class="list-disc list-inside mt-2 space-y-1 pl-4">
+          <li>Efectivo (en tienda física).</li>
+          <li>Tarjetas de crédito y débito (Visa, Mastercard, American Express).</li>
+          <li>Transferencias bancarias y depósitos.</li>
+          <li>Yape, Plin y otras billeteras digitales.</li>
+        </ul>
+      </div>
+
+      <!-- Sección 6 -->
+      <div>
+        <h3 class="text-xl md:text-2xl font-semibold text-gray-800 mb-3">6. Envíos y Entregas</h3>
+        <p>Realizamos envíos a nivel nacional. Los tiempos de entrega varían según la ubicación:</p>
+        <ul class="list-disc list-inside mt-2 space-y-1 pl-4">
+          <li>Lima Metropolitana: 1-2 días hábiles.</li>
+          <li>Provincias: 3-5 días hábiles.</li>
+          <li>El costo de envío será calculado al momento de la compra.</li>
+        </ul>
+      </div>
+
+      <!-- Sección 7 -->
+      <div>
+        <h3 class="text-xl md:text-2xl font-semibold text-gray-800 mb-3">
+          7. Responsabilidad del Usuario
+        </h3>
+        <p>
+          El usuario se compromete a proporcionar información veraz y actualizada al realizar sus
+          compras. Asimismo, es responsable del cuidado y uso adecuado de los productos adquiridos,
+          así como de la confidencialidad de sus datos de acceso.
+        </p>
+      </div>
+
+      <!-- Sección 8 -->
+      <div>
+        <h3 class="text-xl md:text-2xl font-semibold text-gray-800 mb-3">8. Modificaciones</h3>
+        <p>
+          Nos reservamos el derecho de modificar estos Términos y Condiciones en cualquier momento.
+          Los cambios serán publicados en esta página y entrarán en vigencia inmediatamente después
+          de su publicación. Te recomendamos revisar periódicamente esta sección.
+        </p>
+      </div>
+
+      <!-- Sección 9 -->
+      <div>
+        <h3 class="text-xl md:text-2xl font-semibold text-gray-800 mb-3">9. Contacto</h3>
+        <p>
+          Si tienes alguna duda o consulta sobre nuestros Términos y Condiciones, puedes
+          contactarnos a través de:
+        </p>
+        <ul class="list-disc list-inside mt-2 space-y-1 pl-4">
+          <li><strong>Teléfono:</strong> +51 953713240</li>
+          <li><strong>Correo:</strong> ventasmart.tech.pe@gmail.com</li>
+          <li>
+            <strong>Dirección:</strong> Calle Mercaderes 224 CC El Panorámico of.106, Arequipa -
+            Perú
+          </li>
+        </ul>
+      </div>
+
+      <!-- Aceptación final -->
+      <div class="mt-8 p-6 bg-gray-50 border border-gray-200 rounded-xl">
+        <p class="text-center font-semibold text-gray-800">
+          Al realizar una compra en nuestra tienda, aceptas automáticamente todos los términos y
+          condiciones aquí descritos.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
