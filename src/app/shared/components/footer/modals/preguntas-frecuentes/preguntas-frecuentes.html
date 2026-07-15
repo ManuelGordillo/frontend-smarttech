@@ -1,1 +1,117 @@
-<p>preguntas-frecuentes works!</p>,
+<div class="min-h-screen w-full bg-white flex items-start justify-center p-8 md:p-12 relative">
+  <!-- Botón X para regresar -->
+  <button
+    (click)="cerrar()"
+    class="absolute top-4 right-4 w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-2xl font-bold text-gray-600 transition-colors duration-200 z-10"
+  >
+    ✕
+  </button>
+
+  <div class="w-full max-w-4xl mx-auto">
+    <!-- Título -->
+    <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-8">
+      Preguntas Frecuentes
+    </h2>
+
+    <!-- Lista de preguntas -->
+    <div class="space-y-4">
+      <div
+        *ngFor="let item of preguntas; let i = index"
+        class="bg-gray-50 border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200"
+      >
+        <!-- Pregunta (click para expandir) -->
+        <div
+          (click)="togglePregunta(i)"
+          class="p-4 md:p-6 cursor-pointer hover:bg-gray-100 transition-colors duration-200 flex items-center justify-between"
+        >
+          <h3 class="text-lg md:text-xl font-semibold text-gray-800 pr-4">
+            {{ item.pregunta }}
+          </h3>
+          <span
+            class="text-2xl text-gray-400 flex-shrink-0 transition-transform duration-300"
+            [class.rotate-45]="item.abierta"
+          >
+            +
+          </span>
+        </div>
+
+        <!-- Respuesta (se muestra cuando está abierta) -->
+        <div
+          *ngIf="item.abierta"
+          class="px-4 md:px-6 pb-4 md:pb-6 pt-0 border-t border-gray-200 bg-white"
+        >
+          <div class="text-gray-700 text-base md:text-lg leading-relaxed pt-4">
+            <p>{{ item.respuesta }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección: ¿No encontraste tu pregunta? -->
+    <div class="mt-10 p-6 bg-blue-50 border-2 border-blue-200 rounded-2xl text-center">
+      <h4 class="text-lg font-semibold text-gray-800 mb-2">¿No encontraste tu pregunta?</h4>
+      <p class="text-gray-600 mb-4">Escríbenos y te responderemos a la brevedad</p>
+      <button
+        (click)="abrirFormulario()"
+        class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full transition-colors duration-200 shadow-md hover:shadow-lg"
+      >
+        Hacer una pregunta
+      </button>
+    </div>
+
+    <!-- Modal para hacer pregunta -->
+    <div
+      *ngIf="formularioAbierto"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+      (click)="cerrarFormulario()"
+    >
+      <div
+        class="bg-white rounded-2xl max-w-2xl w-full p-6 md:p-8 shadow-2xl"
+        (click)="$event.stopPropagation()"
+      >
+        <div class="flex justify-end mb-4">
+          <button
+            (click)="cerrarFormulario()"
+            class="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-2xl font-bold text-gray-600 transition-colors duration-200"
+          >
+            ✕
+          </button>
+        </div>
+
+        <h3 class="text-2xl font-bold text-gray-800 mb-6">Haz tu pregunta</h3>
+
+        <form (ngSubmit)="enviarPregunta()" class="space-y-4">
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Tu pregunta *</label>
+            <textarea
+              [(ngModel)]="nuevaPregunta"
+              name="nuevaPregunta"
+              rows="4"
+              class="w-full border-2 border-gray-300 rounded-xl p-3 focus:border-blue-500 focus:outline-none transition-colors"
+              placeholder="Escribe tu pregunta aquí..."
+              required
+            ></textarea>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Tu correo electrónico</label>
+            <input
+              [(ngModel)]="correoUsuario"
+              name="correoUsuario"
+              type="email"
+              class="w-full border-2 border-gray-300 rounded-xl p-3 focus:border-blue-500 focus:outline-none transition-colors"
+              placeholder="tucorreo@ejemplo.com"
+            />
+          </div>
+          <button
+            type="submit"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200 shadow-md hover:shadow-lg"
+          >
+            Enviar pregunta
+          </button>
+        </form>
+
+        <p class="text-sm text-gray-500 mt-4 text-center">Te responderemos a la brevedad</p>
+      </div>
+    </div>
+  </div>
+</div>
