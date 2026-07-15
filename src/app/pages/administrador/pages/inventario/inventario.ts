@@ -1,5 +1,5 @@
 // inventario.ts
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InventarioFiltros } from './inventario-filtros/inventario-filtros';
 import { InventarioResumen } from './inventario-resumen/inventario-resumen';
@@ -20,7 +20,6 @@ export interface FiltrosInventario {
   standalone: true,
   imports: [CommonModule, InventarioFiltros, InventarioResumen, InventarioTabla],
   templateUrl: './inventario.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Inventario implements OnInit {
   private productoService = inject(ProductoService);

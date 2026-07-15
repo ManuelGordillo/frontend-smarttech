@@ -1,5 +1,5 @@
 // inventario-filtros/inventario-filtros.ts
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -8,7 +8,7 @@ export interface FiltrosInventario {
   modelo: string;
   estado: string;
   fecha: string;
-  color: string; // ✅ Agregar color
+  color: string;
 }
 
 @Component({
@@ -16,7 +16,6 @@ export interface FiltrosInventario {
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './inventario-filtros.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InventarioFiltros {
   @Input() marcas: string[] = [];

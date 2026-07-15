@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductoInterface } from '../../../../../interfaces/producto.interface';
 
@@ -7,7 +7,6 @@ import { ProductoInterface } from '../../../../../interfaces/producto.interface'
   standalone: true,
   imports: [CommonModule],
   templateUrl: './inventario-tabla.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InventarioTabla {
   @Input() productos: ProductoInterface[] = [];

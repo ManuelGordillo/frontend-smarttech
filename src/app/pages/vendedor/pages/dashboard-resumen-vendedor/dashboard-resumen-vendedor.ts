@@ -1,12 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-  OnDestroy,
-  AfterViewInit,
-  ElementRef,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Chart, ChartConfiguration, registerables } from 'chart.js';
@@ -32,7 +24,6 @@ Chart.register(...registerables);
   standalone: true,
   imports: [RouterLink, CommonModule],
   templateUrl: './dashboard-resumen-vendedor.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardResumenVendedor implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('salesChart') salesChartRef!: ElementRef<HTMLCanvasElement>;

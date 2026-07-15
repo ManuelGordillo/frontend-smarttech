@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, TitleCasePipe } from '@angular/common';
 import { ClientesService } from '../../../../../services/clientes.service';
@@ -7,7 +7,6 @@ import { ClientesService } from '../../../../../services/clientes.service';
   selector: 'smarttech-nuevo-clientes-vendedor',
   imports: [CommonModule, ReactiveFormsModule, TitleCasePipe],
   templateUrl: './nuevo-clientes-vendedor.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NuevoClientesVendedor {
   private fb = inject(FormBuilder);

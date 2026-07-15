@@ -1,13 +1,12 @@
 // buscar-clientes-vendedor.ts
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'smarttech-buscar-clientes-vendedor',
   imports: [CommonModule, FormsModule],
   templateUrl: './buscar-clientes-vendedor.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BuscarClientesVendedor {
   filtroDni: string = '';

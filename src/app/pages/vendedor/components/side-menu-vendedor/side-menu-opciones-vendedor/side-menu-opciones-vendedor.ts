@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
 interface MenuOpcionVendedor {
@@ -12,7 +12,6 @@ interface MenuOpcionVendedor {
   selector: 'smarttech-side-menu-opciones-vendedor',
   imports: [RouterLink],
   templateUrl: './side-menu-opciones-vendedor.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SideMenuOpcionesVendedor {
   private router = inject(Router);

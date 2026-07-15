@@ -1,5 +1,5 @@
 // clientes-vendedor.ts
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { finalize } from 'rxjs/operators';
 
@@ -22,7 +22,6 @@ import { CarritoService } from '../../../../services/carrito.service'; // ✅ Im
     NuevoClientesVendedor,
   ],
   templateUrl: './clientes-vendedor.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClientesVendedor implements OnInit {
   clientesFiltrados: ClientesInterface[] = [];

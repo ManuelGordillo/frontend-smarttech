@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { Navbar } from '../../../shared/components/navbar/navbar';
 import { Footer } from '../../../shared/components/footer/footer';
 import { ProductoInterface } from '../../../interfaces/producto.interface';
@@ -8,7 +8,6 @@ import { ProductoService } from '../../../services/producto.service';
   selector: 'app-tablets',
   imports: [Navbar, Footer],
   templateUrl: './tablets.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Tablets {
   tablets: ProductoInterface[] = [];

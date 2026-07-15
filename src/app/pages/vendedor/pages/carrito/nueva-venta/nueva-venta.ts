@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -14,7 +14,6 @@ import { VentasService } from '../../../../../services/ventas.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './nueva-venta.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NuevaVenta implements OnInit {
   private fb = inject(FormBuilder);

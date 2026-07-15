@@ -4,6 +4,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   selector: 'reporte-filtros',
   imports: [],
   templateUrl: './reporte-filtros.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReporteFiltros {}

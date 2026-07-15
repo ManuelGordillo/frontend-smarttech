@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { Footer } from '../../../shared/components/footer/footer';
 import { Navbar } from '../../../shared/components/navbar/navbar';
 
@@ -6,6 +6,5 @@ import { Navbar } from '../../../shared/components/navbar/navbar';
   selector: 'app-accesorios',
   imports: [Footer, Navbar],
   templateUrl: './accesorios.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Accesorios {}
