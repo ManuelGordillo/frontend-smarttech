@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { SideMenuCliente } from '../../components/side-menu-cliente/side-menu-cliente';
 import { RouterOutlet } from '@angular/router';
 
@@ -6,6 +6,5 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-dashboard-cliente',
   imports: [SideMenuCliente, RouterOutlet],
   templateUrl: './dashboard-cliente.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class DashboardCliente {}

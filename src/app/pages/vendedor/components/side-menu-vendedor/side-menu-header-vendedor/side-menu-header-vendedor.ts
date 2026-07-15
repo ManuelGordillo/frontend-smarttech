@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'smarttech-side-menu-header-vendedor',
   imports: [RouterLink],
   templateUrl: './side-menu-header-vendedor.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SideMenuHeaderVendedor implements OnInit {
   nombreVendedor = signal<string>('');

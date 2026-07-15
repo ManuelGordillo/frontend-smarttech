@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, computed } from '@angular/core';
+import { Component, input, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductoInterface } from '../../../../../interfaces/producto.interface';
 import { CarritoProducto } from '../../../../../interfaces/carrito.interface';
@@ -8,7 +8,6 @@ import { CarritoProducto } from '../../../../../interfaces/carrito.interface';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './ventas-resumen.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VentasResumen {
   // Inputs

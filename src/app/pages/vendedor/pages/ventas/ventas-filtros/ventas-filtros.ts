@@ -1,12 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  signal,
-  computed,
-  output,
-  inject,
-  OnInit,
-} from '@angular/core';
+import { Component, signal, computed, output, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ProductoService } from '../../../../../services/producto.service'; // Ajusta la ruta según tu estructura
 import { ProductoInterface } from '../../../../../interfaces/producto.interface'; // Ajusta la ruta según tu estructura
@@ -22,7 +14,6 @@ export interface FiltrosVentas {
   selector: 'smarttech-ventas-filtros',
   imports: [FormsModule],
   templateUrl: './ventas-filtros.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VentasFiltros implements OnInit {
   private productoService = inject(ProductoService);

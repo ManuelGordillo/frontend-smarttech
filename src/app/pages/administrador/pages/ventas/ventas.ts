@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { VentasResumen } from './ventas-resumen/ventas-resumen';
 import { VentasFiltros } from './ventas-filtros/ventas-filtros';
 import { VentasTabla } from './ventas-tabla/ventas-tabla';
@@ -7,6 +7,5 @@ import { VentasTabla } from './ventas-tabla/ventas-tabla';
   selector: 'app-ventas',
   imports: [VentasResumen, VentasFiltros, VentasTabla],
   templateUrl: './ventas.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class Ventas {}

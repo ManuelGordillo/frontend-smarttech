@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { ReporteEncabezado } from './reporte-encabezado/reporte-encabezado';
 import { ReporteKpis } from './reporte-kpis/reporte-kpis';
 import { ReporteFiltros } from './reporte-filtros/reporte-filtros';
@@ -19,6 +19,5 @@ import { ReporteTablaDetalle } from './reporte-tabla-detalle/reporte-tabla-detal
     ReporteTablaDetalle,
   ],
   templateUrl: './reportes.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class Reportes {}

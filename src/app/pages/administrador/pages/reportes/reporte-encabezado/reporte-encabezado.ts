@@ -4,6 +4,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   selector: 'reporte-encabezado',
   imports: [],
   templateUrl: './reporte-encabezado.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReporteEncabezado {}
