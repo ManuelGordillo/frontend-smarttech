@@ -11,7 +11,6 @@ import { ClientesInterface } from '../../../../interfaces/clientes.interface';
 export default class Clientes implements OnInit {
   private clientesService = inject(ClientesService);
 
-  // 🔥 Signals para Angular 20
   clientes = signal<ClientesInterface[]>([]);
   loading = signal<boolean>(false);
   error = signal<string>('');
@@ -59,7 +58,7 @@ export default class Clientes implements OnInit {
 
     this.clientesService.eliminarCliente(cliente.id).subscribe({
       next: () => {
-        // 🔥 Actualizar signal con filter
+        // Actualizar signal con filter
         this.clientes.update((current) => current.filter((c) => c.id !== cliente.id));
         this.mensaje.set(`✅ ${cliente.nombre} ${cliente.apellido} eliminado correctamente`);
         setTimeout(() => this.mensaje.set(''), 3000);

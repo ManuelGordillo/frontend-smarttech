@@ -2,7 +2,6 @@
   <h1 class="text-3xl font-bold text-slate-900 mb-2">Clientes</h1>
   <p class="text-slate-500 mb-6">Clientes registrados en la plataforma</p>
 
-  <!-- 🔥 Mensajes de estado con signals -->
   @if (loading()) {
     <div class="alert alert-info mb-4">
       <span>Cargando clientes...</span>
@@ -21,7 +20,7 @@
     </div>
   }
 
-  <!-- 🔥 Tabla de clientes -->
+  <!-- Tabla de clientes -->
   <div class="bg-white rounded-xl shadow overflow-hidden text-slate-900">
     @if (clientes().length === 0 && !loading()) {
       <div class="p-8 text-center text-slate-500">
@@ -47,7 +46,7 @@
         </thead>
 
         <tbody>
-          <!-- 🔥 @for con signals -->
+          <!--  @for con signals -->
           @for (cliente of clientes(); track cliente.id) {
             <tr class="hover:bg-slate-50">
               <td>{{ cliente.id }}</td>

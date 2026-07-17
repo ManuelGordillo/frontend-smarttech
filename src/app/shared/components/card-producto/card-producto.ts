@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductoInterface } from '../../../interfaces/producto.interface';
-import { CarritoService } from '../../../services/carrito.service'; // ✅ Importar
+import { CarritoService } from '../../../services/carrito.service';
 
 @Component({
   selector: 'smarttech-card-producto',
@@ -12,7 +12,6 @@ import { CarritoService } from '../../../services/carrito.service'; // ✅ Impor
 export class CardProducto {
   @Input() producto!: ProductoInterface;
   @Output() verDetalle = new EventEmitter<ProductoInterface>();
-  // @Output() agregarCarrito = new EventEmitter<ProductoInterface>(); // ❌ Ya no lo necesitas
 
   constructor(private carritoService: CarritoService) {} // ✅ Inyectar servicio
 
