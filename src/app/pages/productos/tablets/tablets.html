@@ -29,11 +29,7 @@
   @if (!loading && !error) {
     @if (tablets.length > 0) {
       @for (producto of tablets; track producto.id) {
-        <smarttech-card-producto
-          [producto]="producto"
-          (verDetalle)="verDetalle($event)"
-          (agregarCarrito)="agregarAlCarrito($event)"
-        />
+        <smarttech-card-producto [producto]="producto" (verDetalle)="verDetalle($event)" />
       }
     } @else {
       <div class="text-center py-20 w-full">
