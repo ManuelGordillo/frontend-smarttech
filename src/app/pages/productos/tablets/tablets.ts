@@ -3,10 +3,11 @@ import { Navbar } from '../../../shared/components/navbar/navbar';
 import { Footer } from '../../../shared/components/footer/footer';
 import { ProductoInterface } from '../../../interfaces/producto.interface';
 import { ProductoService } from '../../../services/producto.service';
+import { CardProducto } from '../../../shared/components/card-producto/card-producto';
 
 @Component({
   selector: 'app-tablets',
-  imports: [Navbar, Footer],
+  imports: [Navbar, Footer, CardProducto],
   templateUrl: './tablets.html',
 })
 export class Tablets {
