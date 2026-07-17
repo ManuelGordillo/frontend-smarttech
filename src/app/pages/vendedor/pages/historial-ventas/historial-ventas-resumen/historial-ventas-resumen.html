@@ -1,25 +1,40 @@
 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+  <!-- Ventas Hoy -->
   <div class="stats shadow-xl bg-white border border-slate-200/50 rounded-2xl">
     <div class="stat px-5 py-4">
       <div class="stat-title text-slate-500 font-medium">Ventas Hoy</div>
-      <div class="stat-value text-3xl font-extrabold text-primary">15</div>
-      <div class="stat-desc text-slate-400">↗︎ +2 que ayer</div>
+
+      <div class="stat-value text-3xl font-extrabold text-primary">
+        {{ ventasHoy }}
+      </div>
+
+      <div class="stat-desc text-slate-400">Ventas registradas hoy</div>
     </div>
   </div>
 
+  <!-- Ventas del Mes -->
   <div class="stats shadow-xl bg-white border border-slate-200/50 rounded-2xl">
     <div class="stat px-5 py-4">
       <div class="stat-title text-slate-500 font-medium">Ventas del Mes</div>
-      <div class="stat-value text-3xl font-extrabold text-secondary">120</div>
-      <div class="stat-desc text-slate-400">↗︎ +15% respecto al mes pasado</div>
+
+      <div class="stat-value text-3xl font-extrabold text-secondary">
+        {{ ventasMes }}
+      </div>
+
+      <div class="stat-desc text-slate-400">Ventas registradas este mes</div>
     </div>
   </div>
 
+  <!-- Total Vendido -->
   <div class="stats shadow-xl bg-white border border-slate-200/50 rounded-2xl">
     <div class="stat px-5 py-4">
       <div class="stat-title text-slate-500 font-medium">Total Vendido</div>
-      <div class="stat-value text-3xl font-extrabold text-success">S/ 48,500</div>
-      <div class="stat-desc text-slate-400">↗︎ +8% crecimiento</div>
+
+      <div class="stat-value text-3xl font-extrabold text-success">
+        S/ {{ totalVendido | number: '1.2-2' }}
+      </div>
+
+      <div class="stat-desc text-slate-400">Total acumulado de ventas</div>
     </div>
   </div>
 </div>

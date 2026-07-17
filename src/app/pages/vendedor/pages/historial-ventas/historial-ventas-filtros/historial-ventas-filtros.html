@@ -2,26 +2,34 @@
   <div class="card-body p-5 md:p-6">
     <h2 class="card-title text-slate-700 mb-3 text-xl">Filtros de Búsqueda</h2>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+      <!-- Número de Venta -->
       <input
         type="text"
         placeholder="🔍 N° Venta"
         class="input input-bordered bg-white border-slate-200 focus:border-primary rounded-xl placeholder:text-slate-400"
+        [(ngModel)]="filtros.numeroVenta"
       />
 
+      <!-- Cliente -->
       <input
         type="text"
         placeholder="🔍 Cliente"
         class="input input-bordered bg-white border-slate-200 focus:border-primary rounded-xl placeholder:text-slate-400"
+        [(ngModel)]="filtros.cliente"
       />
 
+      <!-- Fecha -->
       <input
         type="date"
         class="input input-bordered bg-white border-slate-200 focus:border-primary rounded-xl text-slate-600"
+        [(ngModel)]="filtros.fecha"
       />
 
+      <!-- Buscar -->
       <button
         class="btn btn-primary rounded-xl shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all duration-200"
+        (click)="buscarVentas()"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -36,6 +44,14 @@
           />
         </svg>
         Buscar
+      </button>
+
+      <!-- Limpiar -->
+      <button
+        class="btn btn-outline rounded-xl border-slate-300 hover:bg-slate-100 transition-all duration-200"
+        (click)="limpiar()"
+      >
+        Limpiar
       </button>
     </div>
   </div>
