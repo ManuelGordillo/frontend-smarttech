@@ -2,11 +2,10 @@
 export interface VentaInterface {
   id?: number;
   id_cliente: number;
-  fecha_venta: string;
-  subtotal: number;
-  igv: number;
+  id_usuario: number;
+  fecha_venta: Date;
   total: number;
-  tipo_comprobante: string; // 'BOLETA' | 'FACTURA'
+  tipo_pago: string;
   estado: 'PENDIENTE' | 'COMPLETADO' | 'ANULADO';
 }
 
