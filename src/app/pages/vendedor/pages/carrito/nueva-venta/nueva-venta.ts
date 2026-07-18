@@ -207,9 +207,32 @@ export class NuevaVenta implements OnInit {
 
     this.loading = true;
 
-    // ✅ Obtener usuarioId desde localStorage
-    const usuarioId = localStorage.getItem('usuarioId') || '1';
-    console.log('🆔 Usuario ID desde localStorage:', usuarioId);
+    // ✅ OBTENER USUARIO ID DE FORMA DINÁMICA DESDE EL OBJETO GUARDADO
+    let usuarioId = '1';
+    const usuarioData = localStorage.getItem('usuario');
+
+    if (usuarioData) {
+      try {
+        const usuario = JSON.parse(usuarioData);
+        if (usuario && usuario.id) {
+          usuarioId = String(usuario.id);
+          console.log('✅ Usuario ID obtenido del objeto usuario:', usuarioId);
+        }
+      } catch (e) {
+        console.error('❌ Error al parsear usuario:', e);
+      }
+    }
+
+    // Si no se pudo obtener, intentar con usuarioId directo
+    if (usuarioId === '1') {
+      const usuarioIdDirecto = localStorage.getItem('usuarioId');
+      if (usuarioIdDirecto) {
+        usuarioId = usuarioIdDirecto;
+        console.log('✅ Usuario ID obtenido de usuarioId:', usuarioId);
+      }
+    }
+
+    console.log('🆔 Usuario ID final desde localStorage:', usuarioId);
     console.log('👤 Cliente ID:', carritoActual.cliente.id);
 
     // ✅ Fecha con formato ISO completo
@@ -234,10 +257,6 @@ export class NuevaVenta implements OnInit {
       next: (response) => {
         console.log('✅ Venta registrada en BD:', response);
         this.loading = false;
-
-        // ❌ ELIMINADO: this.carritoService.vaciarProductos();
-        // ✅ El carrito NO se limpia para poder generar el PDF
-
         alert('✅ Venta registrada exitosamente. Ahora ve al carrito para generar el comprobante.');
         this.router.navigate(['/vendedor/vendedor-dashboard/carrito']);
       },
