@@ -6,64 +6,40 @@
   </div>
 
   <!-- FILTROS -->
-  <smarttech-historial-ventas-filtros />
+  <smarttech-historial-ventas-filtros (buscar)="aplicarFiltros($event)" />
 
   <!-- RESUMEN -->
-  <smarttech-historial-ventas-resumen />
+  <smarttech-historial-ventas-resumen [ventas]="ventasFiltradas" />
 
   <!-- TABLA -->
-  <smarttech-historial-ventas-tabla />
+  <smarttech-historial-ventas-tabla [ventas]="ventasFiltradas" (verVenta)="onVerVenta($event)" />
 
   <!-- PAGINACIÓN -->
-  <div class="flex justify-center mt-8">
-    <div class="join shadow-lg rounded-xl overflow-hidden">
-      <button
-        class="join-item btn bg-white border-slate-200 hover:bg-slate-50 transition-all duration-200 px-5"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-            clip-rule="evenodd"
-          />
-        </svg>
-      </button>
-      <button
-        class="join-item btn btn-primary text-white border-none px-6 font-bold shadow-lg shadow-primary/30"
-      >
-        1
-      </button>
-      <button
-        class="join-item btn bg-white border-slate-200 hover:bg-slate-50 transition-all duration-200 px-6"
-      >
-        2
-      </button>
-      <button
-        class="join-item btn bg-white border-slate-200 hover:bg-slate-50 transition-all duration-200 px-6"
-      >
-        3
-      </button>
-      <button
-        class="join-item btn bg-white border-slate-200 hover:bg-slate-50 transition-all duration-200 px-5"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-            clip-rule="evenodd"
-          />
-        </svg>
-      </button>
-    </div>
+  <div class="flex justify-center items-center gap-4 mt-8">
+    <button
+      class="btn btn-sm bg-white border-slate-200 hover:bg-slate-50 disabled:opacity-50"
+      (click)="paginaActual = paginaActual - 1"
+      [disabled]="paginaActual === 1"
+    >
+      ◀ Anterior
+    </button>
+
+    <span class="text-sm text-slate-600"> Página {{ paginaActual }} de {{ totalPaginas }} </span>
+
+    <button
+      class="btn btn-sm bg-white border-slate-200 hover:bg-slate-50 disabled:opacity-50"
+      (click)="paginaActual = paginaActual + 1"
+      [disabled]="paginaActual === totalPaginas"
+    >
+      Siguiente ▶
+    </button>
   </div>
+
+  <!-- Carga -->
+  @if (cargando) {
+    <div class="text-center py-8">
+      <span class="loading loading-spinner loading-lg text-primary"></span>
+      <p class="text-slate-500 mt-2">Cargando ventas...</p>
+    </div>
+  }
 </div>
