@@ -41,15 +41,33 @@ export class VentasService {
   // ==========================================
   // OBTENER VENTAS
   // ==========================================
-  getVentas(): Observable<any[]> {
-    // ✅ Cambiar a any[]
+  // getVentas(): Observable<any[]> {
+  //   // ✅ Cambiar a any[]
+  //   const token = localStorage.getItem('token');
+  //   const headers = new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //     Authorization: `Bearer ${token}`,
+  //   });
+
+  //   return this.http.get<any[]>(`${this.apiUrl}/ventas/listar`, {
+  //     headers: headers,
+  //   });
+  // }
+
+  // ==========================================
+  // OBTENER VENTAS - CORREGIDO
+  // ==========================================
+  getVentas(): Observable<any> {
     const token = localStorage.getItem('token');
+    console.log('🔑 Token en getVentas:', token);
+
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     });
 
-    return this.http.get<any[]>(`${this.apiUrl}/ventas/listar`, {
+    // ✅ QUITAR responseType: 'text' - DEJAR QUE DEVUELVA JSON
+    return this.http.get(`${this.apiUrl}/ventas/listar`, {
       headers: headers,
     });
   }

@@ -15,12 +15,28 @@ export class HistorialVentasResumen implements OnChanges {
   totalVendido: number = 0;
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['ventas'] && this.ventas) {
+    if (changes['ventas']) {
+      // ✅ VERIFICAR QUE SEA UN ARRAY
+      if (!this.ventas || !Array.isArray(this.ventas)) {
+        console.warn('⚠️ ventas no es un array:', this.ventas);
+        this.ventasHoy = 0;
+        this.ventasMes = 0;
+        this.totalVendido = 0;
+        return;
+      }
       this.calcularResumen();
     }
   }
 
   calcularResumen(): void {
+    // ✅ ASEGURAR QUE ventas SEA UN ARRAY
+    if (!this.ventas || !Array.isArray(this.ventas) || this.ventas.length === 0) {
+      this.ventasHoy = 0;
+      this.ventasMes = 0;
+      this.totalVendido = 0;
+      return;
+    }
+
     const hoy = new Date();
     const inicioMes = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
 

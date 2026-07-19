@@ -3,19 +3,12 @@
     <thead class="bg-slate-100">
       <tr>
         <th>#</th>
-
         <th>Fecha</th>
-
         <th>Cliente</th>
-
         <th>Vendedor</th>
-
         <th>Tipo Pago</th>
-
         <th>Total</th>
-
         <th>Estado</th>
-
         <th class="text-center">Acciones</th>
       </tr>
     </thead>
@@ -28,7 +21,8 @@
           </td>
         </tr>
       } @else {
-        @for (venta of ventas; track venta.id) {
+        <!-- ✅ CAMBIAR track venta.id POR venta.id || $index -->
+        @for (venta of ventas; track venta.id || $index) {
           <tr class="hover">
             <td>
               {{ venta.id }}
