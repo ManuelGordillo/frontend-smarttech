@@ -21,7 +21,7 @@
     </div>
   </div>
 
-  <!-- KPI CARDS - Datos desde la BD -->
+  <!-- KPI CARDS -->
   <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6 mb-8">
     <!-- Ventas Hoy -->
     <div
@@ -128,7 +128,7 @@
 
   <!-- GRÁFICOS Y TOP PRODUCTOS -->
   <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-8">
-    <!-- Gráfico de Ventas (ocupa 2 columnas en XL) -->
+    <!-- Gráfico de Ventas -->
     <div class="xl:col-span-2">
       <div class="card bg-white shadow-md rounded-xl border border-slate-200 p-4 md:p-6">
         <div class="card-body">
@@ -148,17 +148,14 @@
             </select>
           </div>
           <div class="h-64 md:h-72 relative">
-            <!-- Canvas para el gráfico -->
             <canvas #salesChart id="salesChart"></canvas>
 
-            <!-- Skeleton loader con @if -->
             @if (estado.cargando) {
               <div class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75">
                 <span class="loading loading-spinner loading-lg text-blue-600"></span>
               </div>
             }
 
-            <!-- Mensaje sin datos con @if -->
             @if (!estado.cargando && todasLasVentas.length === 0) {
               <div class="absolute inset-0 flex flex-col items-center justify-center">
                 <span class="text-4xl mb-2">📭</span>
@@ -170,7 +167,7 @@
       </div>
     </div>
 
-    <!-- Productos Más Vendidos (1 columna) -->
+    <!-- Top Productos -->
     <div class="xl:col-span-1">
       <div class="card bg-white shadow-md rounded-xl border border-slate-200 p-4 md:p-6">
         <div class="card-body">
@@ -178,14 +175,12 @@
             <span>🏆</span> Top Productos Más Vendidos
           </h2>
 
-          <!-- Estado de carga con @if -->
           @if (estado.cargandoProductos) {
             <div class="flex justify-center items-center h-48">
               <span class="loading loading-spinner loading-md"></span>
             </div>
           }
 
-          <!-- Lista de productos desde la BD con @if -->
           @if (!estado.cargandoProductos) {
             <div class="space-y-3">
               @for (producto of topProductos; track producto.productoId; let i = $index) {
@@ -217,7 +212,6 @@
                   </div>
                 </div>
               } @empty {
-                <!-- Mensaje sin productos -->
                 <div class="text-center py-8">
                   <span class="text-4xl">📭</span>
                   <p class="text-slate-500 mt-2">No hay productos vendidos aún</p>
@@ -226,7 +220,6 @@
             </div>
           }
 
-          <!-- Ver todos -->
           <div class="mt-4 text-center border-t border-slate-100 pt-4">
             <button
               (click)="verTodosLosProductos()"
@@ -242,7 +235,6 @@
 
   <!-- ACCESO RÁPIDO -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-    <!-- Nueva Venta -->
     <div
       class="card bg-white shadow-md rounded-xl border border-slate-200 hover:shadow-xl transition-all duration-300 p-4 md:p-6"
     >
@@ -263,7 +255,6 @@
       </div>
     </div>
 
-    <!-- Carrito -->
     <div
       class="card bg-white shadow-md rounded-xl border border-slate-200 hover:shadow-xl transition-all duration-300 p-4 md:p-6"
     >
@@ -288,7 +279,6 @@
       </div>
     </div>
 
-    <!-- Clientes -->
     <div
       class="card bg-white shadow-md rounded-xl border border-slate-200 hover:shadow-xl transition-all duration-300 p-4 md:p-6"
     >
@@ -310,7 +300,6 @@
     </div>
   </div>
 
-  <!-- Mensaje de Error con @if -->
   @if (hayError) {
     <div class="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
       <div class="flex items-center gap-2 text-red-600">

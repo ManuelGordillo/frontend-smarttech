@@ -8,13 +8,13 @@ import { finalize } from 'rxjs/operators';
 import {
   EstadisticasDashboard,
   ProductoRanking,
-  VentaDashboard,
   DatosGraficoVentas,
   DashboardEstado,
 } from '../../../../interfaces/vendedor-dashboard.interface';
 
 // Importar servicio
 import { VentasService } from '../../../../services/ventas.service';
+import { CarritoService } from '../../../../services/carrito.service';
 
 // Registrar todos los elementos de Chart.js
 Chart.register(...registerables);
@@ -68,14 +68,14 @@ export class DashboardResumenVendedor implements OnInit, AfterViewInit, OnDestro
   private graficoInstance: Chart | null = null;
   private intervaloActualizacion: any;
   private periodoActual: number = 7;
-  private _todasLasVentas: VentaDashboard[] = [];
+  private _todasLasVentas: any[] = [];
 
   // ============================================================
   // GETTERS PARA EL TEMPLATE
   // ============================================================
 
   /** Getter para acceder a todas las ventas desde el template */
-  get todasLasVentas(): VentaDashboard[] {
+  get todasLasVentas(): any[] {
     return this._todasLasVentas;
   }
 
@@ -91,13 +91,21 @@ export class DashboardResumenVendedor implements OnInit, AfterViewInit, OnDestro
   // CONSTRUCTOR
   // ============================================================
 
-  constructor(private ventasService: VentasService) {}
+  constructor(
+    private ventasService: VentasService,
+    private carritoService: CarritoService,
+  ) {}
 
   // ============================================================
   // CICLO DE VIDA
   // ============================================================
 
   ngOnInit(): void {
+    // Suscribirse al carrito para obtener el número de items
+    this.carritoService.carrito$.subscribe((carrito) => {
+      this.itemsCarrito = carrito.productos.length;
+    });
+
     // Cargar datos iniciales
     this.cargarDatosDashboard();
 
@@ -144,20 +152,27 @@ export class DashboardResumenVendedor implements OnInit, AfterViewInit, OnDestro
         }),
       )
       .subscribe({
-        next: (ventas: VentaDashboard[]) => {
-          console.log('📊 Ventas recibidas:', ventas.length);
-          this._todasLasVentas = ventas;
+        next: (ventas: any[]) => {
+          console.log('📊 Ventas recibidas:', ventas?.length || 0);
+
+          // ✅ Asegurar que sea un array
+          if (Array.isArray(ventas)) {
+            this._todasLasVentas = ventas;
+          } else {
+            console.warn('⚠️ Las ventas no son un array:', ventas);
+            this._todasLasVentas = [];
+          }
 
           // Procesar estadísticas
-          this.procesarEstadisticas(ventas);
+          this.procesarEstadisticas(this._todasLasVentas);
 
           // Procesar top productos
-          this.procesarTopProductos(ventas);
+          this.procesarTopProductos(this._todasLasVentas);
 
           // Actualizar gráfico
           if (this.graficoInstance) {
             this.actualizarGrafico(this.periodoActual);
-          } else if (ventas.length > 0) {
+          } else if (this._todasLasVentas.length > 0) {
             this.crearGrafico(this.periodoActual);
           }
 
@@ -166,7 +181,7 @@ export class DashboardResumenVendedor implements OnInit, AfterViewInit, OnDestro
         error: (error) => {
           console.error('❌ Error cargando ventas:', error);
           this.estado.error = 'Error al cargar los datos del dashboard';
-          this.mostrarError(this.estado.error);
+          this._todasLasVentas = [];
         },
       });
   }
@@ -175,7 +190,21 @@ export class DashboardResumenVendedor implements OnInit, AfterViewInit, OnDestro
   // PROCESAR ESTADÍSTICAS DE VENTAS
   // ============================================================
 
-  private procesarEstadisticas(ventas: VentaDashboard[]): void {
+  private procesarEstadisticas(ventas: any[]): void {
+    if (!ventas || ventas.length === 0) {
+      this.estadisticas = {
+        ventasHoy: 0,
+        cambioHoy: 0,
+        ventasMes: 0,
+        cambioMes: 0,
+        productosVendidos: 0,
+        productosComparados: 0,
+        clientesAtendidos: 0,
+        clientesComparados: 0,
+      };
+      return;
+    }
+
     const hoy = new Date();
     hoy.setHours(0, 0, 0, 0);
 
@@ -183,7 +212,7 @@ export class DashboardResumenVendedor implements OnInit, AfterViewInit, OnDestro
     const inicioMesAnterior = new Date(hoy.getFullYear(), hoy.getMonth() - 1, 1);
     const finMesAnterior = new Date(hoy.getFullYear(), hoy.getMonth(), 0);
 
-    // Filtrar ventas por período
+    // ✅ Filtrar ventas usando fechaVenta (estructura real del backend)
     const ventasHoy = this.filtrarVentasPorFecha(ventas, hoy, hoy);
     const ventasAyer = this.filtrarVentasPorFecha(
       ventas,
@@ -231,36 +260,40 @@ export class DashboardResumenVendedor implements OnInit, AfterViewInit, OnDestro
   // PROCESAR TOP PRODUCTOS
   // ============================================================
 
-  private procesarTopProductos(ventas: VentaDashboard[]): void {
+  private procesarTopProductos(ventas: any[]): void {
+    if (!ventas || ventas.length === 0) {
+      this.topProductos = [];
+      return;
+    }
+
     const mapaProductos = new Map<string, ProductoRanking>();
 
     ventas.forEach((venta) => {
-      if (venta.detalles && venta.detalles.length > 0) {
-        venta.detalles.forEach((detalle) => {
-          // Obtener ID del producto
-          const productoId = detalle.producto?.id || detalle.productoId || 'desconocido';
-          const nombreProducto =
-            detalle.producto?.nombre || detalle.producto?.modelo || 'Producto sin nombre';
+      // ✅ Verificar si tiene detalles
+      const detalles = venta.detalles || [];
+
+      if (detalles.length > 0) {
+        detalles.forEach((detalle: any) => {
+          // ✅ Obtener información del producto
+          const producto = detalle.producto || {};
+          const productoId = producto.id || detalle.productoId || 'desconocido';
+          const nombreProducto = producto.modelo || producto.nombre || 'Producto sin nombre';
+          const cantidad = detalle.cantidad || 1;
+          const precio = detalle.precioUnitario || detalle.precio || 0;
+          const subtotal = detalle.subtotal || precio * cantidad;
 
           if (mapaProductos.has(productoId.toString())) {
             const existente = mapaProductos.get(productoId.toString())!;
-            existente.unidades += detalle.cantidad || 0;
-            existente.ingresos += (detalle.precio || 0) * (detalle.cantidad || 0);
+            existente.unidades += cantidad;
+            existente.ingresos += subtotal;
           } else {
             const nuevoProducto: ProductoRanking = {
               nombre: nombreProducto,
-              unidades: detalle.cantidad || 0,
-              ingresos: (detalle.precio || 0) * (detalle.cantidad || 0),
+              unidades: cantidad,
+              ingresos: subtotal,
               productoId: productoId,
+              categoria: producto.marca || producto.categoria || 'General',
             };
-
-            // Agregar categoría solo si existe
-            if (detalle.producto?.marca) {
-              nuevoProducto.categoria = detalle.producto.marca;
-            } else if (detalle.producto?.categoria) {
-              nuevoProducto.categoria = detalle.producto.categoria;
-            }
-
             mapaProductos.set(productoId.toString(), nuevoProducto);
           }
         });
@@ -286,13 +319,10 @@ export class DashboardResumenVendedor implements OnInit, AfterViewInit, OnDestro
   // FUNCIONES DE UTILIDAD
   // ============================================================
 
-  private filtrarVentasPorFecha(
-    ventas: VentaDashboard[],
-    fechaInicio: Date,
-    fechaFin: Date,
-  ): VentaDashboard[] {
+  private filtrarVentasPorFecha(ventas: any[], fechaInicio: Date, fechaFin: Date): any[] {
     return ventas.filter((venta) => {
-      const fechaVenta = new Date(venta.fecha);
+      // ✅ Usar fechaVenta (estructura real del backend)
+      const fechaVenta = new Date(venta.fechaVenta || venta.fecha);
       fechaVenta.setHours(0, 0, 0, 0);
       return fechaVenta >= fechaInicio && fechaVenta <= fechaFin;
     });
@@ -304,23 +334,22 @@ export class DashboardResumenVendedor implements OnInit, AfterViewInit, OnDestro
     return ayer;
   }
 
-  private calcularTotalVentas(ventas: VentaDashboard[]): number {
+  private calcularTotalVentas(ventas: any[]): number {
     return ventas.reduce((sum, venta) => sum + (venta.total || 0), 0);
   }
 
-  private contarProductosVendidos(ventas: VentaDashboard[]): number {
+  private contarProductosVendidos(ventas: any[]): number {
     let total = 0;
     ventas.forEach((venta) => {
-      if (venta.detalles) {
-        venta.detalles.forEach((detalle) => {
-          total += detalle.cantidad || 0;
-        });
-      }
+      const detalles = venta.detalles || [];
+      detalles.forEach((detalle: any) => {
+        total += detalle.cantidad || 0;
+      });
     });
     return total;
   }
 
-  private contarClientesUnicos(ventas: VentaDashboard[]): number {
+  private contarClientesUnicos(ventas: any[]): number {
     const clientesSet = new Set();
     ventas.forEach((venta) => {
       if (venta.cliente) {
@@ -337,6 +366,12 @@ export class DashboardResumenVendedor implements OnInit, AfterViewInit, OnDestro
 
   private crearGrafico(periodo: number): void {
     if (!this.salesChartRef) return;
+
+    // ✅ DESTRUIR GRÁFICO ANTERIOR SI EXISTE
+    if (this.graficoInstance) {
+      this.graficoInstance.destroy();
+      this.graficoInstance = null;
+    }
 
     const ctx = this.salesChartRef.nativeElement.getContext('2d');
     if (!ctx) return;
@@ -414,9 +449,9 @@ export class DashboardResumenVendedor implements OnInit, AfterViewInit, OnDestro
 
       etiquetas.push(fecha.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric' }));
 
-      // Filtrar ventas de este día
+      // ✅ Usar fechaVenta (estructura real del backend)
       const ventasDia = this._todasLasVentas.filter((venta) => {
-        const fechaVenta = new Date(venta.fecha);
+        const fechaVenta = new Date(venta.fechaVenta || venta.fecha);
         fechaVenta.setHours(0, 0, 0, 0);
         return fechaVenta.getTime() === fecha.getTime();
       });
@@ -453,18 +488,6 @@ export class DashboardResumenVendedor implements OnInit, AfterViewInit, OnDestro
    * Navegar a la lista completa de productos
    */
   verTodosLosProductos(): void {
-    // Navegar a la página de productos
-    // this.router.navigate(['/productos']);
     console.log('📦 Ver todos los productos');
-  }
-
-  /**
-   * Mostrar mensaje de error
-   */
-  private mostrarError(mensaje: string): void {
-    // Implementar sistema de notificaciones
-    console.error('❌', mensaje);
-    // Puedes usar un servicio de notificaciones
-    // this.notificacionService.error(mensaje);
   }
 }
