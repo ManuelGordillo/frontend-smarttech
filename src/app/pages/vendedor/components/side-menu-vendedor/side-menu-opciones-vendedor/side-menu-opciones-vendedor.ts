@@ -40,12 +40,7 @@ export class SideMenuOpcionesVendedor {
       ruta: '/vendedor/vendedor-dashboard/historial-ventas',
       icono: 'fa-solid fa-coins',
     },
-    {
-      titulo: 'Ventas',
-      subtitulo: 'Lista de Ventas',
-      ruta: '/vendedor/vendedor-dashboard/ventas',
-      icono: 'fa-solid fa-clock-rotate-left',
-    },
+
     {
       titulo: 'Configuracion',
       subtitulo: 'Editar Perfil',

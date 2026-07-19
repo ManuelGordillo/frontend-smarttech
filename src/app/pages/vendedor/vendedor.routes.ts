@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { VendedorDashboard } from './pages/vendedor-dashboard/vendedor-dashboard';
 import { DashboardResumenVendedor } from './pages/dashboard-resumen-vendedor/dashboard-resumen-vendedor';
-import { Ventas } from './pages/ventas/ventas';
+
 import { Carrito } from './pages/carrito/carrito';
 import { ClientesVendedor } from './pages/clientes-vendedor/clientes-vendedor';
 import { HistorialVentas } from './pages/historial-ventas/historial-ventas';
@@ -22,10 +22,7 @@ export const vendedorRoutes: Routes = [
         path: 'dashboard-resumen-vendedor',
         component: DashboardResumenVendedor,
       },
-      {
-        path: 'ventas',
-        component: Ventas,
-      },
+
       {
         path: 'carrito',
         component: Carrito,
