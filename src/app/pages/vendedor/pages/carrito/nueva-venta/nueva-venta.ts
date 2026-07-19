@@ -182,6 +182,102 @@ export class NuevaVenta implements OnInit {
   // ==========================================
   // ✅ REGISTRAR VENTA - GUARDAR EN BD (SIN LIMPIAR CARRITO)
   // ==========================================
+  // registrarVenta() {
+  //   if (this.ventaForm.invalid) {
+  //     this.ventaForm.markAllAsTouched();
+  //     return;
+  //   }
+
+  //   const carritoActual = this.carritoService.getCarritoSnapshot();
+
+  //   if (!carritoActual.cliente) {
+  //     alert('⚠️ Selecciona un cliente');
+  //     return;
+  //   }
+
+  //   if (!carritoActual.cliente.id) {
+  //     alert('⚠️ El cliente seleccionado no tiene ID válido');
+  //     return;
+  //   }
+
+  //   if (carritoActual.productos.length === 0) {
+  //     alert('⚠️ Agrega al menos un producto al carrito');
+  //     return;
+  //   }
+
+  //   this.loading = true;
+
+  //   // ✅ OBTENER USUARIO ID DE FORMA DINÁMICA DESDE EL OBJETO GUARDADO
+  //   let usuarioId = '1';
+  //   const usuarioData = localStorage.getItem('usuario');
+
+  //   if (usuarioData) {
+  //     try {
+  //       const usuario = JSON.parse(usuarioData);
+  //       if (usuario && usuario.id) {
+  //         usuarioId = String(usuario.id);
+  //         console.log('✅ Usuario ID obtenido del objeto usuario:', usuarioId);
+  //       }
+  //     } catch (e) {
+  //       console.error('❌ Error al parsear usuario:', e);
+  //     }
+  //   }
+
+  //   // Si no se pudo obtener, intentar con usuarioId directo
+  //   if (usuarioId === '1') {
+  //     const usuarioIdDirecto = localStorage.getItem('usuarioId');
+  //     if (usuarioIdDirecto) {
+  //       usuarioId = usuarioIdDirecto;
+  //       console.log('✅ Usuario ID obtenido de usuarioId:', usuarioId);
+  //     }
+  //   }
+
+  //   console.log('🆔 Usuario ID final desde localStorage:', usuarioId);
+  //   console.log('👤 Cliente ID:', carritoActual.cliente.id);
+
+  //   // ✅ Fecha con formato ISO completo
+  //   const fechaVenta = this.ventaForm.value.fechaVenta
+  //     ? new Date(this.ventaForm.value.fechaVenta).toISOString()
+  //     : new Date().toISOString();
+
+  //   // ✅ Crear objeto VENTA según el modelo del backend
+  //   const venta = {
+  //     cliente: { id: Number(carritoActual.cliente.id) },
+  //     usuario: { id: Number(usuarioId) },
+  //     fecha_venta: fechaVenta,
+  //     total: carritoActual.total,
+  //     tipoPago: this.ventaForm.value.metodoPago || 'EFECTIVO',
+  //     estado: 'COMPLETADO',
+  //   };
+
+  //   console.log('📤 Registrando venta en BD:', venta);
+
+  //   // ✅ Guardar en la base de datos
+  //   this.ventasService.crearVenta(venta).subscribe({
+  //     next: (response) => {
+  //       console.log('✅ Venta registrada en BD:', response);
+  //       this.loading = false;
+  //       alert('✅ Venta registrada exitosamente. Ahora ve al carrito para generar el comprobante.');
+  //       this.router.navigate(['/vendedor/vendedor-dashboard/carrito']);
+  //     },
+  //     error: (error) => {
+  //       console.error('❌ Error al registrar venta:', error);
+  //       this.loading = false;
+
+  //       let mensajeError = 'Error al registrar la venta.';
+  //       if (error.error?.mensaje) {
+  //         mensajeError = error.error.mensaje;
+  //       } else if (error.error?.message) {
+  //         mensajeError = error.error.message;
+  //       }
+  //       alert(`❌ ${mensajeError}`);
+  //     },
+  //   });
+  // }
+
+  // ==========================================
+  // ✅ REGISTRAR VENTA - GUARDAR EN BD CON DETALLES
+  // ==========================================
   registrarVenta() {
     if (this.ventaForm.invalid) {
       this.ventaForm.markAllAsTouched();
@@ -207,58 +303,65 @@ export class NuevaVenta implements OnInit {
 
     this.loading = true;
 
-    // ✅ OBTENER USUARIO ID DE FORMA DINÁMICA DESDE EL OBJETO GUARDADO
-    let usuarioId = '1';
+    // Obtener usuario ID
+    let usuarioId = 1;
     const usuarioData = localStorage.getItem('usuario');
-
     if (usuarioData) {
       try {
         const usuario = JSON.parse(usuarioData);
         if (usuario && usuario.id) {
-          usuarioId = String(usuario.id);
-          console.log('✅ Usuario ID obtenido del objeto usuario:', usuarioId);
+          usuarioId = Number(usuario.id);
         }
       } catch (e) {
         console.error('❌ Error al parsear usuario:', e);
       }
     }
 
-    // Si no se pudo obtener, intentar con usuarioId directo
-    if (usuarioId === '1') {
-      const usuarioIdDirecto = localStorage.getItem('usuarioId');
-      if (usuarioIdDirecto) {
-        usuarioId = usuarioIdDirecto;
-        console.log('✅ Usuario ID obtenido de usuarioId:', usuarioId);
-      }
-    }
+    // ✅ Fecha en formato correcto
+    const ahora = new Date();
+    const fechaVenta = new Date(
+      ahora.getFullYear(),
+      ahora.getMonth(),
+      ahora.getDate(),
+      ahora.getHours(),
+      ahora.getMinutes(),
+      ahora.getSeconds(),
+    );
 
-    console.log('🆔 Usuario ID final desde localStorage:', usuarioId);
-    console.log('👤 Cliente ID:', carritoActual.cliente.id);
+    // ✅ CREAR LOS DETALLES DE LA VENTA
+    const detalles = carritoActual.productos.map((producto: any) => ({
+      producto: { id: Number(producto.id) },
+      cantidad: producto.cantidad || 1,
+      precioUnitario: producto.precio,
+      subtotal: producto.precio * (producto.cantidad || 1),
+    }));
 
-    // ✅ Fecha con formato ISO completo
-    const fechaVenta = this.ventaForm.value.fechaVenta
-      ? new Date(this.ventaForm.value.fechaVenta).toISOString()
-      : new Date().toISOString();
+    console.log('📦 Detalles de la venta:', JSON.stringify(detalles, null, 2));
 
-    // ✅ Crear objeto VENTA según el modelo del backend
+    // ✅ CREAR OBJETO VENTA CON DETALLES
     const venta = {
       cliente: { id: Number(carritoActual.cliente.id) },
-      usuario: { id: Number(usuarioId) },
-      fecha_venta: fechaVenta,
+      usuario: { id: usuarioId },
+      fechaVenta: fechaVenta.toISOString(),
       total: carritoActual.total,
       tipoPago: this.ventaForm.value.metodoPago || 'EFECTIVO',
       estado: 'COMPLETADO',
+      detalles: detalles, // ✅ INCLUIR LOS DETALLES
     };
 
-    console.log('📤 Registrando venta en BD:', venta);
+    console.log('📤 Registrando venta con detalles:', JSON.stringify(venta, null, 2));
 
-    // ✅ Guardar en la base de datos
+    // Guardar en la base de datos
     this.ventasService.crearVenta(venta).subscribe({
       next: (response) => {
-        console.log('✅ Venta registrada en BD:', response);
+        console.log('✅ Venta registrada con detalles:', response);
         this.loading = false;
-        alert('✅ Venta registrada exitosamente. Ahora ve al carrito para generar el comprobante.');
-        this.router.navigate(['/vendedor/vendedor-dashboard/carrito']);
+
+        // ✅ LIMPIAR EL CARRITO DESPUÉS DE GUARDAR
+        this.carritoService.limpiarCarrito();
+
+        alert('✅ Venta registrada exitosamente');
+        this.router.navigate(['/vendedor/vendedor-dashboard/historial-ventas']);
       },
       error: (error) => {
         console.error('❌ Error al registrar venta:', error);
