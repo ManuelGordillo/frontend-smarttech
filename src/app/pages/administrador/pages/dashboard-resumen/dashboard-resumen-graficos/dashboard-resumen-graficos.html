@@ -3,13 +3,11 @@
     <div class="card-body">
       <div class="flex justify-between items-center mb-4">
         <h2 class="card-title">Ventas Mensuales</h2>
-
         <div class="badge badge-primary">2026</div>
       </div>
 
-      <!-- Canvas para Chart.js -->
       <div class="h-96">
-        <canvas id="ventasChart"></canvas>
+        <canvas #ventasChart></canvas>
       </div>
     </div>
   </div>
@@ -19,13 +17,20 @@
       <h2 class="card-title">Objetivo Mensual</h2>
 
       <div class="flex justify-center my-6">
-        <div class="radial-progress text-primary" style="--value: 78; --size: 12rem">78%</div>
+        <div
+          class="radial-progress text-primary"
+          [style.--value]="objetivoMensual > 0 ? (totalVentasMes / objetivoMensual) * 100 : 0"
+          [style.--size]="'12rem'"
+        >
+          {{
+            objetivoMensual > 0 ? ((totalVentasMes / objetivoMensual) * 100 | number: '1.0-0') : 0
+          }}%
+        </div>
       </div>
 
       <div class="text-center">
-        <p class="text-2xl font-bold">S/ 84,320</p>
-
-        <p class="text-slate-500">de S/ 108,000 proyectados</p>
+        <p class="text-2xl font-bold">S/ {{ totalVentasMes | number: '1.2-2' }}</p>
+        <p class="text-slate-500">de S/ {{ objetivoMensual | number: '1.2-2' }} proyectados</p>
       </div>
     </div>
   </div>

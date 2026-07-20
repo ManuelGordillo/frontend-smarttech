@@ -3,9 +3,14 @@
   <dashboard-resumen-encabezado />
 
   <!-- Tarjetas estadísticas -->
-  <dashboard-resumen-estadistica />
+  <dashboard-resumen-estadistica [datos]="datosEstadisticas" />
+
   <!-- Gráfico y objetivo -->
-  <dashboard-resumen-graficos />
+  <dashboard-resumen-graficos
+    [datos]="datosGraficos"
+    [totalVentasMes]="totalVentasMes"
+    [objetivoMensual]="objetivoMensual"
+  />
 
   <!-- Productos y ventas -->
   <dashboard-resumen-productos-ventas />
