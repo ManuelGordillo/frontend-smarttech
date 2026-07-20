@@ -2,98 +2,273 @@
   <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
     <!-- IZQUIERDA: FORMULARIO DE PAGO -->
     <div class="lg:col-span-2 space-y-6">
-      <h1 class="text-3xl font-bold">PAGO</h1>
+      <h1 class="text-3xl font-bold text-slate-900">💳 Pago</h1>
       <p class="text-slate-500">Completa tu compra de forma segura</p>
 
-      <!-- DIRECCIÓN -->
-      <div class="bg-white p-6 rounded-xl shadow">
-        <h2 class="font-bold text-lg mb-4">Dirección de envío</h2>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input class="input input-bordered w-full" placeholder="Nombre completo" />
-          <input class="input input-bordered w-full" placeholder="Teléfono" />
-          <input class="input input-bordered w-full md:col-span-2" placeholder="Dirección" />
-          <input class="input input-bordered w-full" placeholder="Ciudad" />
-          <input class="input input-bordered w-full" placeholder="Distrito" />
+      @if (productos.length === 0) {
+        <div class="bg-white p-12 rounded-xl shadow text-center">
+          <span class="text-6xl block mb-4">🛒</span>
+          <h2 class="text-xl font-bold text-slate-900">Carrito vacío</h2>
+          <p class="text-slate-500">Agrega productos antes de proceder al pago</p>
+          <button routerLink="/cliente/dashboard-cliente/comprar" class="btn btn-primary mt-4">
+            Ir al catálogo
+          </button>
         </div>
-      </div>
+      } @else {
+        <!-- TIPO DE ENTREGA -->
+        <div class="bg-white p-6 rounded-xl shadow border border-slate-200">
+          <h2 class="font-bold text-lg mb-4 text-slate-900">📦 Tipo de entrega</h2>
 
-      <!-- MÉTODO DE PAGO -->
-      <div class="bg-white p-6 rounded-xl shadow">
-        <h2 class="font-bold text-lg mb-4">Método de pago</h2>
+          <div class="space-y-3">
+            <label
+              class="flex items-center gap-3 border-2 border-slate-200 p-3 rounded-lg cursor-pointer hover:border-blue-500 transition"
+              [class.border-blue-500]="tipoEntrega === 'ENVIO'"
+            >
+              <input
+                type="radio"
+                name="entrega"
+                value="ENVIO"
+                [(ngModel)]="tipoEntrega"
+                (change)="cambiarTipoEntrega()"
+                class="radio radio-primary"
+              />
+              <div>
+                <span class="text-slate-700 font-medium">🚚 Envío a domicilio</span>
+                <p class="text-xs text-slate-400">Completa tu dirección para recibir el pedido</p>
+              </div>
+            </label>
 
-        <div class="space-y-3">
-          <label class="flex items-center gap-3 border p-3 rounded-lg cursor-pointer">
-            <input type="radio" name="pago" class="radio radio-primary" checked />
-            <span>💳 Tarjeta de crédito / débito</span>
-          </label>
-
-          <label class="flex items-center gap-3 border p-3 rounded-lg cursor-pointer">
-            <input type="radio" name="pago" class="radio radio-primary" />
-            <span>💵 Efectivo contra entrega</span>
-          </label>
-
-          <label class="flex items-center gap-3 border p-3 rounded-lg cursor-pointer">
-            <input type="radio" name="pago" class="radio radio-primary" />
-            <span>🏦 Transferencia bancaria</span>
-          </label>
-
-          <label class="flex items-center gap-3 border p-3 rounded-lg cursor-pointer">
-            <input type="radio" name="pago" class="radio radio-primary" />
-            <span>📱 Yape / Plin</span>
-          </label>
+            <label
+              class="flex items-center gap-3 border-2 border-slate-200 p-3 rounded-lg cursor-pointer hover:border-blue-500 transition"
+              [class.border-blue-500]="tipoEntrega === 'RECOJO'"
+            >
+              <input
+                type="radio"
+                name="entrega"
+                value="RECOJO"
+                [(ngModel)]="tipoEntrega"
+                (change)="cambiarTipoEntrega()"
+                class="radio radio-primary"
+              />
+              <div>
+                <span class="text-slate-700 font-medium">🏪 Recojo en tienda</span>
+                <p class="text-xs text-slate-400">Recoge tu pedido en nuestra tienda física</p>
+              </div>
+            </label>
+          </div>
         </div>
-      </div>
 
-      <!-- DATOS TARJETA (opcional UI) -->
-      <div class="bg-white p-6 rounded-xl shadow">
-        <h2 class="font-bold text-lg mb-4">Datos de tarjeta</h2>
+        <!-- DIRECCIÓN (solo si es envío) -->
+        @if (tipoEntrega === 'ENVIO') {
+          <div class="bg-white p-6 rounded-xl shadow border border-slate-200">
+            <h2 class="font-bold text-lg mb-4 text-slate-900">📍 Dirección de envío</h2>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input
-            class="input input-bordered w-full md:col-span-2"
-            placeholder="Número de tarjeta"
-          />
-          <input class="input input-bordered w-full" placeholder="MM/AA" />
-          <input class="input input-bordered w-full" placeholder="CVV" />
-          <input
-            class="input input-bordered w-full md:col-span-2"
-            placeholder="Nombre en la tarjeta"
-          />
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                [(ngModel)]="direccion.nombreCompleto"
+                class="w-full px-4 py-2 border-2 border-slate-300 rounded-lg bg-white text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 md:col-span-2"
+                placeholder="Nombre completo"
+              />
+              <input
+                [(ngModel)]="direccion.telefono"
+                class="w-full px-4 py-2 border-2 border-slate-300 rounded-lg bg-white text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                placeholder="Teléfono"
+              />
+              <input
+                [(ngModel)]="direccion.direccion"
+                class="w-full px-4 py-2 border-2 border-slate-300 rounded-lg bg-white text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 md:col-span-2"
+                placeholder="Dirección"
+              />
+              <input
+                [(ngModel)]="direccion.ciudad"
+                class="w-full px-4 py-2 border-2 border-slate-300 rounded-lg bg-white text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                placeholder="Ciudad"
+              />
+              <input
+                [(ngModel)]="direccion.distrito"
+                class="w-full px-4 py-2 border-2 border-slate-300 rounded-lg bg-white text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                placeholder="Distrito"
+              />
+            </div>
+          </div>
+        } @else {
+          <!-- INFO RECOJO EN TIENDA -->
+          <div class="bg-blue-50 p-6 rounded-xl border border-blue-200">
+            <div class="flex items-start gap-3">
+              <span class="text-2xl">🏪</span>
+              <div>
+                <h3 class="font-bold text-blue-800">Recojo en tienda</h3>
+                <p class="text-sm text-blue-700 mt-1">
+                  Puedes recoger tu pedido en nuestra tienda ubicada en:
+                </p>
+                <p class="text-sm text-blue-800 font-medium mt-2">
+                  📍 Calle Mercaderes 224 CC El Panoramico of. 106, Arequipa - Perú
+                </p>
+                <p class="text-sm text-blue-700">⏰ Horario: Lunes a Viernes 11:00 AM - 8:00 PM</p>
+                <p class="text-sm text-blue-700">📞 Teléfono: (+51) 953713240</p>
+              </div>
+            </div>
+          </div>
+        }
+
+        <!-- MÉTODO DE PAGO -->
+        <div class="bg-white p-6 rounded-xl shadow border border-slate-200">
+          <h2 class="font-bold text-lg mb-4 text-slate-900">💳 Método de pago</h2>
+
+          <div class="space-y-3">
+            <label
+              class="flex items-center gap-3 border-2 border-slate-200 p-3 rounded-lg cursor-pointer hover:border-blue-500 transition"
+            >
+              <input
+                type="radio"
+                name="pago"
+                value="TARJETA"
+                [(ngModel)]="metodoPago"
+                class="radio radio-primary"
+              />
+              <span class="text-slate-700">💳 Tarjeta de crédito / débito</span>
+            </label>
+
+            <label
+              class="flex items-center gap-3 border-2 border-slate-200 p-3 rounded-lg cursor-pointer hover:border-blue-500 transition"
+            >
+              <input
+                type="radio"
+                name="pago"
+                value="EFECTIVO"
+                [(ngModel)]="metodoPago"
+                class="radio radio-primary"
+              />
+              <span class="text-slate-700">💵 Efectivo contra entrega</span>
+            </label>
+
+            <label
+              class="flex items-center gap-3 border-2 border-slate-200 p-3 rounded-lg cursor-pointer hover:border-blue-500 transition"
+            >
+              <input
+                type="radio"
+                name="pago"
+                value="TRANSFERENCIA"
+                [(ngModel)]="metodoPago"
+                class="radio radio-primary"
+              />
+              <span class="text-slate-700">🏦 Transferencia bancaria</span>
+            </label>
+
+            <label
+              class="flex items-center gap-3 border-2 border-slate-200 p-3 rounded-lg cursor-pointer hover:border-blue-500 transition"
+            >
+              <input
+                type="radio"
+                name="pago"
+                value="YAPE"
+                [(ngModel)]="metodoPago"
+                class="radio radio-primary"
+              />
+              <span class="text-slate-700">📱 Yape / Plin</span>
+            </label>
+          </div>
         </div>
-      </div>
+
+        <!-- DATOS TARJETA (solo si se selecciona tarjeta) -->
+        @if (metodoPago === 'TARJETA') {
+          <div class="bg-white p-6 rounded-xl shadow border border-slate-200">
+            <h2 class="font-bold text-lg mb-4 text-slate-900">💳 Datos de tarjeta</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                [(ngModel)]="tarjeta.numero"
+                class="w-full px-4 py-2 border-2 border-slate-300 rounded-lg bg-white text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 md:col-span-2"
+                placeholder="Número de tarjeta"
+              />
+              <input
+                [(ngModel)]="tarjeta.fecha"
+                class="w-full px-4 py-2 border-2 border-slate-300 rounded-lg bg-white text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                placeholder="MM/AA"
+              />
+              <input
+                [(ngModel)]="tarjeta.cvv"
+                class="w-full px-4 py-2 border-2 border-slate-300 rounded-lg bg-white text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                placeholder="CVV"
+              />
+              <input
+                [(ngModel)]="tarjeta.nombre"
+                class="w-full px-4 py-2 border-2 border-slate-300 rounded-lg bg-white text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 md:col-span-2"
+                placeholder="Nombre en la tarjeta"
+              />
+            </div>
+          </div>
+        }
+      }
     </div>
 
     <!-- DERECHA: RESUMEN -->
     <div class="space-y-6">
-      <div class="bg-white p-6 rounded-xl shadow">
-        <h2 class="font-bold text-lg mb-4">Resumen del pedido</h2>
+      <div class="bg-white p-6 rounded-xl shadow border border-slate-200">
+        <h2 class="font-bold text-lg mb-4 text-slate-900">📋 Resumen del pedido</h2>
 
-        <!-- PRODUCTO -->
-        <div class="space-y-3">
-          <div class="flex justify-between text-sm">
-            <span>iPhone 14 Pro x1</span>
-            <span>S/ 4500</span>
+        <div class="space-y-3 max-h-60 overflow-y-auto">
+          @for (producto of productos; track producto.id) {
+            <div class="flex justify-between text-sm border-b border-slate-100 pb-2">
+              <span class="text-slate-700"
+                >{{ producto.marca }} {{ producto.modelo }} x{{ producto.cantidad }}</span
+              >
+              <span class="font-medium text-slate-900"
+                >S/ {{ producto.subtotal | number: '1.2-2' }}</span
+              >
+            </div>
+          }
+        </div>
+
+        <hr class="my-4" />
+
+        <div class="space-y-1 text-sm">
+          <div class="flex justify-between text-slate-600">
+            <span>Subtotal</span>
+            <span>S/ {{ subtotal | number: '1.2-2' }}</span>
           </div>
-
-          <div class="flex justify-between text-sm">
-            <span>Samsung S23 x2</span>
-            <span>S/ 7600</span>
+          <div class="flex justify-between text-slate-600">
+            <span>IGV (18%)</span>
+            <span>S/ {{ igv | number: '1.2-2' }}</span>
           </div>
         </div>
 
         <hr class="my-4" />
 
         <div class="flex justify-between font-bold text-lg">
-          <span>Total</span>
-          <span>S/ 12,100</span>
+          <span class="text-slate-900">Total</span>
+          <span class="text-primary">S/ {{ total | number: '1.2-2' }}</span>
+        </div>
+
+        <!-- Mostrar tipo de entrega -->
+        <div class="mt-3 pt-3 border-t border-slate-200 text-sm">
+          <span class="text-slate-500">Tipo de entrega:</span>
+          <span class="font-medium text-slate-700">
+            @if (tipoEntrega === 'ENVIO') {
+              🚚 Envío a domicilio
+            } @else {
+              🏪 Recojo en tienda
+            }
+          </span>
         </div>
       </div>
 
       <!-- BOTÓN CONFIRMAR -->
-      <button class="btn btn-primary w-full">Confirmar compra</button>
+      <button
+        (click)="confirmarCompra()"
+        class="btn btn-primary w-full"
+        [disabled]="procesando || productos.length === 0"
+      >
+        @if (procesando) {
+          <span>Procesando...</span>
+        } @else {
+          <span>✅ Confirmar compra</span>
+        }
+      </button>
 
-      <button class="btn btn-outline w-full">Volver al carrito</button>
+      <button (click)="volverAlCarrito()" class="btn btn-outline w-full">
+        ← Volver al carrito
+      </button>
     </div>
   </div>
 </div>
