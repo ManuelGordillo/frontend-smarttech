@@ -1,101 +1,71 @@
 <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+  <!-- Productos Más Vendidos -->
   <div class="card bg-white shadow-lg border border-slate-200">
     <div class="card-body">
       <h2 class="card-title mb-4">Productos Más Vendidos</h2>
 
-      <div class="space-y-4">
-        <div>
-          <div class="flex justify-between mb-2">
-            <span>iPhone 15 Pro</span>
-            <span>92%</span>
-          </div>
-
-          <progress class="progress progress-primary w-full" value="92" max="100"></progress>
+      @if (topProductos.length === 0) {
+        <div class="text-center py-8 text-slate-500">No hay productos vendidos</div>
+      } @else {
+        <div class="space-y-4">
+          @for (producto of topProductos; track producto.id) {
+            <div>
+              <div class="flex justify-between mb-2">
+                <span class="font-medium">{{ producto.marca }} {{ producto.nombre }}</span>
+                <span>{{ producto.porcentaje | number: '1.0-0' }}%</span>
+              </div>
+              <progress
+                class="progress w-full {{ producto.color }}"
+                [value]="producto.porcentaje"
+                max="100"
+              ></progress>
+              <div class="flex justify-between text-xs text-slate-500 mt-1">
+                <span>{{ producto.cantidad }} unidades</span>
+                <span>S/ {{ producto.precio | number: '1.2-2' }}</span>
+              </div>
+            </div>
+          }
         </div>
-
-        <div>
-          <div class="flex justify-between mb-2">
-            <span>Samsung Galaxy S25</span>
-            <span>85%</span>
-          </div>
-
-          <progress class="progress progress-success w-full" value="85" max="100"></progress>
-        </div>
-
-        <div>
-          <div class="flex justify-between mb-2">
-            <span>Redmi Note 14</span>
-            <span>74%</span>
-          </div>
-
-          <progress class="progress progress-warning w-full" value="74" max="100"></progress>
-        </div>
-
-        <div>
-          <div class="flex justify-between mb-2">
-            <span>iPad Air</span>
-            <span>66%</span>
-          </div>
-
-          <progress class="progress progress-info w-full" value="66" max="100"></progress>
-        </div>
-      </div>
+      }
     </div>
   </div>
 
+  <!-- Últimas Ventas -->
   <div class="card bg-white shadow-lg border border-slate-200">
     <div class="card-body">
       <h2 class="card-title mb-4">Últimas Ventas</h2>
 
       <div class="overflow-x-auto">
-        <table class="table text-slate-800">
-          <thead>
-            <tr>
-              <th>Cliente</th>
-              <th>Producto</th>
-              <th>Total</th>
-              <th>Estado</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr>
-              <td>Juan Pérez</td>
-              <td>iPhone 15 Pro</td>
-              <td>S/ 4,899</td>
-              <td>
-                <span class="badge badge-success"> Completado </span>
-              </td>
-            </tr>
-
-            <tr>
-              <td>María López</td>
-              <td>Galaxy S25</td>
-              <td>S/ 3,799</td>
-              <td>
-                <span class="badge badge-success"> Completado </span>
-              </td>
-            </tr>
-
-            <tr>
-              <td>Carlos Díaz</td>
-              <td>iPad Air</td>
-              <td>S/ 2,499</td>
-              <td>
-                <span class="badge badge-warning"> Pendiente </span>
-              </td>
-            </tr>
-
-            <tr>
-              <td>Ana Torres</td>
-              <td>Redmi Note 14</td>
-              <td>S/ 1,299</td>
-              <td>
-                <span class="badge badge-success"> Completado </span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        @if (ultimasVentas.length === 0) {
+          <div class="text-center py-8 text-slate-500">No hay ventas registradas</div>
+        } @else {
+          <table class="table text-slate-800 w-full">
+            <thead>
+              <tr>
+                <th class="text-left">Cliente</th>
+                <th class="text-left">Producto</th>
+                <th class="text-right">Total</th>
+                <th class="text-center">Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (venta of ultimasVentas; track venta.id) {
+                <tr>
+                  <td>{{ venta.cliente }}</td>
+                  <td>{{ venta.producto }}</td>
+                  <td class="text-right font-medium">
+                    {{ venta.total | currency: 'PEN' : 'symbol' : '1.2-2' }}
+                  </td>
+                  <td class="text-center">
+                    <span class="badge {{ getBadgeClass(venta.estado) }}">
+                      {{ venta.estado }}
+                    </span>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        }
       </div>
     </div>
   </div>

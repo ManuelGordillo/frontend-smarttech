@@ -35,6 +35,8 @@ export default class DashboardResumen implements OnInit {
     this.cargarDatos();
   }
 
+  ventasFiltradas: any[] = [];
+
   cargarDatos(): void {
     this.ventasService.getVentas().subscribe({
       next: (data: any) => {
@@ -44,6 +46,7 @@ export default class DashboardResumen implements OnInit {
         console.log('📊 Ventas con detalles:', ventas.length);
         console.log('📊 Datos:', ventas);
 
+        this.ventasFiltradas = ventas;
         this.procesarEstadisticas(ventas);
         this.procesarGraficos(ventas);
       },
