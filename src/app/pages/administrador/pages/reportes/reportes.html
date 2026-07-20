@@ -4,7 +4,7 @@
   <!-- KPIs -->
   <reporte-kpis [datos]="datosKpis" />
   <!-- FILTROS -->
-  <reporte-filtros />
+  <reporte-filtros (buscar)="aplicarFiltrosDesdeHijo($event)" />
   <!-- GRAFICOS -->
   <reporte-graficos />
   <!-- PORCENTAJES DE MARCAS -->
