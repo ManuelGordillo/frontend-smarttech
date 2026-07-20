@@ -1,41 +1,50 @@
-<div class="bg-white rounded-xl shadow p-6 mb-8">
-  <h2 class="text-xl font-bold text-slate-900 mb-6">Participación de Mercado</h2>
+<div class="bg-white rounded-xl shadow overflow-hidden mt-6">
+  <div class="px-6 py-4 border-b border-slate-200">
+    <h3 class="text-lg font-semibold text-slate-900">📊 Distribución por Marca</h3>
+    <p class="text-sm text-slate-500">
+      Total de productos vendidos: <span class="font-bold">{{ totalProductos }}</span>
+    </p>
+  </div>
 
-  <div class="space-y-6">
-    <div>
-      <div class="flex justify-between">
-        <span>Apple</span>
-        <span>45%</span>
+  <div class="p-6">
+    @if (marcas.length === 0) {
+      <div class="text-center py-8 text-slate-500">No hay datos de marcas disponibles</div>
+    } @else {
+      <div class="space-y-4">
+        @for (marca of marcas; track marca.nombre; let i = $index) {
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <div class="flex items-center gap-3">
+                <span class="text-sm font-medium text-slate-700">{{ marca.nombre }}</span>
+                <span class="text-xs text-slate-500">{{ marca.cantidad }} unidades</span>
+              </div>
+              <span class="text-sm font-bold text-slate-900">
+                {{ marca.porcentaje | number: '1.1-1' }}%
+              </span>
+            </div>
+
+            <!-- BARRA DE PROGRESO -->
+            <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
+              <div
+                class="h-3 rounded-full transition-all duration-500 ease-in-out {{ getColor(i) }}"
+                [style.width.%]="marca.porcentaje"
+              ></div>
+            </div>
+          </div>
+        }
       </div>
 
-      <progress class="progress progress-primary w-full" value="45" max="100"></progress>
-    </div>
-
-    <div>
-      <div class="flex justify-between">
-        <span>Samsung</span>
-        <span>32%</span>
+      <!-- RESUMEN DE PORCENTAJES -->
+      <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 pt-4 border-t border-slate-200">
+        @for (marca of marcas.slice(0, 4); track marca.nombre) {
+          <div class="text-center p-2 bg-slate-50 rounded-lg">
+            <div class="text-lg font-bold text-slate-900">
+              {{ marca.porcentaje | number: '1.0-0' }}%
+            </div>
+            <div class="text-xs text-slate-500 truncate">{{ marca.nombre }}</div>
+          </div>
+        }
       </div>
-
-      <progress class="progress progress-secondary w-full" value="32" max="100"></progress>
-    </div>
-
-    <div>
-      <div class="flex justify-between">
-        <span>Xiaomi</span>
-        <span>15%</span>
-      </div>
-
-      <progress class="progress progress-accent w-full" value="15" max="100"></progress>
-    </div>
-
-    <div>
-      <div class="flex justify-between">
-        <span>Otros</span>
-        <span>8%</span>
-      </div>
-
-      <progress class="progress progress-warning w-full" value="8" max="100"></progress>
-    </div>
+    }
   </div>
 </div>
