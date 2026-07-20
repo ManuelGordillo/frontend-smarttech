@@ -24,10 +24,12 @@
             <td class="px-4 py-2">{{ venta.id }}</td>
             <td class="px-4 py-2">{{ venta.fechaVenta | date: 'dd/MM/yyyy HH:mm' }}</td>
             <td class="px-4 py-2">{{ venta.cliente?.nombre || '-' }}</td>
-            <td class="px-4 py-2">{{ venta.usuario?.nombre || '-' }}</td>
-            <td class="px-4 py-2">{{ venta.marca || '-' }}</td>
-            <td class="px-4 py-2">{{ venta.modelo || '-' }}</td>
-            <td class="px-4 py-2 text-center">{{ venta.cantidad }}</td>
+            <td class="px-4 py-2">
+              {{ venta.usuario?.nombreUsuario || '-' }}
+            </td>
+            <td class="px-4 py-2">{{ venta.detalles?.[0]?.producto?.marca || '-' }}</td>
+            <td class="px-4 py-2">{{ venta.detalles?.[0]?.producto?.modelo || '-' }}</td>
+            <td class="px-4 py-2 text-center">{{ venta.detalles?.[0]?.cantidad || 0 }}</td>
             <td class="px-4 py-2 text-right">
               {{ venta.total | currency: 'PEN' : 'symbol' : '1.2-2' }}
             </td>

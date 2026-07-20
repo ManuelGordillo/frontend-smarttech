@@ -2,6 +2,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -86,5 +87,60 @@ export class VentasService {
     return this.http.get<any>(`${this.apiUrl}/ventas/buscar/${id}`, {
       headers: headers,
     });
+  }
+  // ==========================================
+  // OBTENER VENTAS FORMATEADAS PARA LA TABLA
+  // ==========================================
+  getVentasFormateadas(): Observable<any[]> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http.get<any[]>(`${this.apiUrl}/ventas/listar`, { headers }).pipe(
+      map((ventas: any[]) => {
+        return ventas.map((venta: any) => {
+          const primerDetalle = venta.detalles?.[0] || {};
+          const producto = primerDetalle.producto || {};
+
+          return {
+            id: venta.id,
+            fechaVenta: venta.fecha_venta,
+            cliente: venta.cliente,
+            usuario: venta.usuario,
+            total: venta.total,
+            marca: producto.marca || '-',
+            modelo: producto.modelo || '-',
+            cantidad: primerDetalle.cantidad || 0,
+            detalles: venta.detalles || [],
+          };
+        });
+      }),
+    );
+  }
+
+  // ==========================================
+  // OBTENER TOTAL DE PRODUCTOS VENDIDOS
+  // ==========================================
+  getTotalProductosVendidos(): Observable<number> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http.get<any[]>(`${this.apiUrl}/ventas/listar`, { headers }).pipe(
+      map((ventas: any[]) => {
+        let total = 0;
+        ventas.forEach((venta: any) => {
+          const detalles = venta.detalles || [];
+          detalles.forEach((detalle: any) => {
+            total += detalle.cantidad || 0;
+          });
+        });
+        return total;
+      }),
+    );
   }
 }

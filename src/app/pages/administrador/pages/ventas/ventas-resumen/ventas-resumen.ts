@@ -55,7 +55,13 @@ export class VentasResumen {
     }).length;
 
     // Total de productos vendidos y ventas generadas
-    this.productosVendidos = this.ventas.length;
+    this.productosVendidos = this.ventas.reduce((sum: number, venta: any) => {
+      const detalles = venta.detalles || [];
+      const totalPorVenta = detalles.reduce((subSum: number, detalle: any) => {
+        return subSum + (detalle.cantidad || 0);
+      }, 0);
+      return sum + totalPorVenta;
+    }, 0);
     this.ventasGeneradas = this.ventas.length;
   }
 }
