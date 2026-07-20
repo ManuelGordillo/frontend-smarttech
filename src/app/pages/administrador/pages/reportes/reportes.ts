@@ -33,14 +33,41 @@ export default class Reportes implements OnInit {
   };
 
   todasLasVentas: any[] = [];
+  ventasFiltradas: any[] = [];
 
   ngOnInit(): void {
     this.cargarDatos(); // ✅ Sin parámetros al inicio
   }
 
   // ✅ FILTROS OPCIONALES con valor por defecto
+  // cargarDatos(filtros?: any): void {
+  //   // ← Agregar ? para opcional
+  //   this.ventasService.getVentas().subscribe({
+  //     next: (data: any) => {
+  //       console.log('✅ Datos de ventas para reportes:', data);
+
+  //       let ventas = Array.isArray(data) ? data : data.content || data.data || [];
+  //       this.todasLasVentas = ventas;
+
+  //       // ✅ APLICAR FILTROS SI EXISTEN
+  //       const ventasFiltradas = this.aplicarFiltros(ventas, filtros);
+
+  //       // Filtrar ventas con detalles
+  //       const ventasConDetalles = ventasFiltradas.filter(
+  //         (v: any) => v.detalles && v.detalles.length > 0,
+  //       );
+
+  //       console.log('📊 Ventas con detalles:', ventasConDetalles.length);
+
+  //       // ✅ PROCESAR KPIs
+  //       this.procesarKpis(ventasConDetalles);
+  //     },
+  //     error: (error) => {
+  //       console.error('❌ Error al cargar ventas:', error);
+  //     },
+  //   });
+  // }
   cargarDatos(filtros?: any): void {
-    // ← Agregar ? para opcional
     this.ventasService.getVentas().subscribe({
       next: (data: any) => {
         console.log('✅ Datos de ventas para reportes:', data);
@@ -51,6 +78,12 @@ export default class Reportes implements OnInit {
         // ✅ APLICAR FILTROS SI EXISTEN
         const ventasFiltradas = this.aplicarFiltros(ventas, filtros);
 
+        // ✅ ASIGNAR A ventasFiltradas
+        this.ventasFiltradas = ventasFiltradas;
+
+        console.log('📊 ventasFiltradas:', this.ventasFiltradas);
+        console.log('📊 ventasFiltradas length:', this.ventasFiltradas.length);
+
         // Filtrar ventas con detalles
         const ventasConDetalles = ventasFiltradas.filter(
           (v: any) => v.detalles && v.detalles.length > 0,
@@ -58,7 +91,6 @@ export default class Reportes implements OnInit {
 
         console.log('📊 Ventas con detalles:', ventasConDetalles.length);
 
-        // ✅ PROCESAR KPIs
         this.procesarKpis(ventasConDetalles);
       },
       error: (error) => {

@@ -1,47 +1,48 @@
-<div class="bg-white rounded-xl shadow overflow-hidden">
-  <div class="p-5 border-b">
-    <h2 class="text-xl font-bold text-slate-900">Detalle de Ventas</h2>
+<div class="bg-white rounded-xl shadow overflow-hidden mt-6">
+  <div class="px-6 py-4 border-b border-slate-200">
+    <h3 class="text-lg font-semibold text-slate-900">Detalle de Ventas</h3>
+    <p class="text-sm text-slate-500">Lista completa de todas las ventas realizadas</p>
   </div>
 
-  <table class="table w-full text-slate-900">
-    <thead class="bg-slate-100">
-      <tr>
-        <th>Fecha</th>
-        <th>Vendedor</th>
-        <th>Marca</th>
-        <th>Modelo</th>
-        <th>Cantidad</th>
-        <th>Total</th>
-      </tr>
-    </thead>
+  <div class="overflow-x-auto">
+    <table class="w-full text-slate-900">
+      <thead class="bg-slate-100">
+        <tr>
+          <th class="px-4 py-3 text-left text-xs font-medium text-slate-600 uppercase">N° Venta</th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-slate-600 uppercase">Fecha</th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-slate-600 uppercase">Cliente</th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-slate-600 uppercase">Vendedor</th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-slate-600 uppercase">Marca</th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-slate-600 uppercase">Modelo</th>
+          <th class="px-4 py-3 text-center text-xs font-medium text-slate-600 uppercase">
+            Cantidad
+          </th>
+          <th class="px-4 py-3 text-right text-xs font-medium text-slate-600 uppercase">Total</th>
+        </tr>
+      </thead>
 
-    <tbody>
-      <tr>
-        <td>17/06/2026</td>
-        <td>Juan Pérez</td>
-        <td>Apple</td>
-        <td>iPhone 15 Pro</td>
-        <td>2</td>
-        <td class="font-semibold text-green-600">S/ 9,000</td>
-      </tr>
-
-      <tr>
-        <td>17/06/2026</td>
-        <td>Pedro Ruiz</td>
-        <td>Samsung</td>
-        <td>Galaxy S25</td>
-        <td>1</td>
-        <td class="font-semibold text-green-600">S/ 3,800</td>
-      </tr>
-
-      <tr>
-        <td>18/06/2026</td>
-        <td>María López</td>
-        <td>Xiaomi</td>
-        <td>Xiaomi 15</td>
-        <td>3</td>
-        <td class="font-semibold text-green-600">S/ 7,200</td>
-      </tr>
-    </tbody>
-  </table>
+      <tbody>
+        @if (datosTabla.length === 0) {
+          <tr>
+            <td colspan="8" class="text-center py-4 text-slate-500">No hay ventas registradas</td>
+          </tr>
+        } @else {
+          @for (venta of datosTabla; track venta.id) {
+            <tr class="border-b hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-sm">#{{ venta.id }}</td>
+              <td class="px-4 py-3 text-sm">{{ venta.fecha | date: 'dd/MM/yyyy HH:mm' }}</td>
+              <td class="px-4 py-3 text-sm">{{ venta.cliente }}</td>
+              <td class="px-4 py-3 text-sm">{{ venta.vendedor }}</td>
+              <td class="px-4 py-3 text-sm">{{ venta.marca }}</td>
+              <td class="px-4 py-3 text-sm">{{ venta.modelo }}</td>
+              <td class="px-4 py-3 text-sm text-center">{{ venta.cantidad }}</td>
+              <td class="px-4 py-3 text-sm text-right font-medium">
+                {{ venta.total | currency: 'PEN' : 'symbol' : '1.2-2' }}
+              </td>
+            </tr>
+          }
+        }
+      </tbody>
+    </table>
+  </div>
 </div>
