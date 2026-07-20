@@ -1,8 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'smarttech-accesos-rapidos',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './accesos-rapidos.html',
 })
-export class AccesosRapidos {}
+export class AccesosRapidos {
+  @Output() navegar = new EventEmitter<string>();
+
+  irA(ruta: string): void {
+    this.navegar.emit(ruta);
+  }
+}

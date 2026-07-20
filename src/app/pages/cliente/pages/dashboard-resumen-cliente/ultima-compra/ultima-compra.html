@@ -1,24 +1,38 @@
-<div class="bg-white shadow rounded-xl p-6 lg:col-span-2">
-  <h2 class="text-xl font-bold mb-4">Última compra</h2>
+<div
+  class="bg-white border border-slate-200 rounded-xl shadow-sm p-6 lg:col-span-2 hover:shadow-md transition-shadow"
+>
+  <h2 class="text-xl font-bold text-slate-900 mb-4">🛒 Última compra</h2>
 
-  <div class="flex items-center justify-between border-b pb-3 mb-3">
-    <div>
-      <p class="font-semibold">Orden #SMT-1003</p>
-      <p class="text-sm text-slate-500">01/06/2026</p>
+  @if (ultimaCompra) {
+    <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-3">
+      <div>
+        <p class="font-semibold text-slate-900">Orden #{{ ultimaCompra.id }}</p>
+        <p class="text-sm text-slate-500">{{ ultimaCompra.fecha | date: 'dd/MM/yyyy' }}</p>
+      </div>
+      <span
+        class="px-3 py-1 rounded-full text-xs font-medium {{ getEstadoBadge(ultimaCompra.estado) }}"
+      >
+        {{ ultimaCompra.estado }}
+      </span>
     </div>
 
-    <span class="badge badge-info">En camino</span>
-  </div>
-
-  <div class="space-y-2 text-sm">
-    <div class="flex justify-between">
-      <span>Xiaomi Redmi Note 13</span>
-      <span>S/ 1200</span>
+    <div class="space-y-2 text-sm">
+      @for (producto of ultimaCompra.productos; track producto.id) {
+        <div class="flex justify-between py-1 border-b border-slate-100">
+          <span class="text-slate-700">{{ producto.nombre }}</span>
+          <span class="font-medium text-slate-900">S/ {{ producto.precio | number: '1.2-2' }}</span>
+        </div>
+      }
     </div>
-  </div>
 
-  <div class="mt-4 flex justify-between font-bold">
-    <span>Total</span>
-    <span>S/ 1200</span>
-  </div>
+    <div class="mt-4 flex justify-between font-bold text-slate-900 border-t border-slate-200 pt-3">
+      <span>Total</span>
+      <span class="text-green-600">S/ {{ ultimaCompra.total | number: '1.2-2' }}</span>
+    </div>
+  } @else {
+    <div class="text-center py-8 text-slate-500">
+      <p>No tienes compras recientes</p>
+      <button class="btn btn-primary btn-sm mt-3">Ir a comprar</button>
+    </div>
+  }
 </div>

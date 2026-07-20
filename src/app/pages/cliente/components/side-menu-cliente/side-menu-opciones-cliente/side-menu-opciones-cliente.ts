@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
+import { CerrarSesionCliente } from '../../../pages/cerrar-sesion-cliente/cerrar-sesion-cliente';
 
 interface MenuOpcionCliente {
   titulo: string;
@@ -60,7 +61,7 @@ export class SideMenuOpcionesCliente {
       icono: 'fa-solid fa-screwdriver-wrench',
     },
   ];
-  cerrarSesion(): void {
+  CerrarSesionCliente(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('rol');
     this.router.navigate(['/pagina-principal']);
