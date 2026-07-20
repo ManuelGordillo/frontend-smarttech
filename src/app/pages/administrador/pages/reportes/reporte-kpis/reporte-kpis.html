@@ -1,33 +1,25 @@
 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
   <div class="bg-white rounded-xl shadow p-5">
     <p class="text-slate-500">Ingresos Totales</p>
-
-    <h2 class="text-3xl font-bold text-green-600">S/ 185,430</h2>
-
+    <h2 class="text-3xl font-bold text-green-600">S/ {{ ingresosTotales | number: '1.2-2' }}</h2>
     <p class="text-sm text-green-500 mt-2">▲ +12% respecto al mes anterior</p>
   </div>
 
   <div class="bg-white rounded-xl shadow p-5">
     <p class="text-slate-500">Ventas Realizadas</p>
-
-    <h2 class="text-3xl font-bold text-blue-600">450</h2>
-
+    <h2 class="text-3xl font-bold text-blue-600">{{ ventasRealizadas }}</h2>
     <p class="text-sm text-blue-500 mt-2">▲ +8% este mes</p>
   </div>
 
   <div class="bg-white rounded-xl shadow p-5">
     <p class="text-slate-500">Productos Vendidos</p>
-
-    <h2 class="text-3xl font-bold text-purple-600">812</h2>
-
+    <h2 class="text-3xl font-bold text-purple-600">{{ productosVendidos }}</h2>
     <p class="text-sm text-purple-500 mt-2">▲ +15% este mes</p>
   </div>
 
   <div class="bg-white rounded-xl shadow p-5">
     <p class="text-slate-500">Ticket Promedio</p>
-
-    <h2 class="text-3xl font-bold text-orange-600">S/ 412</h2>
-
+    <h2 class="text-3xl font-bold text-orange-600">S/ {{ ticketPromedio | number: '1.2-2' }}</h2>
     <p class="text-sm text-orange-500 mt-2">▲ +5% este mes</p>
   </div>
 </div>
