@@ -1,9 +1,134 @@
-<div class="bg-white shadow rounded-xl p-4 space-y-2">
-  <button class="btn btn-ghost w-full justify-start">👤 Perfil</button>
+<!-- <div class="bg-white shadow rounded-xl p-4 border border-slate-200 space-y-2">
+  <button
+    (click)="cambiarSeccion('perfil')"
+    class="w-full text-left px-3 py-2 rounded-lg transition font-medium"
+    [class.bg-primary]="seccionActiva === 'perfil'"
+    [class.text-white]="seccionActiva === 'perfil'"
+    [class.text-slate-700]="seccionActiva !== 'perfil'"
+    [class.hover:bg-slate-100]="seccionActiva !== 'perfil'"
+  >
+    👤 Perfil
+  </button>
 
-  <button class="btn btn-ghost w-full justify-start">🔐 Seguridad</button>
+  <button
+    (click)="cambiarSeccion('seguridad')"
+    class="w-full text-left px-3 py-2 rounded-lg transition font-medium"
+    [class.bg-primary]="seccionActiva === 'seguridad'"
+    [class.text-white]="seccionActiva === 'seguridad'"
+    [class.text-slate-700]="seccionActiva !== 'seguridad'"
+    [class.hover:bg-slate-100]="seccionActiva !== 'seguridad'"
+  >
+    🔐 Seguridad
+  </button>
 
-  <button class="btn btn-ghost w-full justify-start">📱 Sesiones activas</button>
+  <button
+    (click)="cambiarSeccion('sesiones')"
+    class="w-full text-left px-3 py-2 rounded-lg transition font-medium"
+    [class.bg-primary]="seccionActiva === 'sesiones'"
+    [class.text-white]="seccionActiva === 'sesiones'"
+    [class.text-slate-700]="seccionActiva !== 'sesiones'"
+    [class.hover:bg-slate-100]="seccionActiva !== 'sesiones'"
+  >
+    📱 Sesiones activas
+  </button>
 
-  <button class="btn btn-ghost w-full justify-start">📧 Notificaciones</button>
+  <button
+    (click)="cambiarSeccion('notificaciones')"
+    class="w-full text-left px-3 py-2 rounded-lg transition font-medium"
+    [class.bg-primary]="seccionActiva === 'notificaciones'"
+    [class.text-white]="seccionActiva === 'notificaciones'"
+    [class.text-slate-700]="seccionActiva !== 'notificaciones'"
+    [class.hover:bg-slate-100]="seccionActiva !== 'notificaciones'"
+  >
+    📧 Notificaciones
+  </button>
+</div> -->
+<div class="bg-white shadow rounded-xl p-4 border border-slate-200">
+  <div class="space-y-1">
+    <!-- Perfil -->
+    <button
+      (click)="cambiarSeccion('perfil')"
+      class="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 font-medium"
+      [class.bg-blue-50]="seccionActiva === 'perfil'"
+      [class.text-blue-700]="seccionActiva === 'perfil'"
+      [class.ring-2]="seccionActiva === 'perfil'"
+      [class.ring-blue-500]="seccionActiva === 'perfil'"
+      [class.text-slate-700]="seccionActiva !== 'perfil'"
+      [class.hover:bg-slate-50]="seccionActiva !== 'perfil'"
+    >
+      <span class="text-xl">👤</span>
+      <span class="flex-1 text-left">Perfil</span>
+      @if (seccionActiva === 'perfil') {
+        <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+      }
+    </button>
+
+    <!-- Seguridad -->
+    <button
+      (click)="cambiarSeccion('seguridad')"
+      class="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 font-medium"
+      [class.bg-blue-50]="seccionActiva === 'seguridad'"
+      [class.text-blue-700]="seccionActiva === 'seguridad'"
+      [class.ring-2]="seccionActiva === 'seguridad'"
+      [class.ring-blue-500]="seccionActiva === 'seguridad'"
+      [class.text-slate-700]="seccionActiva !== 'seguridad'"
+      [class.hover:bg-slate-50]="seccionActiva !== 'seguridad'"
+    >
+      <span class="text-xl">🔐</span>
+      <span class="flex-1 text-left">Seguridad</span>
+      @if (seccionActiva === 'seguridad') {
+        <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+      }
+    </button>
+
+    <!-- Sesiones activas -->
+    <button
+      (click)="cambiarSeccion('sesiones')"
+      class="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 font-medium"
+      [class.bg-blue-50]="seccionActiva === 'sesiones'"
+      [class.text-blue-700]="seccionActiva === 'sesiones'"
+      [class.ring-2]="seccionActiva === 'sesiones'"
+      [class.ring-blue-500]="seccionActiva === 'sesiones'"
+      [class.text-slate-700]="seccionActiva !== 'sesiones'"
+      [class.hover:bg-slate-50]="seccionActiva !== 'sesiones'"
+    >
+      <span class="text-xl">📱</span>
+      <span class="flex-1 text-left">Sesiones activas</span>
+      <span class="badge badge-sm badge-info">2</span>
+      @if (seccionActiva === 'sesiones') {
+        <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+      }
+    </button>
+
+    <!-- Notificaciones -->
+    <button
+      (click)="cambiarSeccion('notificaciones')"
+      class="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 font-medium"
+      [class.bg-blue-50]="seccionActiva === 'notificaciones'"
+      [class.text-blue-700]="seccionActiva === 'notificaciones'"
+      [class.ring-2]="seccionActiva === 'notificaciones'"
+      [class.ring-blue-500]="seccionActiva === 'notificaciones'"
+      [class.text-slate-700]="seccionActiva !== 'notificaciones'"
+      [class.hover:bg-slate-50]="seccionActiva !== 'notificaciones'"
+    >
+      <span class="text-xl">📧</span>
+      <span class="flex-1 text-left">Notificaciones</span>
+      <span class="badge badge-sm badge-error">3</span>
+      @if (seccionActiva === 'notificaciones') {
+        <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+      }
+    </button>
+  </div>
+
+  <!-- Separador -->
+  <div class="border-t border-slate-200 my-4"></div>
+
+  <!-- Cerrar sesión -->
+  <button
+    (click)="cerrarSesion()"
+    class="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 text-red-600 hover:bg-red-50 font-medium"
+  >
+    <span class="text-xl">🚪</span>
+    <span class="flex-1 text-left">Cerrar sesión</span>
+  </button>
 </div>

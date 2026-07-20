@@ -1,25 +1,37 @@
-<div class="bg-white shadow rounded-xl p-6">
-  <h2 class="text-xl font-bold mb-4">Sesiones activas</h2>
+<div class="bg-white shadow rounded-xl p-6 border border-slate-200">
+  <h2 class="text-xl font-bold mb-4 text-slate-900">📱 Sesiones activas</h2>
 
-  <div class="space-y-3">
-    <!-- SESION 1 -->
-    <div class="flex items-center justify-between border p-3 rounded-lg">
-      <div>
-        <p class="font-semibold">Chrome - Windows</p>
-        <p class="text-xs text-slate-500">Lima, Perú · Activo ahora</p>
-      </div>
-      <button class="btn btn-error btn-sm">Cerrar</button>
+  @if (sesiones.length === 0) {
+    <div class="text-center py-6 text-slate-500">
+      <p>No hay sesiones activas</p>
+    </div>
+  } @else {
+    <div class="space-y-3">
+      @for (sesion of sesiones; track sesion.id) {
+        <div class="flex items-center justify-between border border-slate-200 p-3 rounded-lg">
+          <div>
+            <p class="font-semibold text-slate-900">{{ sesion.dispositivo }}</p>
+            <p class="text-xs text-slate-500">
+              {{ sesion.ubicacion }}
+              @if (sesion.activa) {
+                <span class="text-green-600 font-medium">· Activo ahora</span>
+              } @else {
+                <span class="text-slate-400">· {{ sesion.fecha }}</span>
+              }
+            </p>
+          </div>
+          <button
+            (click)="cerrarSesion(sesion.id)"
+            class="btn btn-sm {{ sesion.activa ? 'btn-error' : 'btn-outline' }}"
+          >
+            {{ sesion.activa ? 'Cerrar' : 'Cerrar' }}
+          </button>
+        </div>
+      }
     </div>
 
-    <!-- SESION 2 -->
-    <div class="flex items-center justify-between border p-3 rounded-lg">
-      <div>
-        <p class="font-semibold">Safari - iPhone</p>
-        <p class="text-xs text-slate-500">Hace 2 días</p>
-      </div>
-      <button class="btn btn-outline btn-sm">Cerrar</button>
-    </div>
-  </div>
-
-  <button class="btn btn-outline btn-error w-full mt-4">Cerrar todas las sesiones</button>
+    <button (click)="cerrarTodas()" class="btn btn-outline btn-error w-full mt-4">
+      Cerrar todas las sesiones
+    </button>
+  }
 </div>
