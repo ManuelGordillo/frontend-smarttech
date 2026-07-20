@@ -170,6 +170,72 @@
           </div>
         </div>
 
+        <!-- TIPO DE COMPROBANTE -->
+        <div class="bg-white p-6 rounded-xl shadow border border-slate-200">
+          <h2 class="font-bold text-lg mb-4 text-slate-900">📄 Tipo de comprobante</h2>
+
+          <div class="space-y-3">
+            <label
+              class="flex items-center gap-3 border-2 border-slate-200 p-3 rounded-lg cursor-pointer hover:border-blue-500 transition"
+              [class.border-blue-500]="tipoComprobante === 'BOLETA'"
+            >
+              <input
+                type="radio"
+                name="comprobante"
+                value="BOLETA"
+                [(ngModel)]="tipoComprobante"
+                (change)="cambiarTipoComprobante()"
+                class="radio radio-primary"
+              />
+              <div>
+                <span class="text-slate-700 font-medium">🧾 Boleta</span>
+                <p class="text-xs text-slate-400">Para consumidor final (sin RUC)</p>
+              </div>
+            </label>
+
+            <label
+              class="flex items-center gap-3 border-2 border-slate-200 p-3 rounded-lg cursor-pointer hover:border-blue-500 transition"
+              [class.border-blue-500]="tipoComprobante === 'FACTURA'"
+            >
+              <input
+                type="radio"
+                name="comprobante"
+                value="FACTURA"
+                [(ngModel)]="tipoComprobante"
+                (change)="cambiarTipoComprobante()"
+                class="radio radio-primary"
+              />
+              <div>
+                <span class="text-slate-700 font-medium">📄 Factura</span>
+                <p class="text-xs text-slate-400">Para empresas (con RUC)</p>
+              </div>
+            </label>
+          </div>
+
+          <!-- DATOS DE FACTURA (solo si se selecciona factura) -->
+          @if (tipoComprobante === 'FACTURA') {
+            <div class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input
+                  [(ngModel)]="factura.ruc"
+                  class="w-full px-4 py-2 border-2 border-slate-300 rounded-lg bg-white text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                  placeholder="RUC"
+                />
+                <input
+                  [(ngModel)]="factura.razonSocial"
+                  class="w-full px-4 py-2 border-2 border-slate-300 rounded-lg bg-white text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                  placeholder="Razón social"
+                />
+                <input
+                  [(ngModel)]="factura.direccion"
+                  class="w-full px-4 py-2 border-2 border-slate-300 rounded-lg bg-white text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 md:col-span-2"
+                  placeholder="Dirección fiscal"
+                />
+              </div>
+            </div>
+          }
+        </div>
+
         <!-- DATOS TARJETA (solo si se selecciona tarjeta) -->
         @if (metodoPago === 'TARJETA') {
           <div class="bg-white p-6 rounded-xl shadow border border-slate-200">
@@ -248,6 +314,18 @@
               🚚 Envío a domicilio
             } @else {
               🏪 Recojo en tienda
+            }
+          </span>
+        </div>
+
+        <!-- Mostrar tipo de comprobante -->
+        <div class="mt-1 text-sm">
+          <span class="text-slate-500">Comprobante:</span>
+          <span class="font-medium text-slate-700">
+            @if (tipoComprobante === 'FACTURA') {
+              📄 Factura
+            } @else {
+              🧾 Boleta
             }
           </span>
         </div>

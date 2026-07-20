@@ -23,8 +23,18 @@ export default class Pago implements OnInit {
   clienteId: number = 0;
   usuarioId: number = 0;
 
-  // ✅ NUEVO: Tipo de entrega
+  // Tipo de entrega
   tipoEntrega: string = 'ENVIO'; // 'ENVIO' | 'RECOJO'
+
+  // Tipo de comprobante
+  tipoComprobante: string = 'BOLETA'; // 'BOLETA' | 'FACTURA'
+
+  // Datos de factura
+  factura = {
+    ruc: '',
+    razonSocial: '',
+    direccion: '',
+  };
 
   direccion = {
     nombreCompleto: '',
@@ -79,9 +89,12 @@ export default class Pago implements OnInit {
     }
   }
 
-  // ✅ Cambiar tipo de entrega
   cambiarTipoEntrega(): void {
     console.log('📦 Tipo de entrega:', this.tipoEntrega);
+  }
+
+  cambiarTipoComprobante(): void {
+    console.log('📄 Tipo de comprobante:', this.tipoComprobante);
   }
 
   confirmarCompra(): void {
@@ -90,7 +103,7 @@ export default class Pago implements OnInit {
       return;
     }
 
-    // ✅ Validar dirección solo si es envío
+    // Validar dirección solo si es envío
     if (this.tipoEntrega === 'ENVIO') {
       if (!this.direccion.direccion || !this.direccion.ciudad) {
         alert('Por favor completa la dirección de envío');
@@ -98,17 +111,26 @@ export default class Pago implements OnInit {
       }
     }
 
+    // Validar datos de factura
+    if (this.tipoComprobante === 'FACTURA') {
+      if (!this.factura.ruc || !this.factura.razonSocial) {
+        alert('Por favor completa los datos de facturación (RUC y Razón social)');
+        return;
+      }
+    }
+
     this.procesando = true;
 
-    // ✅ Construir la venta con el tipo de entrega
     const venta = {
       cliente: { id: this.clienteId },
       usuario: { id: this.usuarioId },
       total: this.total,
       tipoPago: this.metodoPago,
       estado: 'PENDIENTE',
-      tipoEntrega: this.tipoEntrega, // ✅ Nuevo campo
+      tipoEntrega: this.tipoEntrega,
+      tipoComprobante: this.tipoComprobante,
       direccion: this.tipoEntrega === 'ENVIO' ? this.direccion : null,
+      factura: this.tipoComprobante === 'FACTURA' ? this.factura : null,
       detalles: this.productos.map((p: any) => ({
         producto: { id: p.id },
         cantidad: p.cantidad,
@@ -123,7 +145,9 @@ export default class Pago implements OnInit {
       next: (response) => {
         console.log('✅ Venta creada:', response);
         this.procesando = false;
-        alert('🎉 ¡Compra realizada con éxito!');
+
+        const comprobante = this.tipoComprobante === 'FACTURA' ? 'factura' : 'boleta';
+        alert(`🎉 ¡Compra realizada con éxito! Se generó tu ${comprobante}.`);
 
         this.carritoService.limpiarCarrito();
         this.router.navigate(['/cliente/dashboard-cliente/historial-de-compras']);

@@ -1,99 +1,96 @@
 <div class="min-h-screen bg-slate-50 p-6">
   <div class="max-w-5xl mx-auto">
     <!-- HEADER -->
-    <div class="mb-6">
-      <h1 class="text-3xl font-bold">Historial de compras</h1>
-      <p class="text-slate-500">Revisa todas tus órdenes y estados de pedido</p>
+    <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between">
+      <div>
+        <h1 class="text-3xl font-bold text-slate-900">📋 Historial de compras</h1>
+        <p class="text-slate-500">Revisa todas tus órdenes y estados de pedido</p>
+      </div>
+      <button (click)="recargar()" class="btn btn-ghost btn-sm mt-2 md:mt-0">🔄 Actualizar</button>
     </div>
 
-    <!-- LISTA DE PEDIDOS -->
-    <div class="space-y-4">
-      <!-- PEDIDO 1 -->
-      <div class="bg-white shadow rounded-xl p-5">
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-          <div>
-            <h2 class="font-bold">Orden #SMT-1001</h2>
-            <p class="text-sm text-slate-500">Fecha: 15/06/2026</p>
+    <!-- CARGANDO -->
+    @if (loading) {
+      <div class="text-center py-12">
+        <span class="loading loading-spinner loading-lg text-primary"></span>
+        <p class="text-slate-500 mt-4">Cargando historial...</p>
+      </div>
+    } @else if (compras.length === 0) {
+      <!-- VACÍO -->
+      <div class="bg-white shadow rounded-xl p-12 text-center">
+        <span class="text-6xl block mb-4">📦</span>
+        <h2 class="text-2xl font-bold text-slate-900 mb-2">No tienes compras</h2>
+        <p class="text-slate-500 mb-6">Aún no has realizado ninguna compra</p>
+        <button routerLink="/cliente/dashboard-cliente/comprar" class="btn btn-primary">
+          Ir a comprar
+        </button>
+      </div>
+    } @else {
+      <!-- LISTA DE PEDIDOS -->
+      <div class="space-y-4">
+        @for (compra of compras; track compra.id) {
+          <div
+            class="bg-white shadow rounded-xl p-5 border border-slate-200 hover:shadow-md transition"
+          >
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+              <div>
+                <h2 class="font-bold text-slate-900">Orden #{{ compra.numero }}</h2>
+                <p class="text-sm text-slate-500">Fecha: {{ compra.fechaFormateada }}</p>
+                <p class="text-xs text-slate-400">{{ compra.totalProductos }} productos</p>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <span class="badge {{ getBadgeClass(compra.estado) }}">
+                  {{ getEstadoTexto(compra.estado) }}
+                </span>
+                @if (compra.tipoEntrega === 'RECOJO') {
+                  <span class="badge badge-ghost text-xs">🏪 Recojo</span>
+                }
+              </div>
+
+              <div class="font-bold text-lg text-primary">
+                S/ {{ compra.total | number: '1.2-2' }}
+              </div>
+            </div>
+
+            <!-- PRODUCTOS -->
+            <div class="mt-4 border-t border-slate-100 pt-4">
+              <div class="space-y-1 text-sm">
+                @for (producto of compra.productos.slice(0, 3); track $index) {
+                  <div class="flex justify-between">
+                    <span class="text-slate-600"
+                      >{{ producto.nombre }} x{{ producto.cantidad }}</span
+                    >
+                    <span class="font-medium text-slate-700"
+                      >S/ {{ producto.subtotal | number: '1.2-2' }}</span
+                    >
+                  </div>
+                }
+                @if (compra.productos.length > 3) {
+                  <div class="text-slate-400 text-xs">
+                    + {{ compra.productos.length - 3 }} productos más
+                  </div>
+                }
+              </div>
+            </div>
+
+            <!-- ACCIONES -->
+            <div class="mt-4 flex flex-wrap gap-3 border-t border-slate-100 pt-4">
+              <button (click)="verDetalle(compra.id)" class="btn btn-outline btn-sm">
+                👁️ Ver detalle
+              </button>
+              <button (click)="descargarComprobante(compra.id)" class="btn btn-primary btn-sm">
+                📄 Descargar comprobante
+              </button>
+            </div>
           </div>
-
-          <div class="flex items-center gap-2">
-            <span class="badge badge-warning">Pendiente</span>
-          </div>
-
-          <div class="font-bold text-lg">S/ 4500</div>
-        </div>
-
-        <div class="mt-4 border-t pt-4">
-          <div class="flex items-center justify-between text-sm">
-            <span>iPhone 14 Pro x1</span>
-            <span>S/ 4500</span>
-          </div>
-        </div>
-
-        <div class="mt-4 flex gap-3">
-          <button class="btn btn-outline btn-sm">Ver detalle</button>
-
-          <button class="btn btn-primary btn-sm">Descargar comprobante</button>
-        </div>
+        }
       </div>
 
-      <!-- PEDIDO 2 -->
-      <div class="bg-white shadow rounded-xl p-5">
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-          <div>
-            <h2 class="font-bold">Orden #SMT-1002</h2>
-            <p class="text-sm text-slate-500">Fecha: 10/06/2026</p>
-          </div>
-
-          <div>
-            <span class="badge badge-success">Entregado</span>
-          </div>
-
-          <div class="font-bold text-lg">S/ 7600</div>
-        </div>
-
-        <div class="mt-4 border-t pt-4 space-y-1 text-sm">
-          <div class="flex justify-between">
-            <span>Samsung Galaxy S23 x2</span>
-            <span>S/ 7600</span>
-          </div>
-        </div>
-
-        <div class="mt-4 flex gap-3">
-          <button class="btn btn-outline btn-sm">Ver detalle</button>
-
-          <button class="btn btn-primary btn-sm">Descargar comprobante</button>
-        </div>
+      <!-- CONTADOR -->
+      <div class="mt-6 text-center text-sm text-slate-500">
+        Mostrando {{ compras.length }} {{ compras.length === 1 ? 'compra' : 'compras' }}
       </div>
-
-      <!-- PEDIDO 3 -->
-      <div class="bg-white shadow rounded-xl p-5">
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-          <div>
-            <h2 class="font-bold">Orden #SMT-1003</h2>
-            <p class="text-sm text-slate-500">Fecha: 01/06/2026</p>
-          </div>
-
-          <div>
-            <span class="badge badge-info">En camino</span>
-          </div>
-
-          <div class="font-bold text-lg">S/ 1200</div>
-        </div>
-
-        <div class="mt-4 border-t pt-4">
-          <div class="flex justify-between text-sm">
-            <span>Xiaomi Redmi Note 13 x1</span>
-            <span>S/ 1200</span>
-          </div>
-        </div>
-
-        <div class="mt-4 flex gap-3">
-          <button class="btn btn-outline btn-sm">Ver detalle</button>
-
-          <button class="btn btn-primary btn-sm">Descargar comprobante</button>
-        </div>
-      </div>
-    </div>
+    }
   </div>
 </div>
