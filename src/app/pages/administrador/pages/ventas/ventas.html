@@ -6,9 +6,9 @@
   </div>
 
   <!-- Resumen -->
-  <smarttech-ventas-resumen />
+  <smarttech-ventas-resumen [ventas]="ventasFiltradas" />
   <!-- Filtros -->
-  <smarttech-ventas-filtros />
+  <smarttech-ventas-filtros (buscar)="aplicarFiltros($event)" />
   <!-- Tabla -->
-  <smarttech-ventas-tabla />
+  <smarttech-ventas-tabla [ventas]="ventasFiltradas" (verVenta)="onVerVenta($event)" />
 </div>

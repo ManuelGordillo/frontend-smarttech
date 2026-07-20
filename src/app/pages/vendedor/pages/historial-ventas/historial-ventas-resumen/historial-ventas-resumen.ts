@@ -3,7 +3,6 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'smarttech-historial-ventas-resumen',
-  standalone: true,
   imports: [CommonModule],
   templateUrl: './historial-ventas-resumen.html',
 })
