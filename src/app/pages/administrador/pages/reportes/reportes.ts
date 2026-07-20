@@ -39,34 +39,6 @@ export default class Reportes implements OnInit {
     this.cargarDatos(); // ✅ Sin parámetros al inicio
   }
 
-  // ✅ FILTROS OPCIONALES con valor por defecto
-  // cargarDatos(filtros?: any): void {
-  //   // ← Agregar ? para opcional
-  //   this.ventasService.getVentas().subscribe({
-  //     next: (data: any) => {
-  //       console.log('✅ Datos de ventas para reportes:', data);
-
-  //       let ventas = Array.isArray(data) ? data : data.content || data.data || [];
-  //       this.todasLasVentas = ventas;
-
-  //       // ✅ APLICAR FILTROS SI EXISTEN
-  //       const ventasFiltradas = this.aplicarFiltros(ventas, filtros);
-
-  //       // Filtrar ventas con detalles
-  //       const ventasConDetalles = ventasFiltradas.filter(
-  //         (v: any) => v.detalles && v.detalles.length > 0,
-  //       );
-
-  //       console.log('📊 Ventas con detalles:', ventasConDetalles.length);
-
-  //       // ✅ PROCESAR KPIs
-  //       this.procesarKpis(ventasConDetalles);
-  //     },
-  //     error: (error) => {
-  //       console.error('❌ Error al cargar ventas:', error);
-  //     },
-  //   });
-  // }
   cargarDatos(filtros?: any): void {
     this.ventasService.getVentas().subscribe({
       next: (data: any) => {
