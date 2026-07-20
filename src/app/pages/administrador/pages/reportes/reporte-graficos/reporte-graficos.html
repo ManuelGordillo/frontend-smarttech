@@ -1,29 +1,15 @@
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-  <div class="bg-white rounded-xl shadow p-6">
-    <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-bold text-slate-900">Ventas por Mes</h2>
-
-      <span class="badge badge-success"> +18% </span>
-    </div>
-
-    <div
-      class="h-72 rounded-xl border-2 border-dashed border-slate-300 flex items-center justify-center"
-    >
-      <span class="text-slate-400"> Gráfico de Barras (Chart.js) </span>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+  <!-- GRÁFICO DE BARRAS: Ventas por Mes -->
+  <div class="bg-white rounded-xl shadow p-4">
+    <div class="h-80">
+      <canvas #ventasChart></canvas>
     </div>
   </div>
 
-  <div class="bg-white rounded-xl shadow p-6">
-    <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-bold text-slate-900">Participación de Marcas</h2>
-
-      <span class="badge badge-info"> Top Marcas </span>
-    </div>
-
-    <div
-      class="h-72 rounded-xl border-2 border-dashed border-slate-300 flex items-center justify-center"
-    >
-      <span class="text-slate-400"> Gráfico Circular (Pie Chart) </span>
+  <!-- GRÁFICO DE TORTA: Ventas por Marca -->
+  <div class="bg-white rounded-xl shadow p-4">
+    <div class="h-80">
+      <canvas #marcasChart></canvas>
     </div>
   </div>
 </div>

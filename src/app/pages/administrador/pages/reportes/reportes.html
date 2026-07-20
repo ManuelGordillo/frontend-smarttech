@@ -6,7 +6,7 @@
   <!-- FILTROS -->
   <reporte-filtros (buscar)="aplicarFiltrosDesdeHijo($event)" />
   <!-- GRAFICOS -->
-  <reporte-graficos />
+  <reporte-graficos [ventas]="ventasFiltradas" />
   <!-- PORCENTAJES DE MARCAS -->
   <reporte-porcentajes />
 
