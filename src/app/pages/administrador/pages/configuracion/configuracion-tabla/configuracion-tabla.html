@@ -1,61 +1,47 @@
 <div class="bg-white rounded-xl shadow overflow-hidden">
   <table class="table w-full text-slate-900">
-    <thead class="bg-slate-100">
+    <thead class="bg-slate-600 text-white">
       <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Rol</th>
-        <th>Correo</th>
-        <th>Estado</th>
-        <th>Ingresos Generados</th>
-        <th>Acciones</th>
+        <th class="px-4 py-3 text-left">ID</th>
+        <th class="px-4 py-3 text-left">Nombre</th>
+        <th class="px-4 py-3 text-left">Rol</th>
+        <th class="px-4 py-3 text-left">Estado</th>
+        <th class="px-4 py-3 text-left">Acciones</th>
       </tr>
     </thead>
 
     <tbody>
-      <tr>
-        <td>1</td>
-        <td>Juan Pérez</td>
-        <td>
-          <span class="badge badge-success"> Vendedor </span>
-        </td>
-        <td>juan@gmail.com</td>
-        <td>
-          <span class="badge badge-success"> Activo </span>
-        </td>
-        <td class="font-semibold text-green-600">S/ 42,500</td>
-        <td>
-          <div class="flex gap-2">
-            <button class="btn btn-sm btn-info">Editar</button>
-
-            <button class="btn btn-sm btn-warning">Bloquear</button>
-
-            <button class="btn btn-sm btn-error">Eliminar</button>
-          </div>
-        </td>
-      </tr>
-
-      <tr>
-        <td>2</td>
-        <td>Ana Torres</td>
-        <td>
-          <span class="badge badge-primary"> Administrador </span>
-        </td>
-        <td>ana@gmail.com</td>
-        <td>
-          <span class="badge badge-success"> Activo </span>
-        </td>
-        <td class="font-semibold text-green-600">S/ 0</td>
-        <td>
-          <div class="flex gap-2">
-            <button class="btn btn-sm btn-info">Editar</button>
-
-            <button class="btn btn-sm btn-warning">Bloquear</button>
-
-            <button class="btn btn-sm btn-error">Eliminar</button>
-          </div>
-        </td>
-      </tr>
+      @if (usuarios.length === 0) {
+        <tr>
+          <td colspan="5" class="text-center py-4 text-slate-500">No hay usuarios registrados</td>
+        </tr>
+      } @else {
+        @for (usuario of usuarios; track usuario.id) {
+          <tr class="border-b border-slate-200 hover:bg-slate-50 transition-colors">
+            <td class="px-4 py-3">{{ usuario.id }}</td>
+            <td class="px-4 py-3">{{ usuario.nombreUsuario || usuario.nombre || '-' }}</td>
+            <td class="px-4 py-3">
+              <span class="badge {{ getRolBadge(usuario.rol) }}">
+                {{ usuario.rol || 'VENDEDOR' }}
+              </span>
+            </td>
+            <td class="px-4 py-3">
+              <span class="badge {{ usuario.estado ? 'badge-success' : 'badge-error' }}">
+                {{ usuario.estado ? 'Activo' : 'Inactivo' }}
+              </span>
+            </td>
+            <td class="px-4 py-3">
+              <div class="flex gap-2">
+                <button class="btn btn-sm btn-info">Editar</button>
+                <button class="btn btn-sm btn-warning">
+                  {{ usuario.estado ? 'Bloquear' : 'Activar' }}
+                </button>
+                <button class="btn btn-sm btn-error">Eliminar</button>
+              </div>
+            </td>
+          </tr>
+        }
+      }
     </tbody>
   </table>
 </div>

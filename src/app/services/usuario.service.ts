@@ -86,4 +86,22 @@ export class UsuarioService {
       headers: this.getHeaders(),
     });
   }
+
+  // ==========================================
+  // OBTENER TODOS LOS USUARIOS (CLIENTES + VENDEDORES + ADMINISTRADORES)
+  // ==========================================
+  getUsuarios(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/usuarios/listar`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  // ==========================================
+  // OBTENER CLIENTES
+  // ==========================================
+  getClientes(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/usuarios/clientes`, {
+      headers: this.getHeaders(),
+    });
+  }
 }

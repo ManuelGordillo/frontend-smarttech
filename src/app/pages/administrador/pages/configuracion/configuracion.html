@@ -1,23 +1,18 @@
 <div class="p-6">
   <div class="mb-6">
     <h1 class="text-3xl font-bold text-slate-900">Configuración y Usuarios</h1>
-
     <p class="text-slate-500">Administración de usuarios y permisos</p>
   </div>
 
   <!-- Resumen -->
-
-  <configuracion-resumen />
+  <configuracion-resumen [datos]="datosResumen" />
 
   <!-- Filtro -->
-
-  <configuracion-filtro />
+  <configuracion-filtro (buscar)="aplicarFiltros($event)" />
 
   <!-- Tabla -->
-
-  <configuracion-tabla />
+  <configuracion-tabla [usuarios]="usuarios" />
 
   <!-- Ranking de vendedores -->
-
-  <configuracion-ranking />
+  <configuracion-ranking [ranking]="rankingVendedores" />
 </div>
