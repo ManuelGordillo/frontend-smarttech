@@ -1,6 +1,22 @@
 <div class="mb-6">
   <label class="label">
-    <span class="label-text">Buscar producto</span>
+    <span class="label-text text-slate-700 font-medium">Buscar producto</span>
   </label>
-  <input type="text" placeholder="Ej: iPhone, Samsung..." class="input input-bordered w-full" />
+  <div class="flex gap-2">
+    <input
+      type="text"
+      [(ngModel)]="termino"
+      (input)="onBuscar()"
+      placeholder="Ej: iPhone, Samsung..."
+      class="w-full px-4 py-2.5 border-2 border-slate-300 rounded-lg bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all"
+    />
+    @if (termino) {
+      <button
+        (click)="limpiar()"
+        class="px-3 py-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition"
+      >
+        ✕
+      </button>
+    }
+  </div>
 </div>

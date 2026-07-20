@@ -1,8 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'smarttech-busqueda',
-  imports: [],
+  imports: [CommonModule, FormsModule],
   templateUrl: './busqueda.html',
 })
-export class Busqueda {}
+export class Busqueda {
+  @Output() buscar = new EventEmitter<string>();
+
+  termino: string = '';
+
+  onBuscar(): void {
+    this.buscar.emit(this.termino);
+  }
+
+  limpiar(): void {
+    this.termino = '';
+    this.buscar.emit('');
+  }
+}

@@ -1,7 +1,20 @@
 <div class="mb-6">
   <label class="label">
-    <span class="label-text">Precio máximo</span>
+    <span class="label-text text-slate-700 font-medium"
+      >Precio máximo: S/ {{ valor | number: '1.2-2' }}</span
+    >
   </label>
-  <input type="range" min="0" max="5000" class="range range-primary" />
-  <div class="text-sm mt-2 text-slate-500">S/ 0 - S/ 5000</div>
+  <input
+    type="range"
+    min="0"
+    max="10000"
+    step="100"
+    [(ngModel)]="valor"
+    (change)="onChange()"
+    class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+  />
+  <div class="flex justify-between text-xs text-slate-500 mt-1">
+    <span>S/ 0</span>
+    <span>S/ 10,000</span>
+  </div>
 </div>

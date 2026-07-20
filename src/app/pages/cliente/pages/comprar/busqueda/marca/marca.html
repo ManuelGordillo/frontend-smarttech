@@ -1,11 +1,15 @@
 <div class="mb-6">
   <label class="label">
-    <span class="label-text">Marca</span>
+    <span class="label-text text-slate-700 font-medium">Marca</span>
   </label>
-  <select class="select select-bordered w-full">
-    <option>Todas</option>
-    <option>Apple</option>
-    <option>Samsung</option>
-    <option>Xiaomi</option>
+  <select
+    [(ngModel)]="seleccionada"
+    (change)="onChange()"
+    class="w-full px-4 py-2.5 border-2 border-slate-300 rounded-lg bg-white text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all appearance-none cursor-pointer"
+  >
+    <option value="">Todas</option>
+    @for (marca of marcas; track marca) {
+      <option [value]="marca">{{ marca }}</option>
+    }
   </select>
 </div>

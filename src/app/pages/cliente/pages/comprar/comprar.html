@@ -1,131 +1,157 @@
 <div class="flex min-h-screen">
   <!-- SIDEBAR FILTROS -->
   <aside class="w-72 bg-white border-r p-6 hidden md:block">
-    <h2 class="text-xl font-bold mb-4">Filtros</h2>
+    <h2 class="text-xl font-bold mb-4 text-slate-900">Filtros</h2>
 
     <!-- Búsqueda -->
-    <smarttech-busqueda />
+    <smarttech-busqueda (buscar)="actualizarBusqueda($event)" />
 
     <!-- Categoría -->
-    <smarttech-categoria />
+    <smarttech-categoria [categorias]="categorias" (cambiar)="actualizarCategoria($event)" />
 
     <!-- Marca -->
-    <smarttech-marca />
+    <smarttech-marca [marcas]="marcas" (cambiar)="actualizarMarca($event)" />
 
     <!-- Precio -->
-    <smarttech-precio />
+    <smarttech-precio [precioMaximo]="filtros.precioMaximo" (cambiar)="actualizarPrecio($event)" />
 
-    <button class="btn btn-primary w-full">Aplicar filtros</button>
+    <button (click)="aplicarFiltros()" class="btn btn-primary w-full mt-4">Aplicar filtros</button>
   </aside>
 
   <!-- CONTENIDO -->
   <main class="flex-1 p-6">
+    <!-- CONTADOR DE PRODUCTOS -->
+    <p class="text-slate-500 mb-4">{{ productosFiltrados.length }} productos encontrados</p>
+
     <!-- GRID PRODUCTOS -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- PRODUCTO 1 -->
-      <div class="card bg-white shadow-md hover:shadow-xl transition">
-        <figure class="p-4">
-          <img src="https://via.placeholder.com/300" class="rounded-xl h-48 object-cover" />
-        </figure>
-
-        <div class="card-body">
-          <h2 class="card-title">iPhone 14 Pro</h2>
-
-          <p class="text-sm text-slate-500">Smartphone Apple con 128GB y cámara profesional.</p>
-
-          <div class="flex justify-between items-center mt-2">
-            <span class="font-bold text-lg">S/ 4500</span>
-            <span class="text-sm text-green-600">Stock: 10</span>
-          </div>
-
-          <div class="card-actions mt-4">
-            <label for="modal-producto" class="btn btn-primary w-full"> Ver detalle </label>
-          </div>
-        </div>
+    @if (productosFiltrados.length === 0) {
+      <div class="text-center py-12">
+        <p class="text-slate-500">No se encontraron productos</p>
       </div>
+    } @else {
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        @for (producto of productosFiltrados; track producto.id) {
+          <div
+            class="card bg-white shadow-md hover:shadow-xl transition rounded-xl overflow-hidden"
+          >
+            <figure class="p-4">
+              <img
+                [src]="producto.imagen || 'https://via.placeholder.com/300'"
+                class="rounded-xl h-48 w-full object-cover"
+                [alt]="producto.modelo"
+              />
+            </figure>
 
-      <!-- PRODUCTO 2 -->
-      <div class="card bg-white shadow-md hover:shadow-xl transition">
-        <figure class="p-4">
-          <img src="https://via.placeholder.com/300" class="rounded-xl h-48 object-cover" />
-        </figure>
+            <div class="card-body p-4">
+              <div class="flex justify-between items-start">
+                <h2 class="card-title text-lg font-bold text-slate-900">
+                  {{ producto.marca }} {{ producto.modelo }}
+                </h2>
+                <span class="text-xs px-2 py-1 rounded-full bg-slate-100 text-slate-600">
+                  {{ producto.categoria }}
+                </span>
+              </div>
 
-        <div class="card-body">
-          <h2 class="card-title">Samsung Galaxy S23</h2>
+              <p class="text-sm text-slate-500 line-clamp-2 mt-1">
+                {{ producto.descripcion || 'Sin descripción' }}
+              </p>
 
-          <p class="text-sm text-slate-500">Pantalla AMOLED, 256GB, alto rendimiento.</p>
+              <div class="flex justify-between items-center mt-3">
+                <span class="font-bold text-xl text-primary">
+                  S/ {{ producto.precio | number: '1.2-2' }}
+                </span>
+                <span
+                  class="text-sm"
+                  [class.text-green-600]="producto.stock > 0"
+                  [class.text-red-600]="producto.stock === 0"
+                >
+                  Stock: {{ producto.stock || 0 }}
+                </span>
+              </div>
 
-          <div class="flex justify-between items-center mt-2">
-            <span class="font-bold text-lg">S/ 3800</span>
-            <span class="text-sm text-green-600">Stock: 5</span>
+              <div class="card-actions mt-4 flex gap-2">
+                <button (click)="verDetalle(producto)" class="btn btn-primary flex-1">
+                  Ver detalle
+                </button>
+                <button
+                  (click)="agregarAlCarrito(producto)"
+                  class="btn btn-outline btn-primary"
+                  [disabled]="producto.stock === 0"
+                >
+                  🛒
+                </button>
+              </div>
+            </div>
           </div>
-
-          <div class="card-actions mt-4">
-            <label for="modal-producto" class="btn btn-primary w-full"> Ver detalle </label>
-          </div>
-        </div>
+        }
       </div>
-
-      <!-- PRODUCTO 3 -->
-      <div class="card bg-white shadow-md hover:shadow-xl transition">
-        <figure class="p-4">
-          <img src="https://via.placeholder.com/300" class="rounded-xl h-48 object-cover" />
-        </figure>
-
-        <div class="card-body">
-          <h2 class="card-title">Xiaomi Redmi Note 13</h2>
-
-          <p class="text-sm text-slate-500">Económico, buena batería y cámara.</p>
-
-          <div class="flex justify-between items-center mt-2">
-            <span class="font-bold text-lg">S/ 1200</span>
-            <span class="text-sm text-green-600">Stock: 20</span>
-          </div>
-
-          <div class="card-actions mt-4">
-            <label for="modal-producto" class="btn btn-primary w-full"> Ver detalle </label>
-          </div>
-        </div>
-      </div>
-    </div>
+    }
   </main>
 </div>
 
 <!-- MODAL DETALLE PRODUCTO -->
-<input type="checkbox" id="modal-producto" class="modal-toggle" />
-
-<div class="modal">
-  <div class="modal-box max-w-3xl">
-    <label for="modal-producto" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-      ✕
-    </label>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- IMAGEN -->
-      <div>
-        <img src="https://via.placeholder.com/500" class="rounded-xl w-full object-cover" />
-      </div>
-
-      <!-- INFO -->
-      <div>
-        <h2 class="text-2xl font-bold">iPhone 14 Pro</h2>
-
-        <p class="text-slate-500 mt-2">
-          Smartphone Apple con chip A16 Bionic, cámara profesional y alto rendimiento.
-        </p>
-
-        <div class="mt-4 space-y-2 text-sm">
-          <p><span class="font-semibold">Categoría:</span> Celulares</p>
-          <p><span class="font-semibold">Marca:</span> Apple</p>
-          <p><span class="font-semibold">Stock:</span> 10 unidades</p>
+@if (productoSeleccionado) {
+  <div
+    class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+    (click)="cerrarModal()"
+  >
+    <div
+      class="bg-white rounded-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto"
+      (click)="$event.stopPropagation()"
+    >
+      <div class="p-6">
+        <div class="flex justify-between items-start">
+          <h2 class="text-2xl font-bold text-slate-900">
+            {{ productoSeleccionado.marca }} {{ productoSeleccionado.modelo }}
+          </h2>
+          <button (click)="cerrarModal()" class="btn btn-sm btn-ghost">✕</button>
         </div>
 
-        <div class="mt-6">
-          <span class="text-2xl font-bold text-primary">S/ 4500</span>
-        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+          <!-- IMAGEN -->
+          <div>
+            <img
+              [src]="productoSeleccionado.imagen || 'https://via.placeholder.com/500'"
+              class="rounded-xl w-full object-cover h-64"
+              [alt]="productoSeleccionado.modelo"
+            />
+          </div>
 
-        <button class="btn btn-primary w-full mt-6">Agregar al carrito</button>
+          <!-- INFO -->
+          <div>
+            <p class="text-slate-500 mt-2">{{ productoSeleccionado.descripcion }}</p>
+
+            <div class="mt-4 space-y-2 text-sm">
+              <p>
+                <span class="font-semibold">Categoría:</span> {{ productoSeleccionado.categoria }}
+              </p>
+              <p><span class="font-semibold">Marca:</span> {{ productoSeleccionado.marca }}</p>
+              <p>
+                <span class="font-semibold">Color:</span>
+                {{ productoSeleccionado.color || 'No especificado' }}
+              </p>
+              <p>
+                <span class="font-semibold">Stock:</span>
+                {{ productoSeleccionado.stock || 0 }} unidades
+              </p>
+            </div>
+
+            <div class="mt-6">
+              <span class="text-2xl font-bold text-primary">
+                S/ {{ productoSeleccionado.precio | number: '1.2-2' }}
+              </span>
+            </div>
+
+            <button
+              (click)="agregarAlCarrito(productoSeleccionado)"
+              class="btn btn-primary w-full mt-6"
+              [disabled]="productoSeleccionado.stock === 0"
+            >
+              Agregar al carrito
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
+}
