@@ -1,77 +1,140 @@
-<!-- TOGGLE (controla apertura del carrito) -->
-<input id="cart-drawer" type="checkbox" class="drawer-toggle" />
-
-<div class="drawer drawer-end">
-  <!-- CONTENIDO PRINCIPAL (no se toca mucho aquí) -->
-  <div class="drawer-content">
-    <!-- Botón flotante carrito -->
-    <label for="cart-drawer" class="btn btn-primary fixed bottom-6 right-6 rounded-full shadow-lg">
-      🛒 Carrito
-    </label>
-  </div>
-
-  <!-- PANEL LATERAL -->
-  <div class="drawer-side">
-    <label for="cart-drawer" class="drawer-overlay"></label>
-
-    <div class="w-96 bg-white h-full flex flex-col">
-      <!-- HEADER -->
-      <div class="p-4 border-b">
-        <h2 class="text-xl font-bold">Tu carrito</h2>
-        <p class="text-sm text-slate-500">Productos seleccionados</p>
-      </div>
-
-      <!-- LISTA DE PRODUCTOS -->
-      <div class="flex-1 overflow-y-auto p-4 space-y-4">
-        <!-- ITEM 1 -->
-        <div class="flex gap-3 border rounded-lg p-3">
-          <img src="https://via.placeholder.com/80" class="w-16 h-16 rounded object-cover" />
-
-          <div class="flex-1">
-            <h3 class="font-semibold text-sm">iPhone 14 Pro</h3>
-            <p class="text-xs text-slate-500">S/ 4500</p>
-
-            <!-- cantidad -->
-            <div class="flex items-center gap-2 mt-2">
-              <button class="btn btn-xs btn-outline">-</button>
-              <span>1</span>
-              <button class="btn btn-xs btn-outline">+</button>
-            </div>
-          </div>
-
-          <button class="btn btn-xs btn-error">✕</button>
-        </div>
-
-        <!-- ITEM 2 -->
-        <div class="flex gap-3 border rounded-lg p-3">
-          <img src="https://via.placeholder.com/80" class="w-16 h-16 rounded object-cover" />
-
-          <div class="flex-1">
-            <h3 class="font-semibold text-sm">Samsung S23</h3>
-            <p class="text-xs text-slate-500">S/ 3800</p>
-
-            <div class="flex items-center gap-2 mt-2">
-              <button class="btn btn-xs btn-outline">-</button>
-              <span>2</span>
-              <button class="btn btn-xs btn-outline">+</button>
-            </div>
-          </div>
-
-          <button class="btn btn-xs btn-error">✕</button>
-        </div>
-      </div>
-
-      <!-- FOOTER -->
-      <div class="p-4 border-t space-y-3">
-        <div class="flex justify-between font-bold">
-          <span>Total:</span>
-          <span>S/ 12,300</span>
-        </div>
-
-        <button class="btn btn-primary w-full">Proceder al pago</button>
-
-        <button class="btn btn-outline w-full">Vaciar carrito</button>
-      </div>
+<div class="min-h-screen bg-slate-50 p-6">
+  <div class="max-w-5xl mx-auto">
+    <!-- HEADER -->
+    <div class="mb-6">
+      <h1 class="text-3xl font-bold text-slate-900">🛒 Carrito de Compras</h1>
+      <p class="text-slate-500">Revisa los productos seleccionados antes de proceder al pago</p>
     </div>
+
+    <!-- TABLA DE PRODUCTOS -->
+    @if (productos.length === 0) {
+      <div class="bg-white rounded-xl shadow p-12 text-center">
+        <span class="text-7xl mb-4 block">🛒</span>
+        <h2 class="text-2xl font-bold text-slate-900 mb-2">Tu carrito está vacío</h2>
+        <p class="text-slate-500 mb-6">Agrega productos desde el catálogo</p>
+        <button routerLink="/cliente/dashboard-cliente/comprar" class="btn btn-primary">
+          Ir al catálogo
+        </button>
+      </div>
+    } @else {
+      <!-- TABLA DE PRODUCTOS -->
+      <div class="bg-white rounded-xl shadow overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-slate-900">
+            <thead class="bg-slate-100">
+              <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-slate-600 uppercase">
+                  Producto
+                </th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-slate-600 uppercase">
+                  Precio
+                </th>
+                <th class="px-6 py-3 text-center text-xs font-medium text-slate-600 uppercase">
+                  Cantidad
+                </th>
+                <th class="px-6 py-3 text-right text-xs font-medium text-slate-600 uppercase">
+                  Subtotal
+                </th>
+                <th class="px-6 py-3 text-center text-xs font-medium text-slate-600 uppercase">
+                  Acciones
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (producto of productos; track producto.id) {
+                <tr class="border-b border-slate-200 hover:bg-slate-50 transition">
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-4">
+                      <img
+                        [src]="producto.imagen || 'https://via.placeholder.com/80'"
+                        class="w-16 h-16 rounded object-cover"
+                        [alt]="producto.modelo"
+                      />
+                      <div>
+                        <h3 class="font-semibold text-slate-900">
+                          {{ producto.marca }} {{ producto.modelo }}
+                        </h3>
+                        <p class="text-sm text-slate-500">Stock: {{ producto.stock || 0 }}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 font-medium">S/ {{ producto.precio | number: '1.2-2' }}</td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center justify-center gap-2">
+                      <button
+                        (click)="disminuirCantidad(producto.id)"
+                        class="w-8 h-8 flex items-center justify-center border border-slate-300 rounded hover:bg-slate-100 transition text-slate-600"
+                      >
+                        -
+                      </button>
+                      <span class="w-8 text-center font-medium">{{ producto.cantidad }}</span>
+                      <button
+                        (click)="aumentarCantidad(producto.id)"
+                        class="w-8 h-8 flex items-center justify-center border border-slate-300 rounded hover:bg-slate-100 transition text-slate-600"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 text-right font-bold text-slate-900">
+                    S/ {{ producto.subtotal | number: '1.2-2' }}
+                  </td>
+                  <td class="px-6 py-4 text-center">
+                    <button
+                      (click)="eliminarProducto(producto.id)"
+                      class="text-slate-400 hover:text-red-600 transition text-sm"
+                    >
+                      ✕ Eliminar
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- RESUMEN DEL CARRITO -->
+      <div class="mt-6 bg-white rounded-xl shadow p-6">
+        <div class="flex flex-col md:flex-row md:justify-between gap-4">
+          <div>
+            <button
+              (click)="vaciarCarrito()"
+              class="btn btn-ghost text-slate-500 hover:text-red-600"
+            >
+              Vaciar carrito
+            </button>
+            <button routerLink="/cliente/dashboard-cliente/comprar" class="btn btn-outline ml-2">
+              Seguir comprando
+            </button>
+          </div>
+
+          <div class="flex flex-col items-end gap-2">
+            <div class="space-y-1 text-sm w-full max-w-xs">
+              <div class="flex justify-between text-slate-600">
+                <span>Subtotal</span>
+                <span>S/ {{ subtotal | number: '1.2-2' }}</span>
+              </div>
+              <div class="flex justify-between text-slate-600">
+                <span>IGV (18%)</span>
+                <span>S/ {{ igv | number: '1.2-2' }}</span>
+              </div>
+              <div
+                class="flex justify-between font-bold text-lg text-slate-900 pt-2 border-t border-slate-200"
+              >
+                <span>Total</span>
+                <span class="text-primary">S/ {{ total | number: '1.2-2' }}</span>
+              </div>
+            </div>
+            <button
+              (click)="irAlPago()"
+              class="w-full max-w-xs py-3 bg-primary text-white rounded-lg hover:bg-primary-dark transition font-medium text-lg"
+            >
+              Proceder al pago →
+            </button>
+          </div>
+        </div>
+      </div>
+    }
   </div>
 </div>

@@ -5,6 +5,7 @@ import { Categoria } from './busqueda/categoria/categoria';
 import { Marca } from './busqueda/marca/marca';
 import { Precio } from './busqueda/precio/precio';
 import { ProductoService } from '../../../../services/producto.service';
+import { CarritoService } from '../../../../services/carrito.service'; // ← AGREGADO
 
 @Component({
   selector: 'app-comprar',
@@ -13,12 +14,11 @@ import { ProductoService } from '../../../../services/producto.service';
 })
 export default class Comprar implements OnInit {
   private productoService = inject(ProductoService);
+  private carritoService = inject(CarritoService); // ← AGREGADO
 
-  // Lista de productos
   productos: any[] = [];
   productosFiltrados: any[] = [];
 
-  // Filtros
   filtros = {
     busqueda: '',
     categoria: '',
@@ -26,11 +26,8 @@ export default class Comprar implements OnInit {
     precioMaximo: 10000,
   };
 
-  // Datos para filtros
   categorias: string[] = [];
   marcas: string[] = [];
-
-  // Producto seleccionado para el modal
   productoSeleccionado: any = null;
 
   ngOnInit(): void {
@@ -44,7 +41,6 @@ export default class Comprar implements OnInit {
         this.productos = data;
         this.productosFiltrados = data;
 
-        // Extraer categorías y marcas únicas
         this.categorias = [...new Set(data.map((p: any) => p.categoria).filter(Boolean))];
         this.marcas = [...new Set(data.map((p: any) => p.marca).filter(Boolean))];
 
@@ -59,7 +55,6 @@ export default class Comprar implements OnInit {
 
   aplicarFiltros(): void {
     this.productosFiltrados = this.productos.filter((p: any) => {
-      // Filtro por búsqueda
       const busqueda = this.filtros.busqueda.toLowerCase().trim();
       const coincideBusqueda =
         !busqueda ||
@@ -67,13 +62,8 @@ export default class Comprar implements OnInit {
         p.marca?.toLowerCase().includes(busqueda) ||
         p.descripcion?.toLowerCase().includes(busqueda);
 
-      // Filtro por categoría
       const coincideCategoria = !this.filtros.categoria || p.categoria === this.filtros.categoria;
-
-      // Filtro por marca
       const coincideMarca = !this.filtros.marca || p.marca === this.filtros.marca;
-
-      // Filtro por precio máximo
       const coincidePrecio = (p.precio || 0) <= this.filtros.precioMaximo;
 
       return coincideBusqueda && coincideCategoria && coincideMarca && coincidePrecio;
@@ -82,7 +72,6 @@ export default class Comprar implements OnInit {
     console.log('📊 Productos filtrados:', this.productosFiltrados.length);
   }
 
-  // Métodos para actualizar filtros desde los hijos
   actualizarBusqueda(termino: string): void {
     this.filtros.busqueda = termino;
     this.aplicarFiltros();
@@ -103,22 +92,19 @@ export default class Comprar implements OnInit {
     this.aplicarFiltros();
   }
 
-  // Ver detalle del producto
   verDetalle(producto: any): void {
     this.productoSeleccionado = producto;
     console.log('🔍 Ver detalle:', producto);
   }
 
-  // Cerrar modal
   cerrarModal(): void {
     this.productoSeleccionado = null;
   }
 
-  // Agregar al carrito
+  // ✅ MÉTODO ACTUALIZADO
   agregarAlCarrito(producto: any): void {
-    console.log('🛒 Agregar al carrito:', producto);
-    // Aquí la lógica para agregar al carrito
-    // Puedes emitir un evento o usar un servicio de carrito
-    alert(`Producto agregado al carrito: ${producto.marca} ${producto.modelo}`);
+    this.carritoService.agregarProducto(producto);
+    console.log('🛒 Producto agregado al carrito:', producto.marca, producto.modelo);
+    alert(`✅ ${producto.marca} ${producto.modelo} agregado al carrito`);
   }
 }
